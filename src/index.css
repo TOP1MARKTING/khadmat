@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #f1efe9;
+  --color-surface: #faf9f6;
+  --color-ink: #171916;
+  --color-brand: #2f4638;
+  --color-brand-dark: #22332a;
+  --color-accent: #a67b4b;
+  --color-accent-soft: #e8d8c4;
+  --color-sand: #cbb892;
+  --color-sand-light: #e7dfd0;
+  --color-line: #ddd7cb;
+  --color-muted: #5a5e59;
+  --color-muted-soft: #858985;
+  --font-sans: "Tajawal", "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-display: "Tajawal", "IBM Plex Sans Arabic", sans-serif;
+  --shadow-soft: 0 1px 0 rgb(23 25 22 / 0.04), 0 10px 28px rgb(23 25 22 / 0.06);
+  --shadow-lift: 0 14px 36px rgb(23 25 22 / 0.12);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+    background-color: var(--color-cream);
+    background-image:
+      linear-gradient(rgb(23 25 22 / 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(23 25 22 / 0.015) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 28%, white);
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  img {
+    @apply max-w-full;
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-3.5 sm:px-6 lg:px-8;
+  }
+
+  .section-pad {
+    @apply py-10 sm:py-16 lg:py-20;
+  }
+
+  .eyebrow {
+    @apply text-[11px] font-bold tracking-[0.2em] text-accent uppercase;
+  }
+
+  .heading-display {
+    font-family: var(--font-display);
+    @apply text-4xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-5xl lg:text-[3.4rem];
+  }
+
+  .heading-section {
+    font-family: var(--font-display);
+    @apply text-[1.35rem] font-extrabold leading-snug tracking-tight text-ink sm:text-[1.85rem];
+  }
+
+  .body-lead {
+    @apply text-sm leading-relaxed text-muted sm:text-lg;
+  }
+
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+  }
+
+  .card-work {
+    @apply overflow-hidden rounded-lg border border-line bg-surface shadow-[var(--shadow-soft)] transition-all duration-300;
+  }
+
+  .card-work:hover {
+    border-color: color-mix(in srgb, var(--color-brand) 35%, var(--color-line));
+    box-shadow: var(--shadow-lift);
+  }
+
+  .reveal {
+    animation: reveal-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .reveal-delay-1 {
+    animation-delay: 0.07s;
+  }
+
+  .reveal-delay-2 {
+    animation-delay: 0.14s;
+  }
+
+  .reveal-delay-3 {
+    animation-delay: 0.21s;
+  }
+
+  .hero-shift {
+    animation: hero-shift 18s ease-in-out infinite alternate;
+  }
+
+  .work-rule {
+    @apply border-t-2 border-accent/70;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mobile-nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-nav-panel {
+  animation: mobile-nav-in 0.22s ease-out;
+}
+
+@keyframes hero-shift {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.05) translate3d(-1.5%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-delay-1,
+  .reveal-delay-2,
+  .reveal-delay-3,
+  .hero-shift,
+  .mobile-nav-panel {
+    animation: none !important;
+  }
+}
