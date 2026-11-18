@@ -41,38 +41,38 @@ export function HomePage() {
 
   return (
     <>
-      {/* Hero: full portrait on phone with per-image gradients; desktop uses center crop */}
-      <section className="relative isolate overflow-x-hidden border-b-4 border-accent">
-        <div className="relative min-h-[100dvh] w-full sm:min-h-0 sm:absolute sm:inset-0 md:min-h-[560px] lg:min-h-[640px]">
+      {/* Hero: mobile overlays portrait; laptop starts below solid header */}
+      <section className="relative isolate min-h-[100dvh] overflow-x-hidden border-b-4 border-accent sm:min-h-[560px] lg:min-h-[640px]">
+        <div className="absolute inset-0">
           <HeroBackground onIndexChange={onHeroIndex} />
+        </div>
 
-          {/* Mobile UI over the photo — compact so the image shows more */}
-          <div className="absolute inset-0 flex flex-col justify-end px-3.5 pb-4 pt-16 sm:hidden">
-            <div className="mx-auto w-full max-w-md text-white">
-              <p className="mb-1.5 inline-flex max-w-full items-center gap-1.5 rounded-full border border-white/20 bg-ink/35 px-2.5 py-1 text-[9px] font-bold tracking-wide text-accent-soft backdrop-blur-md">
-                <HardHat className="size-3 shrink-0" />
-                <span className="leading-snug">{t('السعودية — شغل وخدمات حقيقية', 'Saudi Arabia — real trades')}</span>
-              </p>
-              <h1 className="text-[1.85rem] font-extrabold leading-[1.08] drop-shadow-[0_4px_28px_rgba(0,0,0,0.55)]">
-                {t('ساعدني', 'Saedni')}
-              </h1>
-              <p className="mt-1.5 max-w-sm text-[12px] font-semibold leading-snug text-white/92 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
-                {t(
-                  'نساعدك تلاقي الخدمة المناسبة في مدينتك… بسهولة ووضوح.',
-                  'We help you find the right service in your city… easily and clearly.',
-                )}
-              </p>
-              <div className="mt-2.5">
-                <ServiceSearch variant="hero" />
-                <HeroSlideDots index={heroIndex} className="mt-2.5" />
-              </div>
+        {/* Mobile UI */}
+        <div className="absolute inset-0 flex flex-col justify-end px-3.5 pb-4 pt-16 sm:hidden">
+          <div className="mx-auto w-full max-w-md text-white">
+            <p className="mb-1.5 inline-flex max-w-full items-center gap-1.5 rounded-full border border-white/20 bg-ink/35 px-2.5 py-1 text-[9px] font-bold tracking-wide text-accent-soft backdrop-blur-md">
+              <HardHat className="size-3 shrink-0" />
+              <span className="leading-snug">{t('السعودية — شغل وخدمات حقيقية', 'Saudi Arabia — real trades')}</span>
+            </p>
+            <h1 className="text-[1.85rem] font-extrabold leading-[1.08] drop-shadow-[0_4px_28px_rgba(0,0,0,0.55)]">
+              {t('ساعدني', 'Saedni')}
+            </h1>
+            <p className="mt-1.5 max-w-sm text-[12px] font-semibold leading-snug text-white/92 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
+              {t(
+                'نساعدك تلاقي الخدمة المناسبة في مدينتك… بسهولة ووضوح.',
+                'We help you find the right service in your city… easily and clearly.',
+              )}
+            </p>
+            <div className="mt-2.5">
+              <ServiceSearch variant="hero" />
+              <HeroSlideDots index={heroIndex} className="mt-2.5" />
             </div>
           </div>
         </div>
 
-        {/* Desktop / tablet content */}
-        <div className="relative hidden sm:block sm:pb-16 sm:pt-16 lg:pb-24 lg:pt-24">
-          <div className="container-page">
+        {/* Laptop / tablet UI — sits in hero below the header spacer */}
+        <div className="relative hidden h-full min-h-[560px] items-end sm:flex lg:min-h-[640px]">
+          <div className="container-page w-full pb-14 pt-28 lg:pb-16 lg:pt-36">
             <div className="max-w-3xl text-white">
               <p className="reveal mb-4 inline-flex max-w-full items-center gap-2 border border-accent/50 bg-accent/15 px-3 py-1.5 text-[11px] font-bold tracking-[0.16em] text-accent-soft uppercase">
                 <HardHat className="size-3.5 shrink-0" />

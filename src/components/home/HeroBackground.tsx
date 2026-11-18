@@ -8,16 +8,19 @@ type HeroSlide = {
   desktop: string
   /** Mobile overlay strength — based on photo brightness */
   tone: HeroTone
+  /** Mobile-only: lift subject up above the search card */
+  mobileLift?: boolean
 }
 
 /** Brand trade photos — mobile = full 9:16, desktop = center crop */
 export const HERO_SLIDES: HeroSlide[] = [
-  { mobile: '/images/hero/hero-01-plumbing.jpg', desktop: '/images/hero/hero-01-plumbing-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-02-finishing.jpg', desktop: '/images/hero/hero-02-finishing-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-03-tiling.jpg', desktop: '/images/hero/hero-03-tiling-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-04-waterproofing.jpg', desktop: '/images/hero/hero-04-waterproofing-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-05-electrical.jpg', desktop: '/images/hero/hero-05-electrical-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-06-ac.jpg', desktop: '/images/hero/hero-06-ac-desktop.jpg', tone: 'bright' },
+  // First 6 only: raise subject on phone above the search card
+  { mobile: '/images/hero/hero-01-plumbing.jpg', desktop: '/images/hero/hero-01-plumbing-desktop.jpg', tone: 'bright', mobileLift: true },
+  { mobile: '/images/hero/hero-02-finishing.jpg', desktop: '/images/hero/hero-02-finishing-desktop.jpg', tone: 'bright', mobileLift: true },
+  { mobile: '/images/hero/hero-03-tiling.jpg', desktop: '/images/hero/hero-03-tiling-desktop.jpg', tone: 'bright', mobileLift: true },
+  { mobile: '/images/hero/hero-04-waterproofing.jpg', desktop: '/images/hero/hero-04-waterproofing-desktop.jpg', tone: 'bright', mobileLift: true },
+  { mobile: '/images/hero/hero-05-electrical.jpg', desktop: '/images/hero/hero-05-electrical-desktop.jpg', tone: 'bright', mobileLift: true },
+  { mobile: '/images/hero/hero-06-ac.jpg', desktop: '/images/hero/hero-06-ac-desktop.jpg', tone: 'bright', mobileLift: true },
   { mobile: '/images/hero/hero-07-painting.jpg', desktop: '/images/hero/hero-07-painting-desktop.jpg', tone: 'bright' },
   { mobile: '/images/hero/hero-08-moving.jpg', desktop: '/images/hero/hero-08-moving-desktop.jpg', tone: 'bright' },
   { mobile: '/images/hero/hero-09-cleaning.jpg', desktop: '/images/hero/hero-09-cleaning-desktop.jpg', tone: 'mid' },
@@ -71,17 +74,20 @@ export function HeroBackground({
   }, [index])
 
   return (
-    <div className="absolute inset-0" aria-hidden>
+    <div className="absolute inset-0 overflow-hidden" aria-hidden>
       {HERO_SLIDES.map((slide, i) => (
         <div
           key={slide.mobile}
           className={cn(
-            'absolute inset-0 transition-opacity duration-[900ms] ease-out',
+            'absolute inset-0 overflow-hidden transition-opacity duration-[900ms] ease-out',
             i === index ? 'opacity-100' : 'opacity-0',
           )}
         >
           <div
-            className="absolute inset-0 bg-cover bg-center sm:hidden"
+            className={cn(
+              'absolute inset-0 bg-cover bg-center sm:hidden',
+              slide.mobileLift && 'origin-bottom scale-[1.22] -translate-y-[9%]',
+            )}
             style={{ backgroundImage: `url('${slide.mobile}')` }}
           />
           <div

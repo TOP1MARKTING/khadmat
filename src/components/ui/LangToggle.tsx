@@ -18,8 +18,9 @@ export function LangToggle({ className, tone = 'default' }: Props) {
       aria-label={t('تبديل اللغة', 'Switch language')}
       className={cn(
         'relative inline-flex h-9 w-[4.85rem] shrink-0 items-center rounded-full border transition-colors focus-ring',
+        // Glass only on phone; laptop cream bar always uses default
         tone === 'glass'
-          ? 'border-white/35 bg-white/18'
+          ? 'max-sm:border-white/35 max-sm:bg-white/18 sm:border-line/90 sm:bg-[#eceae4]'
           : 'border-line/90 bg-[#eceae4]',
         className,
       )}
@@ -28,7 +29,7 @@ export function LangToggle({ className, tone = 'default' }: Props) {
       <span
         className={cn(
           'pointer-events-none absolute left-2.5 text-[11px] font-bold transition-opacity',
-          tone === 'glass' ? 'text-white/75' : 'text-muted',
+          tone === 'glass' ? 'max-sm:text-white/75 sm:text-muted' : 'text-muted',
           isAr ? 'opacity-100' : 'opacity-0',
         )}
       >
@@ -37,7 +38,7 @@ export function LangToggle({ className, tone = 'default' }: Props) {
       <span
         className={cn(
           'pointer-events-none absolute right-2.5 text-[12px] font-bold transition-opacity',
-          tone === 'glass' ? 'text-white/75' : 'text-muted',
+          tone === 'glass' ? 'max-sm:text-white/75 sm:text-muted' : 'text-muted',
           isAr ? 'opacity-0' : 'opacity-100',
         )}
       >

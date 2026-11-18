@@ -30,9 +30,8 @@ export function Header() {
   const location = useLocation()
   const isHome = location.pathname === '/'
 
-  // Home always keeps the floating glass pill — never reverts to the old solid bar
-  const floating = isHome
-  const overHero = isHome && !scrolled && !open
+  // Glass floating bar only on phone home; laptop always solid cream above the hero
+  const glassMobile = isHome && !scrolled && !open
 
   useEffect(() => {
     setOpen(false)
@@ -67,63 +66,81 @@ export function Header() {
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
-      'text-sm font-bold transition-colors',
-      overHero
-        ? isActive
-          ? 'text-white'
-          : 'text-white/80 hover:text-white'
-        : isActive
-          ? 'text-brand'
-          : 'text-ink/80 hover:text-accent',
+      'text-sm font-bold transition-colors hover:text-accent',
+      // glass only matters on mobile; on sm+ always dark ink links
+      glassMobile
+        ? 'max-sm:text-white/85 max-sm:hover:text-white sm:text-ink/80'
+        : 'text-ink/80',
+      isActive && (glassMobile ? 'max-sm:text-white text-brand' : 'text-brand'),
     )
 
   return (
     <>
-      {!isHome && <div className="h-14 sm:h-16 lg:h-[4.25rem]" aria-hidden />}
+      {/* Reserve header height so hero (and pages) start below the bar on laptop */}
+      <div
+        className={cn(
+          'h-14 sm:h-[4.25rem] lg:h-[4.5rem]',
+          isHome && 'max-sm:hidden',
+        )}
+        aria-hidden
+      />
 
       <header
         className={cn(
-          'z-50 transition-[background-color,box-shadow,border-color] duration-300',
-          floating
+          'z-50 transition-[background-color,box-shadow,border-radius,inset] duration-300',
+          // Phone home: floating glass
+          isHome
             ? cn(
-                'fixed inset-x-3 top-3 rounded-2xl border backdrop-blur-xl sm:inset-x-5 sm:top-4 lg:inset-x-8',
-                overHero
-                  ? 'border-white/25 bg-white/12 shadow-[0_12px_40px_rgba(0,0,0,0.22)]'
-                  : 'border-line/80 bg-cream/90 shadow-[var(--shadow-soft)]',
+                'fixed max-sm:inset-x-3 max-sm:top-3 max-sm:rounded-2xl max-sm:border max-sm:backdrop-blur-xl',
+                glassMobile
+                  ? 'max-sm:border-white/25 max-sm:bg-white/12 max-sm:shadow-[0_12px_40px_rgba(0,0,0,0.22)]'
+                  : 'max-sm:border-line/80 max-sm:bg-cream/90 max-sm:shadow-[var(--shadow-soft)]',
               )
             : 'fixed inset-x-0 top-0 border-b-2 border-line bg-cream/95 backdrop-blur-md',
+          // Laptop+: solid cream bar sitting above the hero (never overlaid)
+          'sm:fixed sm:inset-x-0 sm:top-0 sm:rounded-none sm:border sm:border-x-0 sm:border-t-0 sm:border-b-2 sm:border-line sm:bg-cream sm:shadow-none sm:backdrop-blur-none',
         )}
       >
-        <div className={cn(floating ? 'px-3 sm:px-4' : 'container-page')}>
+        <div
+          className={cn(
+            'container-page',
+            isHome && 'max-sm:px-3',
+          )}
+        >
           <div
             className={cn(
-              'flex items-center justify-between gap-2',
-              floating ? 'h-12 sm:h-14' : 'h-14 sm:h-16 sm:gap-3 lg:h-[4.25rem]',
+              'flex items-center justify-between gap-3',
+              isHome
+                ? 'h-12 max-sm:h-12 sm:h-[4.25rem] lg:h-[4.5rem]'
+                : 'h-14 sm:h-[4.25rem] lg:h-[4.5rem]',
             )}
           >
             <Link
               to="/"
-              className="group flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3 lg:flex-none"
+              className="group flex min-w-0 flex-1 items-center gap-2 sm:flex-none sm:gap-3.5"
               onClick={closeMenu}
             >
+              {/* Phone mark */}
               <BrandLogo
                 variant="mark"
                 size="md"
                 className={cn(
-                  '!block transition-transform duration-200 group-hover:scale-[1.02] sm:!hidden',
-                  overHero && 'ring-1 ring-white/30',
+                  '!block shrink-0 transition-transform duration-200 group-hover:scale-[1.02] sm:!hidden',
+                  glassMobile && 'ring-1 ring-white/30',
                 )}
               />
+              {/* Laptop lockup — dark on cream bar, vertically centered */}
               <BrandLogo
-                variant={overHero ? 'lockup-dark' : 'lockup'}
+                variant="lockup-dark"
                 size="md"
-                className="!hidden h-10 max-h-10 transition-transform duration-200 group-hover:scale-[1.02] sm:!block lg:h-11 lg:max-h-11"
+                className="!hidden h-10 max-h-10 w-auto object-contain object-right transition-transform duration-200 group-hover:scale-[1.02] sm:!block lg:h-11 lg:max-h-11"
               />
+              {/* Phone name */}
               <span className="min-w-0 leading-tight sm:hidden">
                 <span
                   className={cn(
                     'block truncate text-base font-extrabold tracking-tight',
-                    overHero ? 'text-white' : 'text-brand',
+                    glassMobile ? 'text-white' : 'text-brand',
                   )}
                 >
                   {t('ساعدني', 'Saedni')}
@@ -131,38 +148,24 @@ export function Header() {
                 <span
                   className={cn(
                     'block truncate text-[10px] font-bold',
-                    overHero ? 'text-accent-soft' : 'text-accent',
+                    glassMobile ? 'text-accent-soft' : 'text-accent',
                   )}
                 >
                   {t('المملكة العربية السعودية', 'Kingdom of Saudi Arabia')}
                 </span>
               </span>
-              <span
-                className={cn(
-                  'ms-1 hidden max-w-[11rem] border-s ps-3 leading-tight lg:block xl:max-w-[14rem]',
-                  overHero ? 'border-white/25' : 'border-line',
-                )}
-              >
-                <span
-                  className={cn(
-                    'block text-[11px] font-extrabold',
-                    overHero ? 'text-white' : 'text-brand',
-                  )}
-                >
+              {/* Laptop tagline beside lockup */}
+              <span className="hidden border-s-2 border-line/80 ps-3.5 leading-tight sm:block">
+                <span className="block text-[11px] font-extrabold tracking-tight text-brand xl:text-xs">
                   {t('شغل وخدمات', 'Trades & services')}
                 </span>
-                <span
-                  className={cn(
-                    'mt-0.5 block text-[10px] font-bold',
-                    overHero ? 'text-accent-soft' : 'text-accent',
-                  )}
-                >
+                <span className="mt-0.5 block text-[10px] font-bold text-accent xl:text-[11px]">
                   {t('المملكة العربية السعودية', 'Kingdom of Saudi Arabia')}
                 </span>
               </span>
             </Link>
 
-            <nav className="hidden items-center gap-5 xl:gap-6 lg:flex">
+            <nav className="hidden items-center gap-5 lg:flex xl:gap-7">
               {nav.map((item) => (
                 <NavLink key={item.to} to={item.to} className={linkClass}>
                   {t(item.ar, item.en)}
@@ -170,8 +173,8 @@ export function Header() {
               ))}
             </nav>
 
-            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-              <LangToggle tone={overHero ? 'glass' : 'default'} />
+            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+              <LangToggle tone={glassMobile ? 'glass' : 'default'} className="sm:!opacity-100" />
               <Button
                 size="sm"
                 variant="whatsapp"
@@ -185,8 +188,8 @@ export function Header() {
                 type="button"
                 className={cn(
                   'inline-flex size-10 items-center justify-center rounded-xl border transition-colors sm:size-11 lg:hidden focus-ring',
-                  overHero
-                    ? 'border-white/30 bg-white/15 text-white'
+                  glassMobile
+                    ? 'border-white/30 bg-white/15 text-white sm:border-line sm:bg-surface sm:text-ink'
                     : open
                       ? 'border-brand/30 bg-brand/5 text-brand'
                       : 'border-line bg-surface text-ink',
@@ -206,12 +209,12 @@ export function Header() {
           <div className="lg:hidden" id="mobile-nav">
             <button
               type="button"
-              className="fixed inset-0 top-[4.75rem] z-40 bg-ink/35 backdrop-blur-[2px] sm:top-[5.25rem]"
+              className="fixed inset-0 top-[4.75rem] z-40 bg-ink/35 backdrop-blur-[2px] sm:top-16"
               aria-label={t('إغلاق القائمة', 'Close menu')}
               onClick={closeMenu}
             />
 
-            <div className="mobile-nav-panel fixed inset-x-3 top-[4.75rem] z-50 flex max-h-[calc(100dvh-5.5rem)] flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--shadow-lift)] sm:inset-x-5 sm:top-[5.25rem] lg:inset-x-8">
+            <div className="mobile-nav-panel fixed inset-x-3 top-[4.75rem] z-50 flex max-h-[calc(100dvh-5.5rem)] flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--shadow-lift)] sm:inset-x-0 sm:top-16 sm:max-h-[calc(100dvh-4rem)] sm:rounded-none lg:inset-x-0">
               <div className="flex-1 overflow-y-auto overscroll-contain px-3 py-3">
                 <div className="space-y-1.5">
                   {nav.map((item) => {
