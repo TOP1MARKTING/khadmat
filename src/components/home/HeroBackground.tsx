@@ -106,7 +106,7 @@ export function MobileWideHero({
           <img
             src={slide.desktop}
             alt=""
-            className="size-full object-contain object-center"
+            className="size-full object-cover object-center"
           />
         </div>
       ))}

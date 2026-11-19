@@ -3,11 +3,15 @@ import {
   ArrowLeft,
   ArrowRight,
   BookOpen,
+  Building2,
   CheckCircle2,
   Compass,
+  Hammer,
   HardHat,
   MapPin,
   Search,
+  Sparkles,
+  Truck,
   Users,
   Wrench,
 } from 'lucide-react'
@@ -25,6 +29,14 @@ import {
 import { ServiceSearch } from '@/components/home/ServiceSearch'
 import { ArticleCard } from '@/components/blog/ArticleCard'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+
+const categoryIcons: Record<string, typeof Hammer> = {
+  'construction-finishing': Hammer,
+  'home-maintenance': Wrench,
+  cleaning: Sparkles,
+  'moving-logistics': Truck,
+  'other-services': Building2,
+}
 
 const helpPoints = [
   {
@@ -78,11 +90,11 @@ export function HomePage() {
 
   return (
     <>
-      {/* ===== Mobile first fold: image + copy + search fit in one screen ===== */}
-      <section className="flex h-svh flex-col overflow-hidden border-b-4 border-accent bg-ink pt-[5.5rem] sm:hidden">
+      {/* ===== Mobile first fold: image under glass bar + copy + search ===== */}
+      <section className="flex h-svh flex-col overflow-hidden border-b-4 border-accent sm:hidden">
         <MobileWideHero
           index={heroIndex}
-          className="aspect-[16/9] w-full shrink-0"
+          className="aspect-[16/10] w-full shrink-0"
         />
         <div className="flex min-h-0 flex-1 flex-col bg-surface px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2">
           <div className="mx-auto w-full max-w-md">
@@ -131,7 +143,7 @@ export function HomePage() {
           <HeroBackground index={heroIndex} />
         </div>
         <div className="relative flex h-full min-h-[560px] items-end lg:min-h-[640px]">
-          <div className="container-page w-full pb-14 pt-24 lg:pb-16 lg:pt-28">
+          <div className="container-page w-full pb-14 pt-10 lg:pb-16 lg:pt-14">
             <div className="max-w-3xl text-white">
               <p className="reveal mb-4 inline-flex max-w-full items-center gap-2 border border-accent/50 bg-accent/15 px-3 py-1.5 text-[11px] font-bold tracking-[0.14em] text-accent-soft uppercase">
                 <HardHat className="size-3.5 shrink-0" />
@@ -214,7 +226,6 @@ export function HomePage() {
       {/* Categories */}
       <section className="section-pad">
         <div className="container-page">
-          <div className="mb-3 work-rule w-16" />
           <SectionHeading
             eyebrow={t('مجالات الشغل', 'Work fields')}
             title={t('استكشف الخدمات حسب المجال', 'Explore services by field')}
@@ -223,34 +234,47 @@ export function HomePage() {
               'Each section opens related trades, articles, and city pages.',
             )}
           />
-          <div className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-            {categories.map((cat) => (
-              <Link key={cat.slug} to={`/services?category=${cat.slug}`} className="card-work group">
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <img
-                    src={cat.image}
-                    alt={lang === 'ar' ? cat.nameAr : cat.nameEn}
-                    className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-3 text-white sm:p-4">
-                    <h3 className="text-base font-extrabold sm:text-lg">
+          <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
+            {categories.map((cat) => {
+              const Icon = categoryIcons[cat.slug] || Wrench
+              const count = services.filter((s) => s.categorySlug === cat.slug).length
+              return (
+                <Link
+                  key={cat.slug}
+                  to={`/services?category=${cat.slug}`}
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-[var(--shadow-lift)]"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-cream">
+                    <img
+                      src={cat.image}
+                      alt={lang === 'ar' ? cat.nameAr : cat.nameEn}
+                      className="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                      loading="lazy"
+                    />
+                    <span className="absolute start-3 top-3 inline-flex size-10 items-center justify-center rounded-xl bg-white/95 text-brand shadow-soft backdrop-blur-sm">
+                      <Icon className="size-4" />
+                    </span>
+                    {count > 0 ? (
+                      <span className="absolute end-3 top-3 rounded-lg bg-ink/75 px-2.5 py-1 text-[10px] font-extrabold text-white backdrop-blur-sm">
+                        {count} {t('مهنة', 'trades')}
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className="flex flex-1 flex-col p-4 sm:p-5">
+                    <h3 className="text-base font-extrabold leading-snug text-ink transition-colors group-hover:text-brand sm:text-lg">
                       {lang === 'ar' ? cat.nameAr : cat.nameEn}
                     </h3>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted line-clamp-2">
+                      {lang === 'ar' ? cat.descriptionAr : cat.descriptionEn}
+                    </p>
+                    <span className="mt-4 inline-flex h-10 items-center gap-1.5 self-start rounded-xl bg-brand px-3.5 text-xs font-extrabold text-white transition-colors group-hover:bg-brand-dark">
+                      {t('استكشف الخدمات', 'Explore services')}
+                      <Arrow className="size-3.5" />
+                    </span>
                   </div>
-                </div>
-                <div className="p-3.5 sm:p-4">
-                  <p className="text-sm leading-relaxed text-muted line-clamp-3">
-                    {lang === 'ar' ? cat.descriptionAr : cat.descriptionEn}
-                  </p>
-                  <span className="mt-2.5 inline-flex min-h-10 items-center gap-1 text-sm font-bold text-brand sm:mt-3">
-                    {t('استكشف الخدمات', 'Explore services')}
-                    <Arrow className="size-4" />
-                  </span>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>

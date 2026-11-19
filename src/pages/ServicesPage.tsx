@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   ArrowLeft,
   Building2,
@@ -31,10 +31,14 @@ const HERO_IMAGE = '/images/hero/hero-11-contracting-desktop.jpg'
 export function ServicesPage() {
   const { t } = useLanguage()
   const { services } = useCms()
+  const navigate = useNavigate()
   const [params, setParams] = useSearchParams()
   const activeCategory = params.get('category') || 'all'
   const [query, setQuery] = useState('')
   const [cityFilter, setCityFilter] = useState('all')
+  const [suggestOpen, setSuggestOpen] = useState(false)
+  const [activeSuggest, setActiveSuggest] = useState(0)
+  const searchWrapRef = useRef<HTMLDivElement>(null)
 
   usePageMeta({
     titleAr: 'دليل المهن والخدمات | ساعدني',
@@ -66,8 +70,43 @@ export function ServicesPage() {
     })
   }, [activeCategory, query, services])
 
+  const suggestions = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return []
+    return services
+      .filter((s) => {
+        if (activeCategory !== 'all' && s.categorySlug !== activeCategory) return false
+        return (
+          s.nameAr.includes(query.trim()) ||
+          s.nameEn.toLowerCase().includes(q) ||
+          s.shortAr.includes(query.trim()) ||
+          s.slug.toLowerCase().includes(q)
+        )
+      })
+      .slice(0, 8)
+  }, [query, services, activeCategory])
+
+  useEffect(() => {
+    setActiveSuggest(0)
+  }, [query])
+
+  useEffect(() => {
+    const onPointer = (e: MouseEvent) => {
+      if (!searchWrapRef.current?.contains(e.target as Node)) setSuggestOpen(false)
+    }
+    document.addEventListener('mousedown', onPointer)
+    return () => document.removeEventListener('mousedown', onPointer)
+  }, [])
+
+  const pickSuggestion = (slug: string, nameAr: string) => {
+    setQuery(nameAr)
+    setSuggestOpen(false)
+    navigate(`/services/${slug}`)
+  }
+
   const activeCat = categories.find((c) => c.slug === activeCategory)
   const city = cities.find((c) => c.slug === cityFilter)
+  const showSuggestions = suggestOpen && query.trim().length > 0
 
   return (
     <>
@@ -104,17 +143,88 @@ export function ServicesPage() {
       {/* Floating search + categories */}
       <section className="relative z-10 -mt-14 sm:-mt-16">
         <div className="container-page">
-          <div className="reveal overflow-hidden rounded-2xl border border-line bg-surface/95 shadow-[var(--shadow-lift)] backdrop-blur-md">
+          <div className="reveal rounded-2xl border border-line bg-surface/95 shadow-[var(--shadow-lift)] backdrop-blur-md">
             <div className="border-b border-line p-3 sm:p-4">
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-                <div className="relative flex-1">
-                  <Search className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" />
+                <div className="relative z-20 flex-1" ref={searchWrapRef}>
+                  <Search className="pointer-events-none absolute start-3.5 top-1/2 z-10 size-4 -translate-y-1/2 text-muted" />
                   <Input
                     className="h-12 rounded-xl border-line bg-cream/60 ps-10 focus:bg-surface"
                     value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    onChange={(e) => {
+                      setQuery(e.target.value)
+                      setSuggestOpen(true)
+                    }}
+                    onFocus={() => setSuggestOpen(true)}
+                    onKeyDown={(e) => {
+                      if (!showSuggestions || suggestions.length === 0) return
+                      if (e.key === 'ArrowDown') {
+                        e.preventDefault()
+                        setActiveSuggest((i) => (i + 1) % suggestions.length)
+                      } else if (e.key === 'ArrowUp') {
+                        e.preventDefault()
+                        setActiveSuggest((i) => (i - 1 + suggestions.length) % suggestions.length)
+                      } else if (e.key === 'Enter') {
+                        const pick = suggestions[activeSuggest]
+                        if (pick) {
+                          e.preventDefault()
+                          pickSuggestion(pick.slug, pick.nameAr)
+                        }
+                      } else if (e.key === 'Escape') {
+                        setSuggestOpen(false)
+                      }
+                    }}
                     placeholder={t('ابحث: سباكة، بلاط، نقل عفش...', 'Search: plumbing, tiling, moving...')}
+                    role="combobox"
+                    aria-expanded={showSuggestions && suggestions.length > 0}
+                    aria-autocomplete="list"
+                    autoComplete="off"
                   />
+                  {showSuggestions ? (
+                    <div className="absolute inset-x-0 top-[calc(100%+6px)] z-30 overflow-hidden rounded-xl border border-line bg-surface shadow-[var(--shadow-lift)]">
+                      {suggestions.length === 0 ? (
+                        <p className="px-4 py-3 text-sm text-muted">
+                          {t('لا توجد اقتراحات مطابقة', 'No matching suggestions')}
+                        </p>
+                      ) : (
+                        <ul className="max-h-64 overflow-y-auto py-1" role="listbox">
+                          {suggestions.map((s, i) => {
+                            const cat = categories.find((c) => c.slug === s.categorySlug)
+                            return (
+                              <li key={s.slug} role="option" aria-selected={i === activeSuggest}>
+                                <button
+                                  type="button"
+                                  className={cn(
+                                    'flex w-full items-center gap-3 px-3.5 py-2.5 text-start transition-colors',
+                                    i === activeSuggest ? 'bg-brand/10 text-brand' : 'hover:bg-cream/80',
+                                  )}
+                                  onMouseEnter={() => setActiveSuggest(i)}
+                                  onClick={() => pickSuggestion(s.slug, s.nameAr)}
+                                >
+                                  <img
+                                    src={s.image}
+                                    alt=""
+                                    className="size-9 shrink-0 rounded-lg object-cover"
+                                  />
+                                  <span className="min-w-0 flex-1">
+                                    <span className="block truncate text-sm font-extrabold text-ink">
+                                      {s.nameAr}
+                                    </span>
+                                    {cat ? (
+                                      <span className="block truncate text-[11px] font-bold text-muted">
+                                        {cat.nameAr}
+                                      </span>
+                                    ) : null}
+                                  </span>
+                                  <Search className="size-3.5 shrink-0 text-muted" />
+                                </button>
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      )}
+                    </div>
+                  ) : null}
                 </div>
                 <div className="relative lg:w-56">
                   <MapPin className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" />
@@ -196,21 +306,6 @@ export function ServicesPage() {
       {/* Results */}
       <section className="section-pad pt-8 sm:pt-10">
         <div className="container-page">
-          <div className="mb-5 flex items-end justify-between gap-3">
-            <div>
-              <p className="text-[11px] font-bold tracking-wide text-accent uppercase">
-                {activeCat ? activeCat.nameAr : t('كل المهن', 'All trades')}
-              </p>
-              <h2 className="mt-1 text-lg font-extrabold text-ink sm:text-xl">
-                {filtered.length}{' '}
-                {t('نتيجة', 'results')}
-                {city ? (
-                  <span className="ms-2 text-sm font-bold text-muted">· {city.nameAr}</span>
-                ) : null}
-              </h2>
-            </div>
-          </div>
-
           {filtered.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-line bg-surface px-6 py-16 text-center">
               <p className="font-extrabold text-ink">{t('لا توجد نتائج', 'No results')}</p>
