@@ -10,8 +10,9 @@ import {
   Wrench,
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import { useCms } from '@/context/CmsContext'
 import { cities } from '@/data/cities'
-import { categories, services } from '@/data/services'
+import { categories } from '@/data/services'
 import { Button } from '@/components/ui/Button'
 import { Label } from '@/components/ui/Input'
 import { ModernSelect } from '@/components/ui/ModernSelect'
@@ -32,6 +33,7 @@ export function ServiceSearch({
   variant?: 'default' | 'hero'
 }) {
   const { t, lang } = useLanguage()
+  const { services } = useCms()
   const navigate = useNavigate()
   const [service, setService] = useState('')
   const [city, setCity] = useState('')
@@ -53,7 +55,7 @@ export function ServiceSearch({
           icon: categoryIcons[s.categorySlug] ?? <Wrench className="size-4" />,
         }
       }),
-    [lang],
+    [lang, services],
   )
 
   const cityOptions = useMemo(
@@ -84,7 +86,7 @@ export function ServiceSearch({
       onSubmit={onSubmit}
       className={
         compact
-          ? 'rounded-2xl border border-accent/25 bg-surface p-3 shadow-[var(--shadow-lift)]'
+          ? 'rounded-xl border border-accent/25 bg-surface p-2.5 shadow-[var(--shadow-lift)]'
           : isHero
             ? 'rounded-2xl border border-white/18 bg-ink/45 p-2.5 shadow-[0_12px_36px_rgba(0,0,0,0.3)] backdrop-blur-xl sm:rounded-2xl sm:border-accent/20 sm:bg-surface/95 sm:p-5 sm:shadow-[var(--shadow-lift)] sm:backdrop-blur-md'
             : 'rounded-2xl border border-accent/20 bg-surface p-3.5 shadow-[var(--shadow-lift)] sm:p-5'
@@ -92,27 +94,35 @@ export function ServiceSearch({
     >
       <p
         className={
-          isHero
-            ? 'mb-1.5 text-[10px] font-bold tracking-wide text-accent-soft sm:mb-3 sm:text-xs sm:text-accent'
-            : 'mb-2.5 text-xs font-bold tracking-wide text-accent sm:mb-3'
+          compact
+            ? 'mb-1.5 text-[10px] font-bold tracking-wide text-accent'
+            : isHero
+              ? 'mb-1.5 text-[10px] font-bold tracking-wide text-accent-soft sm:mb-3 sm:text-xs sm:text-accent'
+              : 'mb-2.5 text-xs font-bold tracking-wide text-accent sm:mb-3'
         }
       >
         {t('دور على الشغل اللي محتاجه', 'Find the trade you need')}
       </p>
-      <div className={`grid gap-1.5 sm:gap-3 ${compact ? '' : 'lg:grid-cols-[1.2fr_1fr_auto]'}`}>
+      <div
+        className={
+          compact
+            ? 'grid grid-cols-2 gap-1.5'
+            : `grid gap-1.5 sm:gap-3 lg:grid-cols-[1.2fr_1fr_auto]`
+        }
+      >
         <div className="min-w-0">
-          {!compact && (
-            <Label
-              htmlFor="search-service"
-              className={
-                isHero
+          <Label
+            htmlFor="search-service"
+            className={
+              compact
+                ? 'mb-0.5 text-[10px]'
+                : isHero
                   ? 'mb-1 text-[11px] text-white/80 sm:mb-1.5 sm:text-sm sm:text-ink'
                   : 'mb-1.5'
-              }
-            >
-              {t('نوع الشغل / المهنة', 'Trade / service')}
-            </Label>
-          )}
+            }
+          >
+            {t('نوع الشغل / المهنة', 'Trade / service')}
+          </Label>
           <ModernSelect
             id="search-service"
             value={service}
@@ -124,22 +134,28 @@ export function ServiceSearch({
             placeholder={t('اختَر المهنة...', 'Choose a trade...')}
             searchPlaceholder={t('ابحث عن سباكة، بلاط، نقل...', 'Search plumbing, tiling, moving...')}
             ariaLabel={t('اختر المهنة', 'Select trade')}
-            triggerClassName={isHero ? 'h-10 text-[13px] sm:h-12 sm:text-sm' : undefined}
+            triggerClassName={
+              compact
+                ? 'h-9 px-2.5 text-[12px]'
+                : isHero
+                  ? 'h-10 text-[13px] sm:h-12 sm:text-sm'
+                  : undefined
+            }
           />
         </div>
         <div className="min-w-0">
-          {!compact && (
-            <Label
-              htmlFor="search-city"
-              className={
-                isHero
+          <Label
+            htmlFor="search-city"
+            className={
+              compact
+                ? 'mb-0.5 text-[10px]'
+                : isHero
                   ? 'mb-1 text-[11px] text-white/80 sm:mb-1.5 sm:text-sm sm:text-ink'
                   : 'mb-1.5'
-              }
-            >
-              {t('المدينة', 'City')}
-            </Label>
-          )}
+            }
+          >
+            {t('المدينة', 'City')}
+          </Label>
           <ModernSelect
             id="search-city"
             value={city}
@@ -151,18 +167,26 @@ export function ServiceSearch({
             placeholder={t('اختَر المدينة...', 'Choose a city...')}
             searchPlaceholder={t('ابحث عن الرياض، جدة، الدمام...', 'Search Riyadh, Jeddah, Dammam...')}
             ariaLabel={t('اختر المدينة', 'Select city')}
-            triggerClassName={isHero ? 'h-10 text-[13px] sm:h-12 sm:text-sm' : undefined}
+            triggerClassName={
+              compact
+                ? 'h-9 px-2.5 text-[12px]'
+                : isHero
+                  ? 'h-10 text-[13px] sm:h-12 sm:text-sm'
+                  : undefined
+            }
           />
         </div>
-        <div className={compact ? '' : 'flex items-end pt-0.5'}>
+        <div className={compact ? 'col-span-2' : 'flex items-end pt-0.5'}>
           <Button
             type="submit"
             variant="accent"
             size="lg"
             className={
-              isHero
-                ? 'h-10 w-full rounded-full bg-gradient-to-l from-accent to-[#c4925a] text-sm shadow-[0_8px_22px_rgba(166,123,75,0.4)] sm:h-12 sm:rounded-xl sm:bg-none sm:text-base sm:shadow-none lg:min-w-40'
-                : 'h-12 w-full rounded-xl lg:min-w-40'
+              compact
+                ? 'h-9 w-full rounded-xl text-sm'
+                : isHero
+                  ? 'h-10 w-full rounded-full bg-gradient-to-l from-accent to-[#c4925a] text-sm shadow-[0_8px_22px_rgba(166,123,75,0.4)] sm:h-12 sm:rounded-xl sm:bg-none sm:text-base sm:shadow-none lg:min-w-40'
+                  : 'h-12 w-full rounded-xl lg:min-w-40'
             }
           >
             <Search className="size-4" />
@@ -171,7 +195,7 @@ export function ServiceSearch({
         </div>
       </div>
       {empty && (
-        <p className={`mt-2.5 text-sm ${isHero ? 'text-red-200 sm:text-red-700' : 'text-red-700'}`}>
+        <p className={`mt-2 text-xs ${isHero ? 'text-red-200 sm:text-red-700' : 'text-red-700'}`}>
           {t('اختَر المهنة والمدينة معًا.', 'Please select both trade and city.')}
         </p>
       )}

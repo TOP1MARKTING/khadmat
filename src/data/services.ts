@@ -33,8 +33,7 @@ export const categories: ServiceCategory[] = [
       'مقاولات عامة، تشطيب شقق، سيراميك، دهانات، رخام، جبس بورد، عزل وترميم.',
     descriptionEn:
       'General contracting, apartment finishing, ceramic, painting, marble, gypsum, waterproofing, and renovation.',
-    image:
-      '/images/hero/hero-11-contracting.jpg',
+    image: '/images/hero/hero-11-contracting-desktop.jpg',
   },
   {
     slug: 'home-maintenance',
@@ -43,8 +42,7 @@ export const categories: ServiceCategory[] = [
     descriptionAr: 'سباكة، كهرباء، تكييف، صيانة أجهزة، وكشف تسربات.',
     descriptionEn:
       'Plumbing, electrical, air conditioning, appliance repair, and leak detection.',
-    image:
-      '/images/hero/hero-01-plumbing.jpg',
+    image: '/images/hero/hero-01-plumbing-desktop.jpg',
   },
   {
     slug: 'cleaning',
@@ -54,8 +52,7 @@ export const categories: ServiceCategory[] = [
       'تنظيف منازل ومكاتب، مفروشات، خزانات مياه، نظافة ما بعد التشطيب ومكافحة حشرات.',
     descriptionEn:
       'Home and office cleaning, upholstery, water tanks, post-construction cleaning, and pest control.',
-    image:
-      '/images/hero/hero-09-cleaning.jpg',
+    image: '/images/hero/hero-09-cleaning-desktop.jpg',
   },
   {
     slug: 'moving-logistics',
@@ -64,8 +61,7 @@ export const categories: ServiceCategory[] = [
     descriptionAr: 'نقل أثاث، تغليف، فك وتركيب، نقل مكاتب وتخزين.',
     descriptionEn:
       'Furniture moving, packing, assembly, office relocation, and storage.',
-    image:
-      '/images/hero/hero-08-moving.jpg',
+    image: '/images/hero/hero-08-moving-desktop.jpg',
   },
   {
     slug: 'other-services',
@@ -74,8 +70,7 @@ export const categories: ServiceCategory[] = [
     descriptionAr: 'تنسيق حدائق، إدارة مرافق، وصيانة عقارات تجارية.',
     descriptionEn:
       'Landscaping, facility management, and commercial property maintenance.',
-    image:
-      '/images/hero/hero-13-landscaping.jpg',
+    image: '/images/hero/hero-13-landscaping-desktop.jpg',
   },
 ]
 
@@ -114,7 +109,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-11-contracting.jpg',
+      '/images/hero/hero-11-contracting-desktop.jpg',
     popular: true,
   },
   {
@@ -143,7 +138,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-02-finishing.jpg',
+      '/images/hero/hero-02-finishing-desktop.jpg',
     popular: true,
   },
   {
@@ -180,7 +175,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-03-tiling.jpg',
+      '/images/hero/hero-03-tiling-desktop.jpg',
     popular: true,
   },
   {
@@ -209,7 +204,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-07-painting.jpg',
+      '/images/hero/hero-07-painting-desktop.jpg',
     popular: true,
   },
   {
@@ -238,7 +233,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-12-marble.jpg',
+      '/images/hero/hero-12-marble-desktop.jpg',
   },
   {
     slug: 'gypsum-board',
@@ -266,7 +261,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-10-gypsum.jpg',
+      '/images/hero/hero-10-gypsum-desktop.jpg',
   },
   {
     slug: 'waterproofing',
@@ -294,7 +289,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-04-waterproofing.jpg',
+      '/images/hero/hero-04-waterproofing-desktop.jpg',
   },
   {
     slug: 'renovation',
@@ -322,7 +317,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-15-renovation.jpg',
+      '/images/hero/hero-15-renovation-desktop.jpg',
   },
   {
     slug: 'plumbing',
@@ -350,7 +345,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-01-plumbing.jpg',
+      '/images/hero/hero-01-plumbing-desktop.jpg',
     popular: true,
   },
   {
@@ -379,7 +374,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-05-electrical.jpg',
+      '/images/hero/hero-05-electrical-desktop.jpg',
     popular: true,
   },
   {
@@ -408,7 +403,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-06-ac.jpg',
+      '/images/hero/hero-06-ac-desktop.jpg',
     popular: true,
   },
   {
@@ -465,7 +460,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-14-leak.jpg',
+      '/images/hero/hero-14-leak-desktop.jpg',
   },
   {
     slug: 'home-cleaning',
@@ -493,7 +488,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-09-cleaning.jpg',
+      '/images/hero/hero-09-cleaning-desktop.jpg',
     popular: true,
   },
   {
@@ -662,7 +657,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-08-moving.jpg',
+      '/images/hero/hero-08-moving-desktop.jpg',
     popular: true,
   },
   {
@@ -803,7 +798,7 @@ export const services: Service[] = [
       },
     ],
     image:
-      '/images/hero/hero-13-landscaping.jpg',
+      '/images/hero/hero-13-landscaping-desktop.jpg',
   },
   {
     slug: 'facility-management',

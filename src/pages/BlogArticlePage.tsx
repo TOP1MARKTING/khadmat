@@ -1,109 +1,96 @@
 import { Link, useParams } from 'react-router-dom'
 import { useLanguage } from '@/context/LanguageContext'
+import { useCms } from '@/context/CmsContext'
 import { usePageMeta } from '@/hooks/usePageMeta'
-import { getArticle, getArticlesByService } from '@/data/blog'
 import { getCity } from '@/data/cities'
-import { getService } from '@/data/services'
 import { Badge } from '@/components/ui/Badge'
 import { ArticleCard } from '@/components/blog/ArticleCard'
 import { NotFoundPage } from './NotFoundPage'
 
 export function BlogArticlePage() {
   const { articleSlug } = useParams()
-  const { t, lang } = useLanguage()
-  const article = getArticle(articleSlug || '')
-  const service = article ? getService(article.serviceSlug) : undefined
+  const { t } = useLanguage()
+  const { getArticleBySlug, getServiceBySlug, publishedArticles } = useCms()
+  const article = getArticleBySlug(articleSlug || '')
+  const service = article?.serviceSlug ? getServiceBySlug(article.serviceSlug) : undefined
   const city = article?.citySlug ? getCity(article.citySlug) : undefined
   const related = article
-    ? getArticlesByService(article.serviceSlug).filter((a) => a.slug !== article.slug).slice(0, 2)
+    ? publishedArticles()
+        .filter((a) => a.serviceSlug === article.serviceSlug && a.slug !== article.slug)
+        .slice(0, 2)
     : []
 
   usePageMeta({
-    titleAr: article ? `${article.titleAr} | ساعدني` : 'مقال غير موجود | ساعدني',
-    titleEn: article ? `${article.titleEn} | Saedni` : 'Article not found | Saedni',
-    descriptionAr: article?.excerptAr || '',
-    descriptionEn: article?.excerptEn || '',
+    titleAr: article
+      ? `${article.metaTitleAr || article.titleAr} | ساعدني`
+      : 'مقال غير موجود | ساعدني',
+    titleEn: article ? `${article.titleEn || article.titleAr} | Saedni` : 'Article not found',
+    descriptionAr: article?.metaDescriptionAr || article?.excerptAr || '',
+    descriptionEn: article?.excerptEn || article?.excerptAr || '',
     canonicalPath: article ? `/blog/${article.slug}` : undefined,
   })
 
-  if (!article || !service) return <NotFoundPage />
+  if (!article || article.status !== 'published') return <NotFoundPage />
 
-  const paragraphs = lang === 'ar' ? article.contentAr : article.contentEn
+  const html = article.contentHtmlAr || article.contentAr.map((p) => `<p>${p}</p>`).join('')
 
   return (
     <div className="section-pad">
       <div className="container-page max-w-3xl">
-
         <div className="flex flex-wrap gap-2">
-          <Badge tone="brand">{lang === 'ar' ? service.nameAr : service.nameEn}</Badge>
-          {city && <Badge tone="sand">{lang === 'ar' ? city.nameAr : city.nameEn}</Badge>}
-          <Badge tone="neutral">
-            {t(`${article.readMinutes} دقائق`, `${article.readMinutes} min`)}
-          </Badge>
+          {service ? <Badge tone="brand">{service.nameAr}</Badge> : null}
+          {city ? <Badge tone="sand">{city.nameAr}</Badge> : null}
+          <Badge tone="neutral">{t(`${article.readMinutes} دقائق`, `${article.readMinutes} min`)}</Badge>
         </div>
 
-        <h1 className="heading-display mt-4">
-          {lang === 'ar' ? article.titleAr : article.titleEn}
-        </h1>
+        <h1 className="heading-display mt-4">{article.titleAr}</h1>
         <p className="mt-3 text-sm text-muted">
           {t('نُشر في', 'Published')} {article.publishedAt}
         </p>
-        <p className="body-lead mt-4">
-          {lang === 'ar' ? article.excerptAr : article.excerptEn}
-        </p>
+        <p className="body-lead mt-4">{article.excerptAr}</p>
 
-        <div className="mt-8 overflow-hidden rounded-md border border-line">
-          <img
-            src={article.image}
-            alt={lang === 'ar' ? article.titleAr : article.titleEn}
-            className="aspect-[16/9] w-full object-cover"
-          />
-        </div>
-
-        <div className="mt-8 space-y-5 text-base leading-relaxed text-ink/90">
-          {paragraphs.map((p) => (
-            <p key={p}>{p}</p>
-          ))}
-        </div>
-
-        <div className="mt-10 rounded-md border border-line bg-cream p-5">
-          <p className="text-sm font-medium text-ink">
-            {t('الخطوة الجاية للزائر', 'Next step for visitors')}
-          </p>
-          <p className="mt-2 text-sm text-muted">
-            {t(
-              'راجع صفحة المهنة أو صفحة المدينة المرتبطة. بيانات شركة معيّنة تظهر فقط بعد تأجير حصري موثّق — مش من أول يوم.',
-              'Review the related trade or city page. A specific company appears only after a verified exclusive rental — not from day one.',
-            )}
-          </p>
-          <div className="mt-4 flex flex-wrap gap-3 text-sm">
-            <Link to={`/services/${service.slug}`} className="font-medium text-brand hover:underline">
-              {t(`صفحة ${service.nameAr}`, `${service.nameEn} page`)}
-            </Link>
-            {city && (
-              <Link
-                to={`/sa/${city.regionSlug}/${city.slug}/${service.slug}`}
-                className="font-medium text-brand hover:underline"
-              >
-                {t(`${service.nameAr} في ${city.nameAr}`, `${service.nameEn} in ${city.nameEn}`)}
-              </Link>
-            )}
-            <Link to={`/blog?service=${service.slug}`} className="text-muted hover:text-brand">
-              {t('المزيد من مقالات المهنة', 'More articles in this trade')}
-            </Link>
+        {article.image ? (
+          <div className="mt-8 overflow-hidden rounded-md border border-line">
+            <img
+              src={article.image}
+              alt={article.imageAltAr || article.titleAr}
+              className="aspect-[16/9] w-full object-cover"
+            />
           </div>
-        </div>
+        ) : null}
 
-        {related.length > 0 && (
-          <section className="mt-14">
-            <h2 className="heading-section">{t('مقالات أخرى في نفس المهنة', 'More articles in this trade')}</h2>
-            <div className="mt-6 grid gap-5 sm:grid-cols-2">
+        <div
+          className="prose-article mt-8 space-y-5 text-base leading-relaxed text-ink/90 [&_a]:font-bold [&_a]:text-accent [&_a]:underline [&_figure]:my-6 [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-extrabold [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-extrabold [&_img]:rounded-xl [&_p]:leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+
+        {service ? (
+          <div className="mt-10 rounded-md border border-line bg-cream p-5">
+            <p className="text-sm font-medium text-ink">{t('الخطوة الجاية', 'Next step')}</p>
+            <p className="mt-2 text-sm text-muted">
+              {t(
+                'راجع صفحة المهنة المرتبطة واقرأ التفاصيل قبل ما تطلب.',
+                'Review the related trade page before you ask.',
+              )}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3 text-sm">
+              <Link to={`/services/${service.slug}`} className="font-medium text-brand hover:underline">
+                {service.nameAr}
+              </Link>
+            </div>
+          </div>
+        ) : null}
+
+        {related.length > 0 ? (
+          <div className="mt-12">
+            <h2 className="text-xl font-extrabold text-ink">{t('مقالات ذات صلة', 'Related articles')}</h2>
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {related.map((item) => (
-                <ArticleCard key={item.slug} article={item} />
+                <ArticleCard key={item.id} article={item} />
               ))}
             </div>
-          </section>
-        )}
+          </div>
+        ) : null}
       </div>
     </div>
   )

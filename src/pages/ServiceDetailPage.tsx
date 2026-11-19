@@ -1,9 +1,9 @@
 import { Link, useParams } from 'react-router-dom'
 import { useLanguage } from '@/context/LanguageContext'
 import { usePageMeta } from '@/hooks/usePageMeta'
-import { getCategory, getRelatedServices, getService } from '@/data/services'
+import { getCategory } from '@/data/services'
 import { cities } from '@/data/cities'
-import { getArticlesByService } from '@/data/blog'
+import { useCms } from '@/context/CmsContext'
 import { Button } from '@/components/ui/Button'
 import { RelatedArticles } from '@/components/blog/RelatedArticles'
 import { NotFoundPage } from './NotFoundPage'
@@ -11,10 +11,15 @@ import { NotFoundPage } from './NotFoundPage'
 export function ServiceDetailPage() {
   const { serviceSlug } = useParams()
   const { t, lang, isAr } = useLanguage()
-  const service = getService(serviceSlug || '')
+  const { getServiceBySlug, services, publishedArticles } = useCms()
+  const service = getServiceBySlug(serviceSlug || '')
   const category = service ? getCategory(service.categorySlug) : undefined
-  const related = service ? getRelatedServices(service.slug) : []
-  const articles = service ? getArticlesByService(service.slug) : []
+  const related = service
+    ? services.filter((s) => s.categorySlug === service.categorySlug && s.slug !== service.slug).slice(0, 4)
+    : []
+  const articles = service
+    ? publishedArticles().filter((a) => a.serviceSlug === service.slug)
+    : []
 
   usePageMeta({
     titleAr: service ? `${service.nameAr} | ساعدني` : 'خدمة غير موجودة | ساعدني',

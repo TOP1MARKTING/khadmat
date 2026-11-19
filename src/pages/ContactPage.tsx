@@ -1,11 +1,13 @@
 import { MessageCircle } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { usePageMeta } from '@/hooks/usePageMeta'
 import { ContactForm } from '@/components/forms/ContactForm'
 import { Button } from '@/components/ui/Button'
 
 export function ContactPage() {
   const { t } = useLanguage()
+  const { settings } = useSiteSettings()
 
   usePageMeta({
     titleAr: 'تواصل معنا | ساعدني',
@@ -14,6 +16,8 @@ export function ContactPage() {
     descriptionEn: 'Contact the Saedni team for general inquiries or service requests across Saudi Arabia.',
     canonicalPath: '/contact',
   })
+
+  const waDigits = settings.whatsapp.replace(/\D/g, '')
 
   return (
     <div className="section-pad">
@@ -30,22 +34,26 @@ export function ContactPage() {
             <div className="mt-8 space-y-4 rounded-md border border-line bg-cream p-5 text-sm">
               <p>
                 <span className="font-medium text-ink">{t('واتساب:', 'WhatsApp:')}</span>{' '}
-                <span dir="ltr" className="text-muted">+966 5X XXX XXXX</span>
+                <span dir="ltr" className="text-muted">{settings.whatsapp}</span>
               </p>
               <p>
                 <span className="font-medium text-ink">{t('البريد:', 'Email:')}</span>{' '}
-                <span className="text-muted">hello@saedni.sa</span>
+                <span className="text-muted">{settings.email}</span>
               </p>
               <p>
                 <span className="font-medium text-ink">{t('النطاق:', 'Coverage:')}</span>{' '}
                 <span className="text-muted">{t('المملكة العربية السعودية', 'Kingdom of Saudi Arabia')}</span>
               </p>
-              <p className="text-xs text-muted">
-                {t('بيانات تواصل تجريبية للواجهة فقط.', 'Placeholder contact details for the frontend only.')}
-              </p>
-              <Button variant="whatsapp" type="button">
+              <Button
+                variant="whatsapp"
+                type="button"
+                onClick={() => {
+                  if (!waDigits) return
+                  window.open(`https://wa.me/${waDigits}`, '_blank', 'noopener,noreferrer')
+                }}
+              >
                 <MessageCircle className="size-4" />
-                {t('فتح واتساب (تجريبي)', 'Open WhatsApp (demo)')}
+                {t('فتح واتساب', 'Open WhatsApp')}
               </Button>
             </div>
           </div>

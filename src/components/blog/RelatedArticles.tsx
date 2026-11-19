@@ -1,8 +1,18 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '@/context/LanguageContext'
-import type { BlogArticle } from '@/data/blog'
 import { ArticleCard } from './ArticleCard'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+
+type RelatedArticle = {
+  slug: string
+  serviceSlug: string
+  citySlug?: string
+  titleAr: string
+  excerptAr: string
+  readMinutes: number
+  image: string
+  id?: string
+}
 
 export function RelatedArticles({
   articles,
@@ -10,7 +20,7 @@ export function RelatedArticles({
   titleAr,
   titleEn,
 }: {
-  articles: BlogArticle[]
+  articles: RelatedArticle[]
   serviceSlug?: string
   titleAr?: string
   titleEn?: string
@@ -22,7 +32,7 @@ export function RelatedArticles({
     <section className="mt-14">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <SectionHeading
-          eyebrow={t('مدونة المهنة', 'Trade blog')}
+          eyebrow={t('مقالات المهنة', 'Trade articles')}
           title={t(
             titleAr || 'مقالات تساعد الصفحة تظهر وتفيد الزائر',
             titleEn || 'Articles that help the page rank and help visitors',
@@ -41,7 +51,7 @@ export function RelatedArticles({
       </div>
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {articles.slice(0, 3).map((article) => (
-          <ArticleCard key={article.slug} article={article} />
+          <ArticleCard key={article.id || article.slug} article={article} />
         ))}
       </div>
     </section>

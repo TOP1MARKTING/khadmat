@@ -3,19 +3,18 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
   type ReactNode,
 } from 'react'
 
-export type Lang = 'ar' | 'en'
+export type Lang = 'ar'
 
 type LanguageContextValue = {
   lang: Lang
   isAr: boolean
   setLang: (lang: Lang) => void
   toggleLang: () => void
-  t: (ar: string, en: string) => string
-  dir: 'rtl' | 'ltr'
+  t: (ar: string, _en?: string) => string
+  dir: 'rtl'
 }
 
 const LanguageContext = createContext<LanguageContextValue | null>(null)
@@ -23,33 +22,23 @@ const LanguageContext = createContext<LanguageContextValue | null>(null)
 const STORAGE_KEY = 'saedni-lang'
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    return saved === 'en' ? 'en' : 'ar'
-  })
-
-  const setLang = (next: Lang) => {
-    setLangState(next)
-    localStorage.setItem(STORAGE_KEY, next)
-  }
-
-  const toggleLang = () => setLang(lang === 'ar' ? 'en' : 'ar')
-
+  // Arabic-only site
   useEffect(() => {
-    document.documentElement.lang = lang
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'
-  }, [lang])
+    localStorage.setItem(STORAGE_KEY, 'ar')
+    document.documentElement.lang = 'ar'
+    document.documentElement.dir = 'rtl'
+  }, [])
 
   const value = useMemo<LanguageContextValue>(
     () => ({
-      lang,
-      isAr: lang === 'ar',
-      setLang,
-      toggleLang,
-      t: (ar, en) => (lang === 'ar' ? ar : en),
-      dir: lang === 'ar' ? 'rtl' : 'ltr',
+      lang: 'ar',
+      isAr: true,
+      setLang: () => undefined,
+      toggleLang: () => undefined,
+      t: (ar) => ar,
+      dir: 'rtl',
     }),
-    [lang],
+    [],
   )
 
   return (

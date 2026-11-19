@@ -5,7 +5,7 @@ import { ScrollToTop } from './ScrollToTop'
 
 export function Layout() {
   return (
-    <div className="flex min-h-dvh flex-col pb-[env(safe-area-inset-bottom)]">
+    <div className="relative flex min-h-dvh flex-col pb-[env(safe-area-inset-bottom)]">
       <ScrollToTop />
       <Header />
       <main className="flex-1">
