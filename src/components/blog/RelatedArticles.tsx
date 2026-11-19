@@ -38,8 +38,8 @@ export function RelatedArticles({
             titleEn || 'Articles that help the page rank and help visitors',
           )}
           description={t(
-            'مقالات عن المهنة نفسها تفيد الزائر وتدعم ظهور الصفحة في البحث.',
-            'Articles about the trade itself help visitors and support the page in search.',
+            'مقالات تشرح الخدمة ومميزاتها وتربطها بالمدن — مفيدة للعميل أولًا.',
+            'Articles that explain the service, benefits, and cities — useful for customers first.',
           )}
         />
         <Link

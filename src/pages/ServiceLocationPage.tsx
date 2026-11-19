@@ -248,14 +248,14 @@ export function ServiceLocationPage() {
                 </>
               ) : (
                 <>
-                  <Badge tone="sand">{t('لا يوجد اسم شركة بعد', 'No company listed yet')}</Badge>
+                  <Badge tone="sand">{t('محتوى للعميل أولًا', 'Customer content first')}</Badge>
                   <h2 className="mt-3 text-lg font-semibold">
                     {t('محتوى المهنة أولًا', 'Trade content first')}
                   </h2>
                   <p className="mt-2 text-sm text-muted">
                     {t(
-                      'الصفحة والمقالات بتتبني عشان تفيد الباحث. بيانات أي شركة هتظهر هنا فقط بعد تأجير حصري.',
-                      'The page and articles are built to help searchers. Any company details appear here only after exclusive rental.',
+                      'الصفحة والمقالات بتتبني عشان تفيد الباحث. اسم وشعار أي شركة يظهران لاحقًا عند اتفاق واضح — مش أسماء فاضية.',
+                      'The page and articles help searchers first. A company name and logo appear later under a clear agreement — never empty placeholder brands.',
                     )}
                   </p>
                   <div className="mt-4">

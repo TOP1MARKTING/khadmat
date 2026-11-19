@@ -113,8 +113,8 @@ export function AboutPage() {
           </p>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
             {t(
-              'مش دليل شركات عشوائي، ومش إعلانات فاضية. بنبني صفحات وأدلة عملية تفيد الباحث وتظهر بشكل نظيف في جوجل.',
-              'Not a random company directory, and not empty ads. We build practical pages and guides that help searchers and appear cleanly in Google.',
+              'مش دليل شركات عشوائي، ومش إعلانات فاضية. بنبني أدلة مهن ومقالات عملية تفيد العميل أولًا — وأي شركة تظهر لاحقًا باسم وشعار واضح عند الاتفاق.',
+              'Not a random company directory, and not empty ads. We build trade guides and practical articles for customers first — any company appears later with a clear name and logo under agreement.',
             )}
           </p>
         </div>

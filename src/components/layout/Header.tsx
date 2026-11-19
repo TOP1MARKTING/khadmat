@@ -51,11 +51,11 @@ export function Header() {
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
-      'rounded-full px-3 py-2 text-sm font-bold text-white/85 transition-colors hover:bg-white/12 hover:text-white',
-      isActive && 'bg-white/15 text-white',
+      'rounded-full px-3 py-2 text-sm font-bold text-ink/70 transition-colors hover:bg-cream hover:text-brand',
+      isActive && 'bg-cream text-brand',
     )
 
-  const pill = (
+  const bar = (
     <div
       className={cn(
         'pointer-events-auto sm:px-5 lg:px-6',
@@ -64,24 +64,24 @@ export function Header() {
     >
       <div
         className={cn(
-          'mx-auto flex max-w-6xl items-center justify-between gap-3',
-          // Phone: solid brand bar, soft bottom corners
-          'rounded-none bg-brand px-3.5 py-2.5 shadow-soft',
-          // Tablet/desktop: glass pill
-          'sm:rounded-full sm:border sm:border-white/25 sm:bg-white/12 sm:px-4 sm:py-2.5 sm:shadow-[0_12px_40px_rgba(0,0,0,0.22)] sm:backdrop-blur-xl',
+          'mx-auto flex max-w-6xl items-center justify-between gap-3 border border-line bg-surface',
+          // Phone: full-width off-white bar
+          'rounded-none px-3.5 py-2.5 shadow-soft',
+          // Desktop: soft pill
+          'sm:rounded-full sm:px-4 sm:py-2.5 sm:shadow-[var(--shadow-lift)]',
         )}
       >
         <Link to="/" className="group flex min-w-0 items-center gap-2.5" onClick={closeMenu}>
           <BrandLogo
             variant="mark"
             size="md"
-            className="size-9 shrink-0 rounded-xl ring-1 ring-white/30 sm:size-10"
+            className="size-9 shrink-0 rounded-xl ring-1 ring-line sm:size-10"
           />
           <span className="min-w-0 leading-tight">
-            <span className="block truncate text-sm font-extrabold tracking-tight text-white sm:text-base">
+            <span className="block truncate text-sm font-extrabold tracking-tight text-ink sm:text-base">
               {t('ساعدني', 'Saedni')}
             </span>
-            <span className="hidden truncate text-[10px] font-bold text-accent-soft sm:block">
+            <span className="hidden truncate text-[10px] font-bold text-muted sm:block">
               {t('شغل وخدمات — السعودية', 'Trades & services — KSA')}
             </span>
           </span>
@@ -98,7 +98,7 @@ export function Header() {
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
           <Button
             size="sm"
-            variant="whatsapp"
+            variant="primary"
             className="!hidden h-9 rounded-full px-4 md:!inline-flex"
             onClick={() => navigate('/contact')}
           >
@@ -107,7 +107,7 @@ export function Header() {
           </Button>
           <button
             type="button"
-            className="inline-flex size-9 items-center justify-center rounded-xl border border-white/25 bg-white/15 text-white transition-colors lg:hidden focus-ring sm:size-10 sm:rounded-full"
+            className="inline-flex size-9 items-center justify-center rounded-xl border border-line bg-cream text-ink transition-colors hover:border-brand/40 hover:text-brand lg:hidden focus-ring sm:size-10 sm:rounded-full"
             aria-expanded={open}
             aria-controls="site-mobile-nav"
             aria-label={open ? t('إغلاق القائمة', 'Close menu') : t('فتح القائمة', 'Open menu')}
@@ -121,7 +121,7 @@ export function Header() {
       {open && (
         <div
           id="site-mobile-nav"
-          className="mx-3 mt-2 max-w-6xl overflow-hidden rounded-2xl border border-brand/30 bg-brand-dark p-3 shadow-[var(--shadow-lift)] sm:mx-auto lg:hidden"
+          className="mx-3 mt-2 max-w-6xl overflow-hidden rounded-2xl border border-line bg-surface p-3 shadow-[var(--shadow-lift)] sm:mx-auto lg:hidden"
         >
           <div className="space-y-1">
             {nav.map((item) => {
@@ -133,12 +133,12 @@ export function Header() {
                   onClick={closeMenu}
                   className={({ isActive }) =>
                     cn(
-                      'flex items-center gap-3 rounded-xl px-3 py-3 text-white transition-colors',
-                      isActive ? 'bg-white/15' : 'hover:bg-white/10',
+                      'flex items-center gap-3 rounded-xl px-3 py-3 text-ink transition-colors',
+                      isActive ? 'bg-cream text-brand' : 'hover:bg-cream/80',
                     )
                   }
                 >
-                  <span className="inline-flex size-9 items-center justify-center rounded-lg bg-white/10">
+                  <span className="inline-flex size-9 items-center justify-center rounded-lg bg-cream text-brand">
                     <Icon className="size-4" />
                   </span>
                   <span className="flex-1 text-sm font-extrabold">{t(item.ar, item.en)}</span>
@@ -148,7 +148,7 @@ export function Header() {
             })}
           </div>
           <Button
-            variant="whatsapp"
+            variant="primary"
             className="mt-2 h-11 w-full rounded-xl md:hidden"
             onClick={() => {
               closeMenu()
@@ -163,23 +163,23 @@ export function Header() {
     </div>
   )
 
-  // Home: bar in normal flow so the hero image starts flush under it.
-  // Services: glass floats over the dark hero. Elsewhere: dark band.
+  // Home: bar in flow so hero starts flush under it.
+  // Services: floats over hero. Elsewhere: light band.
   if (isHome) {
-    return <header className="relative z-50 bg-brand sm:bg-ink">{pill}</header>
+    return <header className="relative z-50 bg-surface">{bar}</header>
   }
 
   if (overlayNav) {
     return (
       <header className="pointer-events-none absolute inset-x-0 top-0 z-50">
-        {pill}
+        {bar}
       </header>
     )
   }
 
   return (
-    <header className="relative z-50 bg-brand sm:bg-gradient-to-b sm:from-ink sm:via-ink sm:to-brand-dark sm:pb-3">
-      {pill}
+    <header className="relative z-50 border-b border-line bg-surface sm:border-0 sm:bg-cream sm:pb-3">
+      {bar}
     </header>
   )
 }

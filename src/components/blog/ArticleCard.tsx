@@ -12,6 +12,7 @@ type ArticleCardData = {
   excerptAr: string
   readMinutes: number
   image: string
+  companyName?: string
 }
 
 export function ArticleCard({ article }: { article: ArticleCardData }) {
@@ -34,6 +35,7 @@ export function ArticleCard({ article }: { article: ArticleCardData }) {
         <p className="text-[11px] font-bold tracking-wide text-accent">
           {service?.nameAr || null}
           {city ? ` · ${city.nameAr}` : ''}
+          {article.companyName?.trim() ? ` · ${article.companyName.trim()}` : ''}
           {' · '}
           {t(`${article.readMinutes} دقائق`, `${article.readMinutes} min`)}
         </p>

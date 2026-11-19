@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useCms } from '@/context/CmsContext'
+import { cities } from '@/data/cities'
 import {
   fileToDataUrl,
   slugify,
@@ -149,7 +150,7 @@ export function AdminBlogEditPage() {
     <div className="space-y-6">
       <AdminPageHeader
         title={isNew ? 'مقال جديد' : 'تعديل مقال'}
-        description="أضف عنوانًا واضحًا، محتوى المقال، غلاف، وتصنيف — ثم احفظ كمسودة أو انشر."
+        description="اكتب محتوى مفيد للعميل أولًا. اربط المقال بمهنة ومدينة، وأضف اسم/شعار شركة لاحقًا عند الاتفاق."
         backTo="/admin/blog"
         action={
           <Link to="/admin/blog/new">
@@ -183,7 +184,7 @@ export function AdminBlogEditPage() {
             />
           </div>
 
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <div>
               <Label htmlFor="slug">Slug</Label>
               <Input
@@ -192,7 +193,7 @@ export function AdminBlogEditPage() {
                 className="mt-1.5 rounded-xl"
                 value={form.slug}
                 onChange={(e) => set('slug', e.target.value)}
-                placeholder="seo-guide-ecommerce"
+                placeholder="gypsum-ceiling-tips-riyadh"
               />
               <p className="mt-1 text-xs text-muted">بالإنجليزية — جزء من رابط المقال.</p>
             </div>
@@ -208,6 +209,22 @@ export function AdminBlogEditPage() {
                 {services.map((s) => (
                   <option key={s.id} value={s.slug}>
                     {s.nameAr}
+                  </option>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="citySlug">مرتبط بمدينة</Label>
+              <Select
+                id="citySlug"
+                className="mt-1.5 rounded-xl"
+                value={form.citySlug || ''}
+                onChange={(e) => set('citySlug', e.target.value || undefined)}
+              >
+                <option value="">— عام للمملكة —</option>
+                {cities.map((c) => (
+                  <option key={c.slug} value={c.slug}>
+                    {c.nameAr}
                   </option>
                 ))}
               </Select>
@@ -436,6 +453,72 @@ export function AdminBlogEditPage() {
               <span className="text-sm font-bold text-ink">مقال رائج (يظهر في الأعلى)</span>
             </label>
           </div>
+        </AdminPanel>
+
+        <AdminPanel
+          title="شركة في المقال (اختياري)"
+          description="اتركه فاضي والمقال يبقى مفيد للعميل فقط. لما يبقى اتفاق، أضف الاسم والشعار ونبذة قصيرة."
+        >
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <Label htmlFor="companyName">اسم الشركة</Label>
+              <Input
+                id="companyName"
+                className="mt-1.5 rounded-xl"
+                value={form.companyName}
+                onChange={(e) => set('companyName', e.target.value)}
+                placeholder="مثال: مؤسسة تشطيب حدائق..."
+              />
+            </div>
+            <div>
+              <Label htmlFor="companyLogo">شعار الشركة (رابط أو رفع)</Label>
+              <Input
+                id="companyLogo"
+                dir="ltr"
+                className="mt-1.5 rounded-xl"
+                value={form.companyLogo}
+                onChange={(e) => set('companyLogo', e.target.value)}
+                placeholder="https://... أو ارفع من الزر"
+              />
+              <input
+                type="file"
+                accept="image/*"
+                className="mt-2 block w-full text-sm text-muted file:me-3 file:rounded-lg file:border-0 file:bg-brand file:px-3 file:py-2 file:text-xs file:font-bold file:text-white"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0]
+                  if (!file) return
+                  set('companyLogo', await fileToDataUrl(file))
+                }}
+              />
+            </div>
+          </div>
+          <div className="mt-4">
+            <Label htmlFor="companyAboutAr">نبذة عن الشركة (عربي)</Label>
+            <Textarea
+              id="companyAboutAr"
+              className="mt-1.5 rounded-xl"
+              value={form.companyAboutAr}
+              onChange={(e) => set('companyAboutAr', e.target.value)}
+              placeholder="فقرة قصيرة عن الشركة تظهر أسفل المقال فقط عند تعبئة الاسم."
+            />
+          </div>
+          {form.companyName || form.companyLogo ? (
+            <div className="mt-4 flex items-center gap-3 rounded-xl border border-line bg-cream/50 p-3">
+              {form.companyLogo ? (
+                <img
+                  src={form.companyLogo}
+                  alt=""
+                  className="size-12 rounded-lg object-contain ring-1 ring-line"
+                />
+              ) : null}
+              <div>
+                <p className="text-sm font-extrabold text-ink">
+                  {form.companyName || 'بدون اسم بعد'}
+                </p>
+                <p className="text-xs text-muted">معاينة سريعة — تظهر للعامة عند وجود اسم.</p>
+              </div>
+            </div>
+          ) : null}
         </AdminPanel>
 
         <AdminPanel title="صورة الغلاف" description="تظهر أعلى المقال وفي بطاقات المدونة ومشاركة الروابط.">

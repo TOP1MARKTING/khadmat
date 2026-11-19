@@ -1,12 +1,19 @@
 import { useMemo, useState, type FormEvent } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { Save } from 'lucide-react'
+import { Save, Trash2 } from 'lucide-react'
 import { useCms } from '@/context/CmsContext'
 import { categories } from '@/data/services'
 import { fileToDataUrl, slugify, type CmsService } from '@/lib/cms'
 import { Button } from '@/components/ui/Button'
 import { FormSuccess, Input, Label, Select, Textarea } from '@/components/ui/Input'
 import { AdminPageHeader, AdminPanel } from '@/components/admin/AdminUI'
+
+function linesToList(text: string) {
+  return text
+    .split('\n')
+    .map((x) => x.trim())
+    .filter(Boolean)
+}
 
 export function AdminServiceEditPage() {
   const { serviceId } = useParams()
@@ -21,6 +28,8 @@ export function AdminServiceEditPage() {
 
   const [form, setForm] = useState<CmsService>(() => existing || createBlankService())
   const [typesText, setTypesText] = useState(() => (existing?.typesAr || []).join('\n'))
+  const [benefitsText, setBenefitsText] = useState(() => (existing?.benefitsAr || []).join('\n'))
+  const [stepsText, setStepsText] = useState(() => (existing?.stepsAr || []).join('\n'))
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
 
@@ -46,10 +55,9 @@ export function AdminServiceEditPage() {
       return
     }
 
-    const typesAr = typesText
-      .split('\n')
-      .map((x) => x.trim())
-      .filter(Boolean)
+    const typesAr = linesToList(typesText)
+    const benefitsAr = linesToList(benefitsText)
+    const stepsAr = linesToList(stepsText)
 
     const payload: CmsService = {
       ...form,
@@ -57,11 +65,18 @@ export function AdminServiceEditPage() {
       nameEn: form.nameEn || form.nameAr,
       shortEn: form.shortEn || form.shortAr,
       introEn: form.introEn || form.introAr,
+      bodyEn: form.bodyEn || form.bodyAr,
       typesAr,
       typesEn: typesAr,
+      benefitsAr,
+      benefitsEn: benefitsAr,
+      stepsAr,
+      stepsEn: stepsAr,
+      gallery: (form.gallery || []).filter(Boolean),
     }
 
     upsertService(payload)
+    setForm(payload)
     setSaved(true)
     if (isNew) navigate(`/admin/services/${payload.id}`, { replace: true })
   }
@@ -70,7 +85,7 @@ export function AdminServiceEditPage() {
     <div className="space-y-6">
       <AdminPageHeader
         title={isNew ? 'مهنة جديدة' : 'تعديل مهنة'}
-        description="عدّل البيانات ثم احفظ — تظهر مباشرة في صفحات المهن."
+        description="ابنِ دليلًا مفيدًا للعميل: شرح وافٍ، صور، مميزات، مراحل، ومقالات مرتبطة."
         backTo="/admin/services"
       />
 
@@ -101,7 +116,7 @@ export function AdminServiceEditPage() {
                 className="mt-1.5 rounded-xl"
                 value={form.slug}
                 onChange={(e) => set('slug', e.target.value)}
-                placeholder="plumbing"
+                placeholder="gypsum-board"
               />
             </div>
           </div>
@@ -134,7 +149,10 @@ export function AdminServiceEditPage() {
           </label>
         </AdminPanel>
 
-        <AdminPanel title="الوصف">
+        <AdminPanel
+          title="دليل العميل"
+          description="الوصف القصير والمقدمة يظهران أعلى الصفحة. الشرح الوافي هو محتوى الصفحة الأساسي."
+        >
           <div>
             <Label htmlFor="shortAr">وصف مختصر</Label>
             <Textarea
@@ -154,6 +172,16 @@ export function AdminServiceEditPage() {
             />
           </div>
           <div className="mt-4">
+            <Label htmlFor="bodyAr">شرح وافٍ (HTML بسيط مثل &lt;p&gt;...&lt;/p&gt;)</Label>
+            <Textarea
+              id="bodyAr"
+              className="mt-1.5 min-h-40 rounded-xl font-mono text-[13px]"
+              value={form.bodyAr}
+              onChange={(e) => set('bodyAr', e.target.value)}
+              placeholder="<p>اشرح الشغل للعميل بوضوح...</p>"
+            />
+          </div>
+          <div className="mt-4">
             <Label htmlFor="typesAr">أنواع الشغل (سطر لكل نوع)</Label>
             <Textarea
               id="typesAr"
@@ -165,9 +193,33 @@ export function AdminServiceEditPage() {
               }}
             />
           </div>
+          <div className="mt-4">
+            <Label htmlFor="benefitsAr">مميزات تهم العميل (سطر لكل ميزة)</Label>
+            <Textarea
+              id="benefitsAr"
+              className="mt-1.5 rounded-xl"
+              value={benefitsText}
+              onChange={(e) => {
+                setSaved(false)
+                setBenefitsText(e.target.value)
+              }}
+            />
+          </div>
+          <div className="mt-4">
+            <Label htmlFor="stepsAr">مراحل الشغل (سطر لكل مرحلة)</Label>
+            <Textarea
+              id="stepsAr"
+              className="mt-1.5 rounded-xl"
+              value={stepsText}
+              onChange={(e) => {
+                setSaved(false)
+                setStepsText(e.target.value)
+              }}
+            />
+          </div>
         </AdminPanel>
 
-        <AdminPanel title="الصورة" description="صورة عريضة مستحسنة لصفحات المهن">
+        <AdminPanel title="الصورة الرئيسية" description="تظهر أعلى دليل المهنة.">
           <Input
             id="image"
             dir="ltr"
@@ -183,8 +235,7 @@ export function AdminServiceEditPage() {
             onChange={async (e) => {
               const file = e.target.files?.[0]
               if (!file) return
-              const url = await fileToDataUrl(file)
-              set('image', url)
+              set('image', await fileToDataUrl(file))
             }}
           />
           {form.image ? (
@@ -194,6 +245,70 @@ export function AdminServiceEditPage() {
               className="mt-4 aspect-[16/10] w-full max-w-md rounded-2xl object-cover ring-1 ring-line"
             />
           ) : null}
+        </AdminPanel>
+
+        <AdminPanel
+          title="معرض صور للعميل"
+          description="صور إضافية تساعد الزائر يفهم الشغل. ارفع صورة أو الصق رابطًا."
+        >
+          <input
+            type="file"
+            accept="image/*"
+            className="block w-full text-sm text-muted file:me-3 file:rounded-lg file:border-0 file:bg-brand file:px-3 file:py-2 file:text-xs file:font-bold file:text-white"
+            onChange={async (e) => {
+              const file = e.target.files?.[0]
+              if (!file) return
+              const url = await fileToDataUrl(file)
+              set('gallery', [...(form.gallery || []), url])
+              e.target.value = ''
+            }}
+          />
+          <div className="mt-3 flex gap-2">
+            <Input
+              dir="ltr"
+              className="rounded-xl"
+              id="gallery-url"
+              placeholder="https://... أو /images/..."
+            />
+            <Button
+              type="button"
+              variant="outline"
+              className="shrink-0 rounded-xl"
+              onClick={() => {
+                const el = document.getElementById('gallery-url') as HTMLInputElement | null
+                const url = el?.value.trim()
+                if (!url) return
+                set('gallery', [...(form.gallery || []), url])
+                if (el) el.value = ''
+              }}
+            >
+              إضافة
+            </Button>
+          </div>
+          {(form.gallery || []).length > 0 ? (
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {form.gallery.map((src, idx) => (
+                <div key={`${src}-${idx}`} className="relative overflow-hidden rounded-xl border border-line">
+                  <img src={src} alt="" className="aspect-[4/3] w-full object-cover" />
+                  <button
+                    type="button"
+                    className="absolute end-2 top-2 inline-flex size-8 items-center justify-center rounded-lg bg-white/95 text-red-600 shadow-sm"
+                    aria-label="حذف الصورة"
+                    onClick={() =>
+                      set(
+                        'gallery',
+                        form.gallery.filter((_, i) => i !== idx),
+                      )
+                    }
+                  >
+                    <Trash2 className="size-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-3 text-sm text-muted">لا توجد صور إضافية بعد.</p>
+          )}
         </AdminPanel>
 
         <div className="sticky bottom-4 z-10 flex flex-wrap gap-2.5 rounded-2xl border border-line bg-surface/95 p-3 shadow-[var(--shadow-lift)] backdrop-blur-md">

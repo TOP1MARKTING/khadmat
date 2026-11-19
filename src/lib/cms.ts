@@ -4,6 +4,13 @@ import { services as seedServices, type Service } from '@/data/services'
 export type CmsService = Service & {
   id: string
   updatedAt: string
+  bodyAr: string
+  bodyEn: string
+  gallery: string[]
+  benefitsAr: string[]
+  benefitsEn: string[]
+  stepsAr: string[]
+  stepsEn: string[]
 }
 
 export type BlogStatus = 'draft' | 'published'
@@ -39,23 +46,77 @@ export type CmsArticle = {
   metaDescriptionAr: string
   metaTitleEn: string
   metaDescriptionEn: string
+  /** Optional company spotlight — only show publicly when name is set */
+  companyName: string
+  companyLogo: string
+  companyAboutAr: string
+  companyAboutEn: string
   updatedAt: string
 }
 
-const SERVICES_KEY = 'saedni_cms_services_v1'
-const ARTICLES_KEY = 'saedni_cms_articles_v1'
+const SERVICES_KEY = 'saedni_cms_services_v24'
+const ARTICLES_KEY = 'saedni_cms_articles_v24'
 
 function uid(prefix: string) {
   return `${prefix}_${Math.random().toString(36).slice(2, 10)}`
 }
 
+function normalizeService(s: CmsService): CmsService {
+  return {
+    ...s,
+    bodyAr: s.bodyAr || '',
+    bodyEn: s.bodyEn || '',
+    gallery: Array.isArray(s.gallery) ? s.gallery.filter(Boolean) : [],
+    benefitsAr: Array.isArray(s.benefitsAr) ? s.benefitsAr : [],
+    benefitsEn: Array.isArray(s.benefitsEn) ? s.benefitsEn : [],
+    stepsAr: Array.isArray(s.stepsAr) ? s.stepsAr : [],
+    stepsEn: Array.isArray(s.stepsEn) ? s.stepsEn : [],
+    typesAr: Array.isArray(s.typesAr) ? s.typesAr : [],
+    typesEn: Array.isArray(s.typesEn) ? s.typesEn : [],
+    faqAr: Array.isArray(s.faqAr) ? s.faqAr : [],
+    faqEn: Array.isArray(s.faqEn) ? s.faqEn : [],
+  }
+}
+
+function normalizeArticle(a: CmsArticle): CmsArticle {
+  return {
+    ...a,
+    citySlug: a.citySlug || undefined,
+    contentHtmlAr: a.contentHtmlAr || '',
+    contentHtmlEn: a.contentHtmlEn || '',
+    contentAr: Array.isArray(a.contentAr) ? a.contentAr : [],
+    contentEn: Array.isArray(a.contentEn) ? a.contentEn : [],
+    imageAltAr: a.imageAltAr || a.titleAr || '',
+    imageAltEn: a.imageAltEn || a.titleEn || '',
+    author: a.author || '',
+    tags: a.tags || '',
+    metaTitleAr: a.metaTitleAr || '',
+    metaDescriptionAr: a.metaDescriptionAr || '',
+    metaTitleEn: a.metaTitleEn || '',
+    metaDescriptionEn: a.metaDescriptionEn || '',
+    companyName: a.companyName || '',
+    companyLogo: a.companyLogo || '',
+    companyAboutAr: a.companyAboutAr || '',
+    companyAboutEn: a.companyAboutEn || '',
+  }
+}
+
 function seedCmsServices(): CmsService[] {
   const now = new Date().toISOString()
-  return seedServices.map((s) => ({
-    ...s,
-    id: uid('svc'),
-    updatedAt: now,
-  }))
+  return seedServices.map((s) =>
+    normalizeService({
+      ...s,
+      bodyAr: s.bodyAr || '',
+      bodyEn: s.bodyEn || '',
+      gallery: s.gallery || [],
+      benefitsAr: s.benefitsAr || [],
+      benefitsEn: s.benefitsEn || [],
+      stepsAr: s.stepsAr || [],
+      stepsEn: s.stepsEn || [],
+      id: uid('svc'),
+      updatedAt: now,
+    }),
+  )
 }
 
 function paragraphsToHtml(paragraphs: string[]) {
@@ -64,35 +125,41 @@ function paragraphsToHtml(paragraphs: string[]) {
 
 function seedCmsArticles(): CmsArticle[] {
   const now = new Date().toISOString()
-  return blogArticles.map((a: BlogArticle) => ({
-    id: uid('art'),
-    slug: a.slug,
-    serviceSlug: a.serviceSlug,
-    citySlug: a.citySlug,
-    titleAr: a.titleAr,
-    titleEn: a.titleEn,
-    excerptAr: a.excerptAr,
-    excerptEn: a.excerptEn,
-    contentHtmlAr: paragraphsToHtml(a.contentAr),
-    contentHtmlEn: paragraphsToHtml(a.contentEn),
-    contentAr: a.contentAr,
-    contentEn: a.contentEn,
-    publishedAt: a.publishedAt,
-    readMinutes: a.readMinutes,
-    image: a.image,
-    imageAltAr: a.titleAr,
-    imageAltEn: a.titleEn,
-    category: 'trades' as BlogCategory,
-    author: '',
-    tags: a.serviceSlug,
-    status: 'published' as BlogStatus,
-    featured: false,
-    metaTitleAr: '',
-    metaDescriptionAr: '',
-    metaTitleEn: '',
-    metaDescriptionEn: '',
-    updatedAt: now,
-  }))
+  return blogArticles.map((a: BlogArticle) =>
+    normalizeArticle({
+      id: uid('art'),
+      slug: a.slug,
+      serviceSlug: a.serviceSlug,
+      citySlug: a.citySlug,
+      titleAr: a.titleAr,
+      titleEn: a.titleEn,
+      excerptAr: a.excerptAr,
+      excerptEn: a.excerptEn,
+      contentHtmlAr: paragraphsToHtml(a.contentAr),
+      contentHtmlEn: paragraphsToHtml(a.contentEn),
+      contentAr: a.contentAr,
+      contentEn: a.contentEn,
+      publishedAt: a.publishedAt,
+      readMinutes: a.readMinutes,
+      image: a.image,
+      imageAltAr: a.titleAr,
+      imageAltEn: a.titleEn,
+      category: 'trades',
+      author: '',
+      tags: a.serviceSlug,
+      status: 'published',
+      featured: false,
+      metaTitleAr: '',
+      metaDescriptionAr: '',
+      metaTitleEn: '',
+      metaDescriptionEn: '',
+      companyName: a.companyName || '',
+      companyLogo: a.companyLogo || '',
+      companyAboutAr: a.companyAboutAr || '',
+      companyAboutEn: a.companyAboutEn || '',
+      updatedAt: now,
+    }),
+  )
 }
 
 export function loadCmsServices(): CmsService[] {
@@ -103,7 +170,7 @@ export function loadCmsServices(): CmsService[] {
       localStorage.setItem(SERVICES_KEY, JSON.stringify(seeded))
       return seeded
     }
-    return JSON.parse(raw) as CmsService[]
+    return (JSON.parse(raw) as CmsService[]).map(normalizeService)
   } catch {
     return seedCmsServices()
   }
@@ -121,7 +188,7 @@ export function loadCmsArticles(): CmsArticle[] {
       localStorage.setItem(ARTICLES_KEY, JSON.stringify(seeded))
       return seeded
     }
-    return JSON.parse(raw) as CmsArticle[]
+    return (JSON.parse(raw) as CmsArticle[]).map(normalizeArticle)
   } catch {
     return seedCmsArticles()
   }
@@ -133,7 +200,7 @@ export function saveCmsArticles(list: CmsArticle[]) {
 
 export function emptyArticle(): CmsArticle {
   const now = new Date().toISOString().slice(0, 10)
-  return {
+  return normalizeArticle({
     id: uid('art'),
     slug: '',
     serviceSlug: '',
@@ -159,12 +226,16 @@ export function emptyArticle(): CmsArticle {
     metaDescriptionAr: '',
     metaTitleEn: '',
     metaDescriptionEn: '',
+    companyName: '',
+    companyLogo: '',
+    companyAboutAr: '',
+    companyAboutEn: '',
     updatedAt: new Date().toISOString(),
-  }
+  })
 }
 
 export function emptyService(categorySlug = 'home-maintenance'): CmsService {
-  return {
+  return normalizeService({
     id: uid('svc'),
     slug: '',
     categorySlug,
@@ -174,6 +245,13 @@ export function emptyService(categorySlug = 'home-maintenance'): CmsService {
     shortEn: '',
     introAr: '',
     introEn: '',
+    bodyAr: '',
+    bodyEn: '',
+    gallery: [],
+    benefitsAr: [],
+    benefitsEn: [],
+    stepsAr: [],
+    stepsEn: [],
     typesAr: [],
     typesEn: [],
     faqAr: [],
@@ -181,7 +259,7 @@ export function emptyService(categorySlug = 'home-maintenance'): CmsService {
     image: '/images/hero/hero-01-plumbing-desktop.jpg',
     popular: false,
     updatedAt: new Date().toISOString(),
-  }
+  })
 }
 
 export function slugify(input: string) {
@@ -201,4 +279,8 @@ export async function fileToDataUrl(file: File): Promise<string> {
     reader.onerror = () => reject(new Error('فشل قراءة الملف'))
     reader.readAsDataURL(file)
   })
+}
+
+export function articleHasCompany(article: Pick<CmsArticle, 'companyName'>) {
+  return Boolean(article.companyName?.trim())
 }

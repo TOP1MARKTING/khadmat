@@ -40,8 +40,8 @@ export function BlogPage() {
             'Practical articles about trades across Saudi Arabia',
           )}
           description={t(
-            'محتوى عن المقاولات والبلاط والسباكة والنقل وغيرها — عشان الباحث يلاقي معلومة مفيدة.',
-            'Content about contracting, tiling, plumbing, moving and more.',
+            'محتوى يفيد العميل أولًا عن المقاولات والبلاط والسباكة والنقل وغيرها — ولاحقًا يمكن إضافة اسم وشعار شركة عند الاتفاق.',
+            'Customer-first content on contracting, tiling, plumbing, moving and more — a company name and logo can be added later under agreement.',
           )}
         />
 

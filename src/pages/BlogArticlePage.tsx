@@ -5,6 +5,7 @@ import { usePageMeta } from '@/hooks/usePageMeta'
 import { getCity } from '@/data/cities'
 import { Badge } from '@/components/ui/Badge'
 import { ArticleCard } from '@/components/blog/ArticleCard'
+import { CompanySpotlight } from '@/components/blog/CompanySpotlight'
 import { NotFoundPage } from './NotFoundPage'
 
 export function BlogArticlePage() {
@@ -64,17 +65,24 @@ export function BlogArticlePage() {
           dangerouslySetInnerHTML={{ __html: html }}
         />
 
+        <CompanySpotlight
+          companyName={article.companyName}
+          companyLogo={article.companyLogo}
+          companyAboutAr={article.companyAboutAr}
+          companyAboutEn={article.companyAboutEn}
+        />
+
         {service ? (
-          <div className="mt-10 rounded-md border border-line bg-cream p-5">
-            <p className="text-sm font-medium text-ink">{t('الخطوة الجاية', 'Next step')}</p>
+          <div className="mt-10 rounded-2xl border border-line bg-cream p-5">
+            <p className="text-sm font-bold text-ink">{t('الخطوة الجاية', 'Next step')}</p>
             <p className="mt-2 text-sm text-muted">
               {t(
-                'راجع صفحة المهنة المرتبطة واقرأ التفاصيل قبل ما تطلب.',
-                'Review the related trade page before you ask.',
+                'راجع دليل المهنة: الشرح والصور والمقالات المرتبطة قبل ما تطلب.',
+                'Review the trade guide: explanation, photos, and related articles before you ask.',
               )}
             </p>
             <div className="mt-4 flex flex-wrap gap-3 text-sm">
-              <Link to={`/services/${service.slug}`} className="font-medium text-brand hover:underline">
+              <Link to={`/services/${service.slug}`} className="font-bold text-brand hover:underline">
                 {service.nameAr}
               </Link>
             </div>
