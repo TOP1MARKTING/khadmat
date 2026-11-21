@@ -41,7 +41,6 @@ export function BlogArticlePage() {
         <div className="flex flex-wrap gap-2">
           {service ? <Badge tone="brand">{service.nameAr}</Badge> : null}
           {city ? <Badge tone="sand">{city.nameAr}</Badge> : null}
-          <Badge tone="neutral">{t(`${article.readMinutes} دقائق`, `${article.readMinutes} min`)}</Badge>
         </div>
 
         <h1 className="heading-display mt-4">{article.titleAr}</h1>

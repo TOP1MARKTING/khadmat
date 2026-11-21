@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   Building2,
   Hammer,
-  MapPin,
   Search,
   Sparkles,
   Truck,
@@ -13,9 +12,8 @@ import {
 import { useLanguage } from '@/context/LanguageContext'
 import { usePageMeta } from '@/hooks/usePageMeta'
 import { categories } from '@/data/services'
-import { cities } from '@/data/cities'
 import { useCms } from '@/context/CmsContext'
-import { Input, Select } from '@/components/ui/Input'
+import { Input } from '@/components/ui/Input'
 import { cn } from '@/lib/cn'
 
 const categoryIcons: Record<string, typeof Hammer> = {
@@ -26,7 +24,7 @@ const categoryIcons: Record<string, typeof Hammer> = {
   'other-services': Building2,
 }
 
-const HERO_IMAGE = '/images/hero/hero-11-contracting-desktop.jpg'
+const HERO_IMAGE = '/images/team/team-01-villas.png'
 
 export function ServicesPage() {
   const { t } = useLanguage()
@@ -35,7 +33,6 @@ export function ServicesPage() {
   const [params, setParams] = useSearchParams()
   const activeCategory = params.get('category') || 'all'
   const [query, setQuery] = useState('')
-  const [cityFilter, setCityFilter] = useState('all')
   const [suggestOpen, setSuggestOpen] = useState(false)
   const [activeSuggest, setActiveSuggest] = useState(0)
   const searchWrapRef = useRef<HTMLDivElement>(null)
@@ -105,7 +102,6 @@ export function ServicesPage() {
   }
 
   const activeCat = categories.find((c) => c.slug === activeCategory)
-  const city = cities.find((c) => c.slug === cityFilter)
   const showSuggestions = suggestOpen && query.trim().length > 0
 
   return (
@@ -130,8 +126,8 @@ export function ServicesPage() {
           </h1>
           <p className="reveal reveal-delay-2 mt-3 max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
             {t(
-              'اختَر المجال، دور على المهنة، ولو حابب اربطها بمدينتك داخل المملكة.',
-              'Pick a field, find the trade, and optionally link it to your city in Saudi Arabia.',
+              'اختَر المجال ودور على المهنة اللي محتاجها.',
+              'Pick a field and find the trade you need.',
             )}
           </p>
           <p className="reveal reveal-delay-3 mt-5 text-xs font-bold text-sand">
@@ -225,22 +221,6 @@ export function ServicesPage() {
                       )}
                     </div>
                   ) : null}
-                </div>
-                <div className="relative lg:w-56">
-                  <MapPin className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" />
-                  <Select
-                    className="h-12 rounded-xl border-line bg-cream/60 ps-10 focus:bg-surface"
-                    value={cityFilter}
-                    onChange={(e) => setCityFilter(e.target.value)}
-                    aria-label={t('تصفية حسب المدينة', 'Filter by city')}
-                  >
-                    <option value="all">{t('كل المدن', 'All cities')}</option>
-                    {cities.map((c) => (
-                      <option key={c.slug} value={c.slug}>
-                        {c.nameAr}
-                      </option>
-                    ))}
-                  </Select>
                 </div>
               </div>
             </div>
@@ -382,15 +362,6 @@ export function ServicesPage() {
                           تفاصيل المهنة
                           <ArrowLeft className="size-3.5" />
                         </Link>
-                        {city ? (
-                          <Link
-                            to={`/sa/${city.regionSlug}/${city.slug}/${service.slug}`}
-                            className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-line bg-cream/50 px-3.5 text-xs font-bold text-ink transition-colors hover:border-accent hover:text-accent"
-                          >
-                            <MapPin className="size-3.5" />
-                            في {city.nameAr}
-                          </Link>
-                        ) : null}
                       </div>
                     </div>
                   </article>

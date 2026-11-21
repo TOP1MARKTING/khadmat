@@ -22,11 +22,11 @@ import { BlogArticlePage } from '@/pages/BlogArticlePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { AdminLoginPage } from '@/pages/admin/AdminLoginPage'
 import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage'
-import { AdminSettingsPage } from '@/pages/admin/AdminSettingsPage'
 import { AdminServicesPage } from '@/pages/admin/AdminServicesPage'
 import { AdminServiceEditPage } from '@/pages/admin/AdminServiceEditPage'
 import { AdminBlogPage } from '@/pages/admin/AdminBlogPage'
 import { AdminBlogEditPage } from '@/pages/admin/AdminBlogEditPage'
+import { AdminMediaPage } from '@/pages/admin/AdminMediaPage'
 
 export default function App() {
   return (
@@ -46,11 +46,12 @@ export default function App() {
                   }
                 >
                   <Route index element={<AdminDashboardPage />} />
-                  <Route path="settings" element={<AdminSettingsPage />} />
                   <Route path="services" element={<AdminServicesPage />} />
+                  <Route path="settings" element={<Navigate to="/admin" replace />} />
                   <Route path="services/:serviceId" element={<AdminServiceEditPage />} />
                   <Route path="blog" element={<AdminBlogPage />} />
                   <Route path="blog/:articleId" element={<AdminBlogEditPage />} />
+                  <Route path="media" element={<AdminMediaPage />} />
                 </Route>
 
                 <Route element={<Layout />}>

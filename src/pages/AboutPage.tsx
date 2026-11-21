@@ -12,37 +12,70 @@ import { useLanguage } from '@/context/LanguageContext'
 import { usePageMeta } from '@/hooks/usePageMeta'
 import { Button } from '@/components/ui/Button'
 
-/** Selected wide service photos for About — not the full catalog */
+/** Selected branded service photos for About — not the full catalog */
 const aboutServiceShots = [
   {
-    src: '/images/hero/hero-01-plumbing-desktop.jpg',
+    src: '/images/services/plumbing.jpg',
     titleAr: 'السباكة',
-    to: '/services?category=home-maintenance',
+    to: '/services/plumbing',
   },
   {
-    src: '/images/hero/hero-03-tiling-desktop.jpg',
-    titleAr: 'البلاط والسيراميك',
-    to: '/services?category=construction-finishing',
+    src: '/images/services/painting.jpg',
+    titleAr: 'الدهانات',
+    to: '/services/painting',
   },
   {
-    src: '/images/hero/hero-11-contracting-desktop.jpg',
-    titleAr: 'المقاولات',
-    to: '/services?category=construction-finishing',
-  },
-  {
-    src: '/images/hero/hero-09-cleaning-desktop.jpg',
+    src: '/images/services/home-cleaning.jpg',
     titleAr: 'النظافة',
-    to: '/services?category=cleaning',
+    to: '/services/home-cleaning',
   },
   {
-    src: '/images/hero/hero-08-moving-desktop.jpg',
+    src: '/images/services/furniture-moving.jpg',
     titleAr: 'نقل العفش',
-    to: '/services?category=moving-logistics',
+    to: '/services/furniture-moving',
   },
   {
-    src: '/images/hero/hero-06-ac-desktop.jpg',
+    src: '/images/services/air-conditioning.jpg',
     titleAr: 'التكييف',
-    to: '/services?category=home-maintenance',
+    to: '/services/air-conditioning',
+  },
+  {
+    src: '/images/services/landscaping.jpg',
+    titleAr: 'تنسيق الحدائق',
+    to: '/services/landscaping',
+  },
+]
+
+const teamShots = [
+  {
+    src: '/images/team/team-01-villas.png',
+    titleAr: 'فريق ساعدني أمام الفلل',
+    titleEn: 'Saedni team at residential villas',
+  },
+  {
+    src: '/images/team/team-02-apartment.png',
+    titleAr: 'فريق الصيانة داخل الشقق',
+    titleEn: 'Maintenance team in apartments',
+  },
+  {
+    src: '/images/team/team-03-truck.png',
+    titleAr: 'فريق النقل مع سيارة ساعدني',
+    titleEn: 'Moving crew with Saedni truck',
+  },
+  {
+    src: '/images/team/team-04-riyadh.png',
+    titleAr: 'الفريق في الرياض',
+    titleEn: 'The team in Riyadh',
+  },
+  {
+    src: '/images/team/team-05-corniche.png',
+    titleAr: 'فنيون على الكورنيش',
+    titleEn: 'Technicians on the corniche',
+  },
+  {
+    src: '/images/team/team-08-makkah.png',
+    titleAr: 'شغل ميداني في مكة',
+    titleEn: 'Field work in Makkah',
   },
 ]
 
@@ -201,8 +234,49 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* Selected wide service photos */}
+      {/* Team group photos */}
       <section className="border-b border-line bg-surface">
+        <div className="container-page section-pad">
+          <div className="mb-3 flex items-center gap-2 text-brand">
+            <HardHat className="size-5" />
+            <p className="text-xs font-bold tracking-wide uppercase">
+              {t('هوية ساعدني', 'Saedni identity')}
+            </p>
+          </div>
+          <h2 className="text-xl font-extrabold text-ink sm:text-2xl">
+            {t('صور مجمّعة للعمال والفنيين', 'Group photos of our trade teams')}
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
+            {t(
+              'نفس الهوية على الفيست واللوجو — فرق صيانة ونظافة ونقل في مدن المملكة.',
+              'Same vest-and-logo identity — maintenance, cleaning, and moving crews across Saudi cities.',
+            )}
+          </p>
+
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            {teamShots.map((shot) => (
+              <figure
+                key={shot.src}
+                className="group relative overflow-hidden rounded-2xl border border-line"
+              >
+                <img
+                  src={shot.src}
+                  alt={isAr ? shot.titleAr : shot.titleEn}
+                  className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 p-3.5 text-sm font-bold text-white sm:p-4 sm:text-base">
+                  {isAr ? shot.titleAr : shot.titleEn}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Selected branded service photos */}
+      <section className="border-b border-line">
         <div className="container-page section-pad">
           <div className="mb-3 flex items-center gap-2 text-brand">
             <HardHat className="size-5" />
@@ -215,8 +289,8 @@ export function AboutPage() {
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
             {t(
-              'صور عريضة من شغل حقيقي — سباكة، بلاط، مقاولات، نظافة، نقل وتكييف. مش كل الخدمات، نماذج توضّح الفكرة.',
-              'Wide photos from real work — plumbing, tiling, contracting, cleaning, moving and AC. Not every service, just clear examples.',
+              'صور براند من شغل المهن — سباكة، دهانات، نظافة، نقل، تكييف وحدائق.',
+              'Branded trade photos — plumbing, painting, cleaning, moving, AC, and landscaping.',
             )}
           </p>
 

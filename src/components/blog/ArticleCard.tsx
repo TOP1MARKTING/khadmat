@@ -33,11 +33,13 @@ export function ArticleCard({ article }: { article: ArticleCardData }) {
       </Link>
       <div className="p-4 sm:p-5">
         <p className="text-[11px] font-bold tracking-wide text-accent">
-          {service?.nameAr || null}
-          {city ? ` · ${city.nameAr}` : ''}
-          {article.companyName?.trim() ? ` · ${article.companyName.trim()}` : ''}
-          {' · '}
-          {t(`${article.readMinutes} دقائق`, `${article.readMinutes} min`)}
+          {[
+            service?.nameAr,
+            city?.nameAr,
+            article.companyName?.trim() || undefined,
+          ]
+            .filter(Boolean)
+            .join(' · ')}
         </p>
         <h3 className="mt-2 text-base font-extrabold leading-snug text-ink sm:text-lg">
           <Link to={`/blog/${article.slug}`} className="hover:text-brand">

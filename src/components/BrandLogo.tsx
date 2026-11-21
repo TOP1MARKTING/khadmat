@@ -34,10 +34,13 @@ export function BrandLogo({ className, variant = 'mark', size = 'md' }: Props) {
       src={sources[variant]}
       alt="ساعدني | Saedni"
       className={cn(
-        'shrink-0 object-contain',
+        'shrink-0',
         isLockup
-          ? cn(lockupHeights[size], 'w-auto')
-          : cn(markSizes[size], 'rounded-xl shadow-sm'),
+          ? cn(lockupHeights[size], 'w-auto object-contain')
+          : cn(
+              markSizes[size],
+              'rounded-full object-cover shadow-sm ring-1 ring-black/10',
+            ),
         className,
       )}
     />

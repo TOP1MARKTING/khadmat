@@ -54,8 +54,8 @@ export type CmsArticle = {
   updatedAt: string
 }
 
-const SERVICES_KEY = 'saedni_cms_services_v24'
-const ARTICLES_KEY = 'saedni_cms_articles_v24'
+const SERVICES_KEY = 'saedni_cms_services_v29'
+const ARTICLES_KEY = 'saedni_cms_articles_v29'
 
 function uid(prefix: string) {
   return `${prefix}_${Math.random().toString(36).slice(2, 10)}`

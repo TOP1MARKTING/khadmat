@@ -53,7 +53,7 @@ export const categories: ServiceCategory[] = [
     descriptionAr: 'سباكة، كهرباء، تكييف، صيانة أجهزة، وكشف تسربات.',
     descriptionEn:
       'Plumbing, electrical, air conditioning, appliance repair, and leak detection.',
-    image: '/images/hero/hero-01-plumbing-desktop.jpg',
+    image: '/images/services/plumbing.jpg',
   },
   {
     slug: 'cleaning',
@@ -63,7 +63,7 @@ export const categories: ServiceCategory[] = [
       'تنظيف منازل ومكاتب، مفروشات، خزانات مياه، نظافة ما بعد التشطيب ومكافحة حشرات.',
     descriptionEn:
       'Home and office cleaning, upholstery, water tanks, post-construction cleaning, and pest control.',
-    image: '/images/hero/hero-09-cleaning-desktop.jpg',
+    image: '/images/services/home-cleaning.jpg',
   },
   {
     slug: 'moving-logistics',
@@ -72,7 +72,7 @@ export const categories: ServiceCategory[] = [
     descriptionAr: 'نقل أثاث، تغليف، فك وتركيب، نقل مكاتب وتخزين.',
     descriptionEn:
       'Furniture moving, packing, assembly, office relocation, and storage.',
-    image: '/images/hero/hero-08-moving-desktop.jpg',
+    image: '/images/services/furniture-moving.jpg',
   },
   {
     slug: 'other-services',
@@ -81,7 +81,7 @@ export const categories: ServiceCategory[] = [
     descriptionAr: 'تنسيق حدائق، إدارة مرافق، وصيانة عقارات تجارية.',
     descriptionEn:
       'Landscaping, facility management, and commercial property maintenance.',
-    image: '/images/hero/hero-13-landscaping-desktop.jpg',
+    image: '/images/services/landscaping.jpg',
   },
 ]
 
@@ -249,14 +249,7 @@ export const services: Service[] = [
 <p>Work types include electrical and plumbing rough-in, plaster and leveling, floors and walls, ceilings and gypsum, painting, then final doors, sanitary ware, switches, lights, and kitchen units when included.</p>
 <p>Quality shows in flat walls and ceilings, even floors and joints, plumbing tests before closing, safe electrical work, even paint, smooth doors and windows, and waterproofing checks in wet areas.</p>
 <p>Stage order matters: survey and plan → rough-in and test → plaster → waterproof and test → floors/walls → ceilings → paint → finals → inspection and handover. Skipping order often means rework and extra cost.</p>`,
-    gallery: [
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-02-finishing.jpg',
-      '/images/hero/hero-03-tiling-desktop.jpg',
-      '/images/hero/hero-07-painting-desktop.jpg',
-      '/images/hero/hero-10-gypsum-desktop.jpg',
-      '/images/hero/hero-01-plumbing-desktop.jpg',
-    ],
+    gallery: ['/images/services/apartment-finishing.jpg'],
     benefitsAr: [
       'تحويل الشقة إلى مساحة جاهزة للسكن بترتيب مراحل واضح',
       'تنسيق الكهرباء والسباكة والأرضيات والدهانات في مسار واحد',
@@ -363,7 +356,7 @@ export const services: Service[] = [
         a: 'Check electrical, plumbing, drainage, floors, paint, doors, windows, and sanitary fittings; list snags and fix them before final acceptance.',
       },
     ],
-    image: '/images/hero/hero-02-finishing-desktop.jpg',
+    image: '/images/services/apartment-finishing.jpg',
     popular: true,
   },
   {
@@ -526,12 +519,7 @@ export const services: Service[] = [
 <p>It suits new apartments, villas, color refreshes, offices, shops, and units prepared for rent or sale.</p>
 <p>Quality shows in clean dry prep, defect repair before final coats, smooth putty and sanding, even color and coverage, clean edges, a product suited to the room, and proper drying times between coats.</p>
 <p>Stages: survey → protect the space → fix defects and moisture causes → putty → sand and clean → primer → finish coats → touch-up → handover.</p>`,
-    gallery: [
-      '/images/hero/hero-07-painting-desktop.jpg',
-      '/images/hero/hero-07-painting.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-15-renovation-desktop.jpg',
-    ],
+    gallery: ['/images/services/painting.jpg'],
     benefitsAr: [
       'شكل نهائي أنظف عند تجهيز الحوائط صح قبل اللون',
       'حماية أفضل لبعض الأسطح باختيار منتج مناسب للمكان',
@@ -632,7 +620,7 @@ export const services: Service[] = [
         a: 'Do not only cover the stain. Find and fix the moisture source and dry the surface before the right paint system.',
       },
     ],
-    image: '/images/hero/hero-07-painting-desktop.jpg',
+    image: '/images/services/painting.jpg',
     popular: true,
   },
   {
@@ -798,13 +786,7 @@ export const services: Service[] = [
 <p>Quality shows in flat surfaces, stable framing and boards, well-treated joints, no early cracks at seams and corners, accurate light openings, and the right board type for the room.</p>
 <p>Stages: survey and measure → lock design, levels, and light points → metal framing → board fixing → joint treatment → sand and prep → paint and lights → final level and finish check.</p>
 <p>Avoid wrong boards in wet rooms, weak framing, skipping level checks, poor joint treatment, no coordination with the electrician, hanging heavy loads without support, and closing the ceiling before services inside are verified.</p>`,
-    gallery: [
-      '/images/hero/hero-10-gypsum-desktop.jpg',
-      '/images/hero/hero-10-gypsum.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-07-painting-desktop.jpg',
-      '/images/hero/hero-05-electrical-desktop.jpg',
-    ],
+    gallery: ['/images/services/gypsum-board.jpg'],
     benefitsAr: [
       'أسقف وقواطع بتصميم مرن وإضاءة مخفية بدون هدم كبير',
       'إخفاء التمديدات وتحسين توزيع الإضاءة بشكل مرتب',
@@ -899,7 +881,7 @@ export const services: Service[] = [
         a: 'Yes — framing and boards need space, and the drop depends on design and services inside.',
       },
     ],
-    image: '/images/hero/hero-10-gypsum-desktop.jpg',
+    image: '/images/services/gypsum-board.jpg',
     popular: true,
   },
   {
@@ -925,13 +907,7 @@ export const services: Service[] = [
 <p>It suits homes and villas, new buildings before finishing, properties with leaks or damp, exposed roofs, and tanks, pools, and facilities that need water protection.</p>
 <p>Quality shows in the right material for the location, clean substrate prep, crack and joint treatment, continuous layers, manufacturer thickness and method, suitable testing after install, and protecting the membrane during later finishes.</p>
 <p>Stages: survey and find the source → inspect substrate → remove damaged parts and clean → treat cracks and joints → primer if needed → apply the system → cure per guidance → test → protect and finish.</p>`,
-    gallery: [
-      '/images/hero/hero-04-waterproofing-desktop.jpg',
-      '/images/hero/hero-04-waterproofing.jpg',
-      '/images/hero/hero-14-leak-desktop.jpg',
-      '/images/hero/hero-03-tiling-desktop.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-    ],
+    gallery: ['/images/services/waterproofing.jpg'],
     benefitsAr: [
       'حماية أفضل من التسرب والرطوبة عند اختيار النظام المناسب',
       'تقليل انتقال الحرارة بالعزل الحراري حيث يُحتاج',
@@ -1036,7 +1012,7 @@ export const services: Service[] = [
         a: 'Leak detection is a related separate service and helps identify the source before choosing a system.',
       },
     ],
-    image: '/images/hero/hero-04-waterproofing-desktop.jpg',
+    image: '/images/services/waterproofing.jpg',
     popular: true,
   },
   {
@@ -1062,13 +1038,7 @@ export const services: Service[] = [
 <p>It suits older homes, units prepared for living or rent, apartment finish updates, wall/floor damage, and shop or office upgrades.</p>
 <p>Quality shows in finding the damage cause before repair, materials suited to the building, not covering cracks without diagnosis, consistent finishes, sound renewed services, stage discipline, a clean handover, and documentation of what was fixed.</p>
 <p>Stages: survey → prioritize → scope and cost estimate → protect furniture → remove damaged parts if needed → specialist repairs → plumbing/electrical rough work → plaster, waterproofing, finishes → review and handover.</p>`,
-    gallery: [
-      '/images/hero/hero-15-renovation-desktop.jpg',
-      '/images/hero/hero-15-renovation.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-07-painting-desktop.jpg',
-      '/images/hero/hero-04-waterproofing-desktop.jpg',
-    ],
+    gallery: ['/images/services/renovation.jpg'],
     benefitsAr: [
       'معالجة التلفيات بدل تغطيتها بشكل مؤقت',
       'تحديث الشكل والاستخدام حسب احتياج السكن أو التأجير',
@@ -1175,7 +1145,7 @@ export const services: Service[] = [
         a: 'Yes. Many requests begin with a single area such as a kitchen, bathroom, or facade.',
       },
     ],
-    image: '/images/hero/hero-15-renovation-desktop.jpg',
+    image: '/images/services/renovation.jpg',
     popular: true,
   },
   {
@@ -1201,13 +1171,7 @@ export const services: Service[] = [
 <p>It suits homes and apartments, new builds during rough-in, leak or blockage problems, properties needing network renewal, and commercial spaces.</p>
 <p>Quality shows in suitable pipes and fittings, proper fixing, dry joints, correct drainage slopes, pressure testing when needed, accessible maintenance points, and drainage without backup or pooling.</p>
 <p>Stages: define the issue or rough-in needs → survey pipe routes → choose materials and sizes → install piping → fit fixtures → pressure/leak/drainage tests → fix snags → hand over after safe operation.</p>`,
-    gallery: [
-      '/images/hero/hero-01-plumbing-desktop.jpg',
-      '/images/hero/hero-01-plumbing.jpg',
-      '/images/hero/hero-14-leak-desktop.jpg',
-      '/images/hero/hero-04-waterproofing-desktop.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-    ],
+    gallery: ['/images/services/plumbing.jpg'],
     benefitsAr: [
       'تشغيل أوضح للمياه والصرف عند التأسيس والاختبار الصحيح',
       'اكتشاف أبكر للتسرب قبل إغلاق التشطيبات',
@@ -1304,7 +1268,7 @@ export const services: Service[] = [
         a: 'Yes — suitable tests should be done before closing services behind finishes.',
       },
     ],
-    image: '/images/hero/hero-01-plumbing-desktop.jpg',
+    image: '/images/services/plumbing.jpg',
     popular: true,
   },
   {
@@ -1330,12 +1294,7 @@ export const services: Service[] = [
 <p>It suits homes, apartments, shops, offices, new builds needing electrical rough-in, repeated outages or weak circuits, and older properties needing a network check.</p>
 <p>Quality shows in specification-compliant components, breakers matched to loads, tidy panels, suitable earthing, secure outlets and switches, no exposed or improvised joints, post-repair testing, and clear circuit labels.</p>
 <p>Typical stages for a qualified technician: diagnose → isolate supply and secure the area → identify the faulty circuit → inspect wiring and breakers → repair or replace → verify earthing and protection → test → restore and review performance.</p>`,
-    gallery: [
-      '/images/hero/hero-05-electrical-desktop.jpg',
-      '/images/hero/hero-05-electrical.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-10-gypsum-desktop.jpg',
-    ],
+    gallery: ['/images/services/electrical.jpg'],
     benefitsAr: [
       'تشغيل أكثر أمانًا عند مطابقة المكونات للأحمال والحماية',
       'تقليل الأعطال المتكررة بتنظيم الدوائر والفحص الصحيح',
@@ -1440,7 +1399,7 @@ export const services: Service[] = [
         a: 'Ask for a safety check within scope with a qualified technician, especially for older properties or repeat faults.',
       },
     ],
-    image: '/images/hero/hero-05-electrical-desktop.jpg',
+    image: '/images/services/electrical.jpg',
     popular: true,
   },
   {
@@ -1466,12 +1425,7 @@ export const services: Service[] = [
 <p>It suits homes, apartments, offices, shops, facilities, new installs, and issues like weak cooling, water leaks, or unusual noise.</p>
 <p>Quality shows in capacity matched to space and heat load, proper indoor/outdoor fixing, good pipework and insulation, suitable drainage, no abnormal vibration or noise, post-install cooling checks, manufacturer-guided refrigerant handling, and service clearance around the outdoor unit.</p>
 <p>Stages: survey cooling needs → choose type and capacity → set unit locations and pipe routes → fix indoor/outdoor units → electrical, refrigerant, and drain connections → leak and operation tests → measure performance → explain use and maintenance.</p>`,
-    gallery: [
-      '/images/hero/hero-06-ac-desktop.jpg',
-      '/images/hero/hero-06-ac.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-05-electrical-desktop.jpg',
-    ],
+    gallery: ['/images/services/air-conditioning.jpg'],
     benefitsAr: [
       'تبريد أوضح عند اختيار القدرة المناسبة والصيانة الدورية',
       'تقليل تسرب المياه بتصريف وتركيب سليم',
@@ -1576,7 +1530,7 @@ export const services: Service[] = [
         a: 'Indoor and outdoor washing can be included depending on agreed scope.',
       },
     ],
-    image: '/images/hero/hero-06-ac-desktop.jpg',
+    image: '/images/services/air-conditioning.jpg',
     popular: true,
   },
   {
@@ -1602,12 +1556,7 @@ export const services: Service[] = [
 <p>It suits homes, apartments, furnished units, facilities using household appliances, repeat faults, and checks before buying a spare part or replacing the unit.</p>
 <p>Quality shows in diagnosing the cause before replacing parts, compatible spares, clear problem and cost before repair, post-service testing, no loose parts or unsafe connections, careful handling, and clarity on original vs compatible parts.</p>
 <p>Stages: fault description and appliance details → identify type and model → inspect and diagnose → explain cause and expected cost → repair or replace → reassemble → test core functions → share use and care guidance.</p>`,
-    gallery: [
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-01-plumbing-desktop.jpg',
-      '/images/hero/hero-05-electrical-desktop.jpg',
-      '/images/hero/hero-06-ac-desktop.jpg',
-    ],
+    gallery: ['/images/services/appliance-repair.jpg'],
     benefitsAr: [
       'تشخيص قبل تغيير القطع يقلل التكلفة العشوائية',
       'إطالة عمر الجهاز عند إصلاحه بحالة مناسبة',
@@ -1710,7 +1659,7 @@ export const services: Service[] = [
         a: 'Availability depends on appliance type and model and should be confirmed before repair starts.',
       },
     ],
-    image: '/images/hero/hero-02-finishing-desktop.jpg',
+    image: '/images/services/appliance-repair.jpg',
     popular: true,
   },
   {
@@ -1736,13 +1685,7 @@ export const services: Service[] = [
 <p>It suits homes and apartments with damp patches, unusual water-bill spikes, repeat leaks, or suspected leaks in bathrooms, kitchens, tanks, or water networks.</p>
 <p>Quality shows in defining the problem scope before repair, using tools suited to the leak type, explaining results, not guessing alone, minimizing unnecessary demolition, documenting location and cause when possible, and retesting after repair.</p>
 <p>Stages: review symptoms → inspect area and network → identify likely leak type → use suitable detection tools → locate leak and confidence level → explain repair method → specialist repair → retest → finish repair effects if agreed.</p>`,
-    gallery: [
-      '/images/hero/hero-14-leak-desktop.jpg',
-      '/images/hero/hero-14-leak.jpg',
-      '/images/hero/hero-01-plumbing-desktop.jpg',
-      '/images/hero/hero-04-waterproofing-desktop.jpg',
-      '/images/hero/hero-15-renovation-desktop.jpg',
-    ],
+    gallery: ['/images/services/leak-detection.jpg'],
     benefitsAr: [
       'تشخيص قبل التكسير يقلل الضرر العشوائي على التشطيبات',
       'توضيح أوضح لمكان التسرب وسبب المشكلة عند الإمكان',
@@ -1849,7 +1792,7 @@ export const services: Service[] = [
         a: 'Accuracy varies by tool, leak location, and building type; more than one method may be needed.',
       },
     ],
-    image: '/images/hero/hero-14-leak-desktop.jpg',
+    image: '/images/services/leak-detection.jpg',
     popular: true,
   },
   {
@@ -1876,12 +1819,7 @@ export const services: Service[] = [
 <p>The service covers cleaning and organizing interiors and removing dust and dirt from floors, surfaces, kitchens, bathrooms, windows, and furniture with suitable tools and products.</p>
 <p>Quality shows in cleaning corners and hard-to-reach areas, no leftover cleaner marks, products suited to each surface, focus on kitchens and bathrooms, not spreading dirt between rooms, sticking to agreed time, and careful handling of furniture and appliances.</p>
 <p>Stages: survey and define needs → agree cleaning type and products → remove trash and dust → rooms, surfaces, furniture → kitchens and grease → bathrooms and floors → windows if agreed → final review.</p>`,
-    gallery: [
-      '/images/hero/hero-09-cleaning-desktop.jpg',
-      '/images/hero/hero-09-cleaning.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-03-tiling-desktop.jpg',
-    ],
+    gallery: ['/images/services/home-cleaning.jpg'],
     benefitsAr: [
       'بيئة أنظف مع تنظيف منظم حسب نوع الخدمة',
       'إمكانية تنظيف دوري أو عميق أو تجهيز قبل السكن',
@@ -1978,7 +1916,7 @@ export const services: Service[] = [
         a: 'Review scope, price details, products, and timing, and agree covered areas clearly.',
       },
     ],
-    image: '/images/hero/hero-09-cleaning-desktop.jpg',
+    image: '/images/services/home-cleaning.jpg',
     popular: true,
   },
   {
@@ -2006,8 +1944,8 @@ export const services: Service[] = [
         a: 'Yes. Recurring contracts can be arranged when a provider is assigned.',
       },
     ],
-    image:
-      '/images/services/office-cleaning.jpg',
+    image: '/images/services/office-cleaning.jpg',
+    gallery: ['/images/services/office-cleaning.jpg'],
   },
   {
     slug: 'upholstery-cleaning',
@@ -2034,8 +1972,8 @@ export const services: Service[] = [
         a: 'It depends on fabric and weather, often from a few hours up to a day.',
       },
     ],
-    image:
-      '/images/services/upholstery-cleaning.jpg',
+    image: '/images/services/upholstery-cleaning.jpg',
+    gallery: ['/images/services/upholstery-cleaning.jpg'],
   },
   {
     slug: 'water-tank-cleaning',
@@ -2060,12 +1998,7 @@ export const services: Service[] = [
 <p>It suits homes, villas, residential buildings, commercial facilities, schools, offices, and properties that store water in tanks.</p>
 <p>Quality shows in safe emptying, sediment removal from floors and corners, drinking-water-suitable products when needed, thorough rinsing, no leftover chemicals, a secure cover against insects and dust, and restart after safety checks.</p>
 <p>Stages: inspect tank type and condition → isolate supply and empty safely → remove sediment → clean walls and floor → use approved clean/disinfect products when needed → rinse per product requirements → check cover and connections → refill and confirm operation.</p>`,
-    gallery: [
-      '/images/hero/hero-01-plumbing-desktop.jpg',
-      '/images/hero/hero-09-cleaning-desktop.jpg',
-      '/images/hero/hero-14-leak-desktop.jpg',
-      '/images/hero/hero-04-waterproofing-desktop.jpg',
-    ],
+    gallery: ['/images/services/water-tank-cleaning.jpg'],
     benefitsAr: [
       'تقليل تراكم الرواسب والشوائب داخل الخزان',
       'فحص الغطاء والتوصيلات يقلل مصادر التلوث الظاهرة',
@@ -2168,7 +2101,7 @@ export const services: Service[] = [
         a: 'It may pause temporarily depending on tank size and cleaning steps.',
       },
     ],
-    image: '/images/hero/hero-01-plumbing-desktop.jpg',
+    image: '/images/services/water-tank-cleaning.jpg',
     popular: true,
   },
   {
@@ -2333,12 +2266,7 @@ export const services: Service[] = [
 <p>It suits homes and apartments, restaurants and commercial kitchens, offices and shops, warehouses, and residential or commercial buildings.</p>
 <p>Quality shows in accurate pest ID, checking spread sources, a suitable method, registered products authorized for the specific use, following safety instructions, protecting children, pets, and food, prevention tips after treatment, and clarifying follow-up visits when needed.</p>
 <p>Stages: problem description → survey and identify pest → entry and breeding sources → choose method → prepare space per specialist guidance → treat → safety precautions and re-entry time per product label → follow up when needed.</p>`,
-    gallery: [
-      '/images/hero/hero-09-cleaning-desktop.jpg',
-      '/images/hero/hero-09-cleaning.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-01-plumbing-desktop.jpg',
-    ],
+    gallery: ['/images/services/pest-control.jpg'],
     benefitsAr: [
       'معالجة أوضح بعد تحديد نوع الآفة ومصدرها',
       'خيارات وقائية وميكانيكية وكيميائية حسب الحالة والمنتجات المسجلة',
@@ -2435,7 +2363,7 @@ export const services: Service[] = [
         a: 'Options include traps, baits, sealing openings, and other methods for some pests — a specialist chooses what fits.',
       },
     ],
-    image: '/images/hero/hero-09-cleaning-desktop.jpg',
+    image: '/images/services/pest-control.jpg',
     popular: true,
   },
   {
@@ -2461,12 +2389,7 @@ export const services: Service[] = [
 <p>It suits families moving to a new home, apartment and villa owners, offices and companies, shops and facilities, and anyone moving furniture into storage.</p>
 <p>Quality shows in a truck sized for the load, protecting pieces before loading, securing items in the vehicle, suitable lifting gear, careful handling of heavy pieces, an inventory list, meeting schedules, and checking items on delivery.</p>
 <p>Stages: survey and estimate load → set pickup and delivery → agree scope and cost → disassemble as needed → pack → load → secure the load → transport → unload and reassemble as agreed → inspect after delivery.</p>`,
-    gallery: [
-      '/images/hero/hero-08-moving-desktop.jpg',
-      '/images/hero/hero-08-moving.jpg',
-      '/images/hero/hero-09-cleaning-desktop.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-    ],
+    gallery: ['/images/services/furniture-moving.jpg'],
     benefitsAr: [
       'تخطيط أوضح من المعاينة حتى التسليم',
       'حماية أفضل بالتغليف والتثبيت داخل السيارة',
@@ -2569,7 +2492,7 @@ export const services: Service[] = [
         a: 'It depends on load size, distance, crew size, and packing, disassembly, and loading services.',
       },
     ],
-    image: '/images/hero/hero-08-moving-desktop.jpg',
+    image: '/images/services/furniture-moving.jpg',
     popular: true,
   },
   {
@@ -2595,12 +2518,7 @@ export const services: Service[] = [
 <p>It suits households moving homes, apartments and villas, office moves, fragile collections, and furniture storage needs.</p>
 <p>Quality shows in materials matched to each item, corner and fragile protection, no tape that damages finishes, secure wrapping, labeled boxes, logging fragile items, and not mixing heavy with light in harmful ways.</p>
 <p>Stages: survey scope → sort by type and fragility → prepare materials → protect furniture and corners → box small items → label contents → ready for move or storage → unpack on arrival and check items.</p>`,
-    gallery: [
-      '/images/hero/hero-08-moving-desktop.jpg',
-      '/images/hero/hero-08-moving.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-09-cleaning-desktop.jpg',
-    ],
+    gallery: ['/images/services/packing.jpg'],
     benefitsAr: [
       'حماية أوضح من الخدوش والكسر أثناء التحميل والنقل',
       'ترتيب أسهل بالصناديق المعلّمة وقوائم المقتنيات',
@@ -2705,7 +2623,7 @@ export const services: Service[] = [
         a: 'Usually yes within the agreement — clarify before work starts.',
       },
     ],
-    image: '/images/hero/hero-08-moving-desktop.jpg',
+    image: '/images/services/packing.jpg',
     popular: true,
   },
   {
@@ -2733,8 +2651,8 @@ export const services: Service[] = [
         a: 'Providers bring standard tools and will notify you if something special is required.',
       },
     ],
-    image:
-      '/images/services/furniture-assembly.jpg',
+    image: '/images/services/furniture-assembly.jpg',
+    gallery: ['/images/services/furniture-assembly.jpg'],
   },
   {
     slug: 'office-relocation',
@@ -2761,8 +2679,8 @@ export const services: Service[] = [
         a: 'Often yes, depending on provider availability and business schedule.',
       },
     ],
-    image:
-      '/images/services/office-relocation.jpg',
+    image: '/images/services/office-relocation.jpg',
+    gallery: ['/images/services/office-relocation.jpg'],
   },
   {
     slug: 'storage',
@@ -2787,12 +2705,7 @@ export const services: Service[] = [
 <p>It suits families moving home, people traveling for long periods, homeowners during renovation, offices and companies, shops needing extra space, and owners of seasonal furniture and items.</p>
 <p>Quality shows in a clean site, protection from humidity and water leaks, suitable ventilation, pest protection, security and monitoring, organized labeling, clear access terms, and a contract that states responsibilities and compensation.</p>
 <p>Stages: define item types and volume → choose suitable space → pack → inventory list → move to storage → organize contents → monitor storage conditions → collect items when the service ends.</p>`,
-    gallery: [
-      '/images/hero/hero-08-moving-desktop.jpg',
-      '/images/hero/hero-08-moving.jpg',
-      '/images/hero/hero-09-cleaning-desktop.jpg',
-      '/images/services/storage.jpg',
-    ],
+    gallery: ['/images/services/storage.jpg'],
     benefitsAr: [
       'مساحة أوضح أثناء الانتقال أو الترميم أو السفر',
       'حماية أفضل باختيار مكان نظيف ومؤمن ومناسب للرطوبة',
@@ -2897,7 +2810,7 @@ export const services: Service[] = [
         a: 'Review the contract for insurance coverage and what cases it includes.',
       },
     ],
-    image: '/images/hero/hero-08-moving-desktop.jpg',
+    image: '/images/services/storage.jpg',
     popular: true,
   },
   {
@@ -2923,12 +2836,7 @@ export const services: Service[] = [
 <p>It suits homeowners and villa owners, rest houses, residential compounds, hotels and commercial sites, schools and offices, and owners of small or large outdoor spaces.</p>
 <p>Quality shows in plants suited to the local climate, placement by sun needs, suitable irrigation, proper soil prep, good drainage, sizes that fit the space, organized paths and seating, and easy access for maintenance.</p>
 <p>Stages: survey and measure → study soil and sun exposure → design and plant selection → prepare soil → irrigation network → plant → lawn and paths → lighting and décor → check irrigation and drainage → hand over with care guidance.</p>`,
-    gallery: [
-      '/images/hero/hero-13-landscaping-desktop.jpg',
-      '/images/hero/hero-13-landscaping.jpg',
-      '/images/hero/hero-11-contracting-desktop.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-    ],
+    gallery: ['/images/services/landscaping.jpg'],
     benefitsAr: [
       'مساحة خارجية أوضح بالتصميم المناسب للمناخ والمساحة',
       'ري وتصريف مدروسان يقللان الهدر والأضرار',
@@ -3033,7 +2941,7 @@ export const services: Service[] = [
         a: 'Yes — and irrigation controls can be designed for plant types, area, and water needs.',
       },
     ],
-    image: '/images/hero/hero-13-landscaping-desktop.jpg',
+    image: '/images/services/landscaping.jpg',
     popular: true,
   },
   {
@@ -3061,8 +2969,8 @@ export const services: Service[] = [
         a: 'Scope can be monthly or matched to operational needs.',
       },
     ],
-    image:
-      '/images/services/facility-management.jpg',
+    image: '/images/services/facility-management.jpg',
+    gallery: ['/images/services/facility-management.jpg'],
   },
   {
     slug: 'commercial-maintenance',
@@ -3087,12 +2995,7 @@ export const services: Service[] = [
 <p>It suits shop and office owners, commercial building owners, restaurants and facilities, mall owners, and property managers.</p>
 <p>Quality shows in a clear maintenance schedule, logging faults and repairs, suitable spare parts, qualified technicians, safety compliance, minimizing disruption to business, documenting work, and following up recurring faults and their causes.</p>
 <p>Stages: survey systems → work list → priorities → timeline → inspect and repair → test after maintenance → document notes → set a periodic follow-up plan.</p>`,
-    gallery: [
-      '/images/hero/hero-11-contracting-desktop.jpg',
-      '/images/hero/hero-05-electrical-desktop.jpg',
-      '/images/hero/hero-06-ac-desktop.jpg',
-      '/images/hero/hero-01-plumbing-desktop.jpg',
-    ],
+    gallery: ['/images/services/commercial-maintenance.jpg'],
     benefitsAr: [
       'أعطال أقل باكتشاف مبكر عبر الصيانة الوقائية',
       'تشغيل أوضح بجداول زيارات وتوثيق للأعمال',
@@ -3191,7 +3094,7 @@ export const services: Service[] = [
         a: 'Some work can be scheduled off-peak or in phases to reduce disruption.',
       },
     ],
-    image: '/images/hero/hero-11-contracting-desktop.jpg',
+    image: '/images/services/commercial-maintenance.jpg',
     popular: true,
   },
 ]

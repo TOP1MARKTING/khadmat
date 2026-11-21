@@ -26,7 +26,6 @@ export function Header() {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
-  const isHome = location.pathname === '/'
   const overlayNav = location.pathname === '/services'
 
   useEffect(() => {
@@ -56,26 +55,13 @@ export function Header() {
     )
 
   const bar = (
-    <div
-      className={cn(
-        'pointer-events-auto sm:px-5 lg:px-6',
-        isHome ? 'px-0 pt-0 pb-0 sm:pt-2.5' : 'px-0 pt-0 sm:px-5 sm:pt-4',
-      )}
-    >
-      <div
-        className={cn(
-          'mx-auto flex max-w-6xl items-center justify-between gap-3 border border-line bg-surface',
-          // Phone: full-width off-white bar
-          'rounded-none px-3.5 py-2.5 shadow-soft',
-          // Desktop: soft pill
-          'sm:rounded-full sm:px-4 sm:py-2.5 sm:shadow-[var(--shadow-lift)]',
-        )}
-      >
+    <div className="pointer-events-auto border-b border-line bg-surface">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-3.5 py-2.5 sm:px-5 sm:py-3 lg:px-6">
         <Link to="/" className="group flex min-w-0 items-center gap-2.5" onClick={closeMenu}>
           <BrandLogo
             variant="mark"
             size="md"
-            className="size-9 shrink-0 rounded-xl ring-1 ring-line sm:size-10"
+            className="size-9 shrink-0 ring-line sm:size-10"
           />
           <span className="min-w-0 leading-tight">
             <span className="block truncate text-sm font-extrabold tracking-tight text-ink sm:text-base">
@@ -107,7 +93,7 @@ export function Header() {
           </Button>
           <button
             type="button"
-            className="inline-flex size-9 items-center justify-center rounded-xl border border-line bg-cream text-ink transition-colors hover:border-brand/40 hover:text-brand lg:hidden focus-ring sm:size-10 sm:rounded-full"
+            className="inline-flex size-9 items-center justify-center rounded-xl border border-line bg-cream text-ink transition-colors hover:border-brand/40 hover:text-brand lg:hidden focus-ring sm:size-10"
             aria-expanded={open}
             aria-controls="site-mobile-nav"
             aria-label={open ? t('إغلاق القائمة', 'Close menu') : t('فتح القائمة', 'Open menu')}
@@ -121,9 +107,9 @@ export function Header() {
       {open && (
         <div
           id="site-mobile-nav"
-          className="mx-3 mt-2 max-w-6xl overflow-hidden rounded-2xl border border-line bg-surface p-3 shadow-[var(--shadow-lift)] sm:mx-auto lg:hidden"
+          className="border-t border-line bg-surface px-3.5 py-3 sm:px-5 lg:hidden"
         >
-          <div className="space-y-1">
+          <div className="mx-auto max-w-6xl space-y-1">
             {nav.map((item) => {
               const Icon = item.icon
               return (
@@ -146,29 +132,24 @@ export function Header() {
                 </NavLink>
               )
             })}
+            <Button
+              variant="primary"
+              className="mt-2 h-11 w-full rounded-xl md:hidden"
+              onClick={() => {
+                closeMenu()
+                navigate('/contact')
+              }}
+            >
+              <MessageCircle className="size-4" />
+              {t('تواصل', 'Contact')}
+            </Button>
           </div>
-          <Button
-            variant="primary"
-            className="mt-2 h-11 w-full rounded-xl md:hidden"
-            onClick={() => {
-              closeMenu()
-              navigate('/contact')
-            }}
-          >
-            <MessageCircle className="size-4" />
-            {t('تواصل', 'Contact')}
-          </Button>
         </div>
       )}
     </div>
   )
 
-  // Home: bar in flow so hero starts flush under it.
-  // Services: floats over hero. Elsewhere: light band.
-  if (isHome) {
-    return <header className="relative z-50 bg-surface">{bar}</header>
-  }
-
+  // Flat full-width bar on every page (no floating pill).
   if (overlayNav) {
     return (
       <header className="pointer-events-none absolute inset-x-0 top-0 z-50">
@@ -177,9 +158,5 @@ export function Header() {
     )
   }
 
-  return (
-    <header className="relative z-50 border-b border-line bg-surface sm:border-0 sm:bg-cream sm:pb-3">
-      {bar}
-    </header>
-  )
+  return <header className="relative z-50 bg-surface">{bar}</header>
 }

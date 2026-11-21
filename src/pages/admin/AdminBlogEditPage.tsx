@@ -10,8 +10,11 @@ import {
   type CmsArticle,
 } from '@/lib/cms'
 import { Button } from '@/components/ui/Button'
-import { FormSuccess, Input, Label, Select, Textarea } from '@/components/ui/Input'
+import { FormSuccess, Input, Label, Textarea } from '@/components/ui/Input'
+import { ModernSelect } from '@/components/ui/ModernSelect'
 import { AdminPageHeader, AdminPanel } from '@/components/admin/AdminUI'
+import { getServiceIcon } from '@/lib/serviceIcons'
+import { categories } from '@/data/services'
 
 function extractHeadings(html: string) {
   const matches = [...html.matchAll(/<h([23])[^>]*>(.*?)<\/h\1>/gi)]
@@ -199,35 +202,50 @@ export function AdminBlogEditPage() {
             </div>
             <div>
               <Label htmlFor="serviceSlug">مرتبط بمهنة</Label>
-              <Select
-                id="serviceSlug"
-                className="mt-1.5 rounded-xl"
-                value={form.serviceSlug}
-                onChange={(e) => set('serviceSlug', e.target.value)}
-              >
-                <option value="">— اختياري —</option>
-                {services.map((s) => (
-                  <option key={s.id} value={s.slug}>
-                    {s.nameAr}
-                  </option>
-                ))}
-              </Select>
+              <div className="mt-1.5">
+                <ModernSelect
+                  id="serviceSlug"
+                  value={form.serviceSlug || ''}
+                  onChange={(value) => set('serviceSlug', value)}
+                  placeholder="— اختياري —"
+                  searchPlaceholder="ابحث عن مهنة..."
+                  ariaLabel="مرتبط بمهنة"
+                  options={[
+                    { value: '', label: '— اختياري —' },
+                    ...services.map((s) => {
+                      const category = categories.find((c) => c.slug === s.categorySlug)
+                      const Icon = getServiceIcon(s.slug, s.categorySlug)
+                      return {
+                        value: s.slug,
+                        label: s.nameAr,
+                        group: category?.nameAr,
+                        icon: <Icon className="size-4" />,
+                      }
+                    }),
+                  ]}
+                />
+              </div>
             </div>
             <div>
               <Label htmlFor="citySlug">مرتبط بمدينة</Label>
-              <Select
-                id="citySlug"
-                className="mt-1.5 rounded-xl"
-                value={form.citySlug || ''}
-                onChange={(e) => set('citySlug', e.target.value || undefined)}
-              >
-                <option value="">— عام للمملكة —</option>
-                {cities.map((c) => (
-                  <option key={c.slug} value={c.slug}>
-                    {c.nameAr}
-                  </option>
-                ))}
-              </Select>
+              <div className="mt-1.5">
+                <ModernSelect
+                  id="citySlug"
+                  value={form.citySlug || ''}
+                  onChange={(value) => set('citySlug', value || undefined)}
+                  placeholder="— عام للمملكة —"
+                  searchPlaceholder="ابحث عن مدينة..."
+                  ariaLabel="مرتبط بمدينة"
+                  options={[
+                    { value: '', label: '— عام للمملكة —' },
+                    ...cities.map((c) => ({
+                      value: c.slug,
+                      label: c.nameAr,
+                      group: c.regionAr,
+                    })),
+                  ]}
+                />
+              </div>
             </div>
           </div>
 
@@ -304,19 +322,23 @@ export function AdminBlogEditPage() {
             </p>
             <div className="mt-3">
               <Label htmlFor="internalTarget">القسم</Label>
-              <Select
-                id="internalTarget"
-                className="mt-1.5 rounded-xl"
-                value={internalTarget}
-                onChange={(e) => setInternalTarget(e.target.value)}
-              >
-                <option value="">— اختر قسمًا —</option>
-                {headings.map((h) => (
-                  <option key={h.id} value={h.id}>
-                    {`H${h.level}: ${h.text}`}
-                  </option>
-                ))}
-              </Select>
+              <div className="mt-1.5">
+                <ModernSelect
+                  id="internalTarget"
+                  value={internalTarget}
+                  onChange={setInternalTarget}
+                  placeholder="— اختر قسمًا —"
+                  searchable={false}
+                  ariaLabel="اختر قسمًا"
+                  options={[
+                    { value: '', label: '— اختر قسمًا —' },
+                    ...headings.map((h) => ({
+                      value: h.id,
+                      label: `H${h.level}: ${h.text}`,
+                    })),
+                  ]}
+                />
+              </div>
             </div>
             <Button
               type="button"
@@ -397,16 +419,21 @@ export function AdminBlogEditPage() {
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <Label htmlFor="category">التصنيف</Label>
-              <Select
-                id="category"
-                className="mt-1.5 rounded-xl"
-                value={form.category}
-                onChange={(e) => set('category', e.target.value as BlogCategory)}
-              >
-                <option value="trades">مهن وخدمات</option>
-                <option value="web-design">تصميم مواقع</option>
-                <option value="seo">SEO</option>
-              </Select>
+              <div className="mt-1.5">
+                <ModernSelect
+                  id="category"
+                  value={form.category}
+                  onChange={(value) => set('category', value as BlogCategory)}
+                  placeholder="التصنيف"
+                  searchable={false}
+                  ariaLabel="التصنيف"
+                  options={[
+                    { value: 'trades', label: 'مهن وخدمات' },
+                    { value: 'web-design', label: 'تصميم مواقع' },
+                    { value: 'seo', label: 'SEO' },
+                  ]}
+                />
+              </div>
             </div>
             <div>
               <Label htmlFor="author">الكاتب</Label>
@@ -433,15 +460,20 @@ export function AdminBlogEditPage() {
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div>
               <Label htmlFor="status">الحالة</Label>
-              <Select
-                id="status"
-                className="mt-1.5 rounded-xl"
-                value={form.status}
-                onChange={(e) => set('status', e.target.value as BlogStatus)}
-              >
-                <option value="draft">مسودة</option>
-                <option value="published">منشور</option>
-              </Select>
+              <div className="mt-1.5">
+                <ModernSelect
+                  id="status"
+                  value={form.status}
+                  onChange={(value) => set('status', value as BlogStatus)}
+                  placeholder="الحالة"
+                  searchable={false}
+                  ariaLabel="الحالة"
+                  options={[
+                    { value: 'draft', label: 'مسودة' },
+                    { value: 'published', label: 'منشور' },
+                  ]}
+                />
+              </div>
             </div>
             <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-line bg-cream/40 px-4 py-3 sm:mt-6">
               <input
@@ -521,13 +553,24 @@ export function AdminBlogEditPage() {
           ) : null}
         </AdminPanel>
 
-        <AdminPanel title="صورة الغلاف" description="تظهر أعلى المقال وفي بطاقات المدونة ومشاركة الروابط.">
+        <AdminPanel
+          title="صورة الغلاف"
+          description="تظهر أعلى المقال وفي بطاقات المدونة. انسخ مسارًا من معرض الصور والصقه هنا."
+          action={
+            <Link
+              to="/admin/media"
+              className="text-xs font-extrabold text-brand hover:text-brand-dark"
+            >
+              فتح معرض الصور
+            </Link>
+          }
+        >
           <Input
             dir="ltr"
             className="rounded-xl"
             value={form.image}
             onChange={(e) => set('image', e.target.value)}
-            placeholder="رابط الصورة أو ارفع من الزر"
+            placeholder="/images/services/... أو ارفع من الزر"
           />
           <input
             type="file"

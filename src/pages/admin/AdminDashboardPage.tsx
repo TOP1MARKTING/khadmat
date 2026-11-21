@@ -3,10 +3,10 @@ import {
   ArrowLeft,
   Briefcase,
   FileText,
+  Images,
   Mail,
   Newspaper,
   Phone,
-  Settings,
   Sparkles,
 } from 'lucide-react'
 import { useSiteSettings } from '@/context/SiteSettingsContext'
@@ -29,10 +29,10 @@ const shortcuts = [
     tone: 'bg-accent/15 text-accent',
   },
   {
-    to: '/admin/settings',
-    icon: Settings,
-    title: 'إعدادات الموقع',
-    desc: 'تواصل وشعار نصي',
+    to: '/admin/media',
+    icon: Images,
+    title: 'معرض الصور',
+    desc: 'كل صور الموقع للنسخ وإعادة الاستخدام',
     tone: 'bg-ink/8 text-ink',
   },
 ] as const
@@ -48,7 +48,7 @@ export function AdminDashboardPage() {
     <div className="space-y-8">
       <AdminPageHeader
         title="لوحة التحكم"
-        description="نظرة سريعة على المحتوى، مع اختصارات لإدارة المهن والمقالات والإعدادات."
+        description="نظرة سريعة على المحتوى، مع اختصارات لإدارة المهن والمقالات."
       />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -94,29 +94,18 @@ export function AdminDashboardPage() {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-line bg-gradient-to-l from-brand to-brand-dark p-5 text-white shadow-[var(--shadow-soft)] sm:p-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-[11px] font-bold tracking-wide text-sand uppercase">بيانات الموقع</p>
-            <h2 className="mt-1 text-lg font-extrabold">{settings.siteNameAr}</h2>
-            <p className="mt-1 max-w-lg text-sm text-white/75">{settings.taglineAr}</p>
-            <div className="mt-3 flex flex-wrap gap-3 text-xs font-bold text-sand">
-              <span className="inline-flex items-center gap-1.5">
-                <Phone className="size-3.5" />
-                <span dir="ltr">{settings.whatsapp}</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <Mail className="size-3.5" />
-                {settings.email}
-              </span>
-            </div>
-          </div>
-          <Link
-            to="/admin/settings"
-            className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-4 text-sm font-extrabold text-brand transition-colors hover:bg-sand-light"
-          >
-            تعديل الإعدادات
-            <ArrowLeft className="size-4" />
-          </Link>
+        <p className="text-[11px] font-bold tracking-wide text-sand uppercase">بيانات الموقع</p>
+        <h2 className="mt-1 text-lg font-extrabold">{settings.siteNameAr}</h2>
+        <p className="mt-1 max-w-lg text-sm text-white/75">{settings.taglineAr}</p>
+        <div className="mt-3 flex flex-wrap gap-3 text-xs font-bold text-sand">
+          <span className="inline-flex items-center gap-1.5">
+            <Phone className="size-3.5" />
+            <span dir="ltr">{settings.whatsapp}</span>
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Mail className="size-3.5" />
+            {settings.email}
+          </span>
         </div>
       </div>
     </div>

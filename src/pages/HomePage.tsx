@@ -8,6 +8,7 @@ import {
   Compass,
   Hammer,
   HardHat,
+  FileText,
   MapPin,
   Search,
   Sparkles,
@@ -47,11 +48,11 @@ const helpPoints = [
     en: 'Learn what each trade does and the services it covers.',
   },
   {
-    icon: MapPin,
-    arTitle: 'ابحث حسب مدينتك',
-    enTitle: 'Search by your city',
-    ar: 'استكشف المعلومات المتعلقة بالخدمات في مدن المملكة.',
-    en: 'Explore service information across Saudi cities.',
+    icon: FileText,
+    arTitle: 'اقرأ مقالات عملية',
+    enTitle: 'Read practical articles',
+    ar: 'نصائح وأخطاء شائعة وأدلة مرتبطة بكل مهنة — بما فيها محتوى محلي عبر المقالات.',
+    en: 'Tips, common mistakes, and guides for each trade — including local context through articles.',
   },
   {
     icon: BookOpen,
@@ -116,18 +117,12 @@ export function HomePage() {
                 'Saedni is your guide to local trades and services in the Kingdom.',
               )}
             </p>
-            <div className="mt-2 flex gap-2">
+            <div className="mt-2">
               <Link
                 to="/services"
-                className="inline-flex h-9 flex-1 items-center justify-center rounded-lg bg-accent px-2.5 text-[11px] font-extrabold text-white"
+                className="inline-flex h-9 w-full items-center justify-center rounded-lg bg-accent px-2.5 text-[11px] font-extrabold text-white"
               >
                 {t('استكشف الخدمات', 'Explore services')}
-              </Link>
-              <Link
-                to="/locations"
-                className="inline-flex h-9 flex-1 items-center justify-center rounded-lg border-2 border-brand px-2.5 text-[11px] font-extrabold text-brand"
-              >
-                {t('اختر مدينتك', 'Choose your city')}
               </Link>
             </div>
             <div className="mt-2.5">
@@ -173,13 +168,6 @@ export function HomePage() {
                 >
                   <Compass className="size-4" />
                   {t('استكشف الخدمات', 'Explore services')}
-                </Link>
-                <Link
-                  to="/locations"
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-white/40 bg-white/12 px-5 text-sm font-extrabold text-white backdrop-blur-md hover:bg-white/20"
-                >
-                  <MapPin className="size-4" />
-                  {t('اختر مدينتك', 'Choose your city')}
                 </Link>
               </div>
             </div>

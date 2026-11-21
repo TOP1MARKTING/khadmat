@@ -5,7 +5,8 @@ import { useCms } from '@/context/CmsContext'
 import { categories } from '@/data/services'
 import { fileToDataUrl, slugify, type CmsService } from '@/lib/cms'
 import { Button } from '@/components/ui/Button'
-import { FormSuccess, Input, Label, Select, Textarea } from '@/components/ui/Input'
+import { FormSuccess, Input, Label, Textarea } from '@/components/ui/Input'
+import { ModernSelect } from '@/components/ui/ModernSelect'
 import { AdminPageHeader, AdminPanel } from '@/components/admin/AdminUI'
 
 function linesToList(text: string) {
@@ -123,18 +124,20 @@ export function AdminServiceEditPage() {
 
           <div className="mt-4">
             <Label htmlFor="category">التصنيف</Label>
-            <Select
-              id="category"
-              className="mt-1.5 rounded-xl"
-              value={form.categorySlug}
-              onChange={(e) => set('categorySlug', e.target.value)}
-            >
-              {categories.map((c) => (
-                <option key={c.slug} value={c.slug}>
-                  {c.nameAr}
-                </option>
-              ))}
-            </Select>
+            <div className="mt-1.5">
+              <ModernSelect
+                id="category"
+                value={form.categorySlug}
+                onChange={(value) => set('categorySlug', value)}
+                placeholder="اختر التصنيف"
+                searchable={false}
+                ariaLabel="التصنيف"
+                options={categories.map((c) => ({
+                  value: c.slug,
+                  label: c.nameAr,
+                }))}
+              />
+            </div>
           </div>
 
           <label className="mt-4 flex cursor-pointer items-center gap-3 rounded-xl border border-line bg-cream/40 px-4 py-3">

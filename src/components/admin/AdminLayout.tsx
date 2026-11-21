@@ -3,11 +3,11 @@ import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import {
   Briefcase,
   ExternalLink,
+  Images,
   LayoutDashboard,
   LogOut,
   Menu,
   Newspaper,
-  Settings,
   X,
 } from 'lucide-react'
 import { useAdminAuth } from '@/context/AdminAuthContext'
@@ -18,7 +18,7 @@ const links = [
   { to: '/admin', end: true, ar: 'لوحة التحكم', icon: LayoutDashboard },
   { to: '/admin/services', end: false, ar: 'المهن', icon: Briefcase },
   { to: '/admin/blog', end: false, ar: 'المدونة', icon: Newspaper },
-  { to: '/admin/settings', end: false, ar: 'إعدادات الموقع', icon: Settings },
+  { to: '/admin/media', end: false, ar: 'معرض الصور', icon: Images },
 ]
 
 export function AdminLayout() {
@@ -76,7 +76,7 @@ export function AdminLayout() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgb(166_123_75_/_0.22),_transparent_55%)]" />
         <div className="relative border-b border-white/10 px-5 py-5">
           <div className="flex items-center gap-3">
-            <BrandLogo variant="mark" size="md" className="size-11 rounded-xl ring-1 ring-white/20" />
+            <BrandLogo variant="mark" size="md" className="size-11 ring-white/20" />
             <div>
               <p className="text-sm font-extrabold text-white">Admin Board</p>
               <p className="text-[11px] font-bold text-sand">ساعدني — لوحة التحكم</p>

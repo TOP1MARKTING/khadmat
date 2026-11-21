@@ -27,7 +27,7 @@ export const cities: City[] = [
       'عاصمة المملكة العربية السعودية ومركزها الأكبر. صفحات خدمات الرياض تغطي التشطيب، الصيانة، النظافة والنقل داخل الأحياء والشمال والشرق والغرب.',
     descriptionEn:
       'Capital of Saudi Arabia. Riyadh service pages cover finishing, maintenance, cleaning, and moving across the city’s districts.',
-    image: img('photo-1486406146926-c627a92ad1ab'),
+    image: '/images/cities/riyadh.jpg',
     featured: true,
   },
   {
@@ -54,7 +54,7 @@ export const cities: City[] = [
       'بوابة البحر الأحمر ومدينة تجارية وسكنيّة كبيرة. صفحات جدة تستهدف السباكة، التكييف، التشطيب، النظافة ونقل العفش.',
     descriptionEn:
       'Red Sea gateway and a major commercial-residential city. Jeddah pages cover plumbing, AC, finishing, cleaning, and moving.',
-    image: img('photo-1448630360428-65456885c650'),
+    image: '/images/cities/jeddah.jpg',
     featured: true,
   },
   {
@@ -66,7 +66,7 @@ export const cities: City[] = [
     regionEn: 'Makkah',
     descriptionAr: 'صفحات محلية لخدمات المنازل والمنشآت في مكة المكرمة والأحياء المحيطة.',
     descriptionEn: 'Local pages for home and facility services in Makkah and surrounding districts.',
-    image: img('photo-1600566753190-17f0baa2a6c3'),
+    image: '/images/cities/makkah.jpg',
     featured: true,
   },
   {
@@ -91,7 +91,7 @@ export const cities: City[] = [
     regionEn: 'Madinah',
     descriptionAr: 'صفحات خدمات منزلية ومنشآت في المدينة المنورة: صيانة، تشطيب، نظافة ونقل.',
     descriptionEn: 'Home and facility service pages in Madinah: maintenance, finishing, cleaning, and moving.',
-    image: img('photo-1600607687939-ce8a6c25118c'),
+    image: '/images/cities/madinah.jpg',
     featured: true,
   },
 
@@ -107,7 +107,7 @@ export const cities: City[] = [
       'مركز الشرقية التجاري. صفحات الدمام تغطي المقاولات، الصيانة، التكييف، النظافة ونقل العفش.',
     descriptionEn:
       'Commercial hub of the Eastern Province. Dammam pages cover contracting, maintenance, AC, cleaning, and moving.',
-    image: img('photo-1503387762-592deb58ef4e'),
+    image: '/images/cities/dammam.jpg',
     featured: true,
   },
   {
@@ -165,7 +165,7 @@ export const cities: City[] = [
     regionEn: 'Asir',
     descriptionAr: 'تغطية لخدمات التشطيب والصيانة والحدائق في أبها والأحياء الجبلية المحيطة.',
     descriptionEn: 'Coverage for finishing, maintenance, and landscaping in Abha and nearby highland districts.',
-    image: img('photo-1416879595882-3373a0480b5b'),
+    image: '/images/cities/abha.jpg',
     featured: true,
   },
   {
@@ -192,7 +192,7 @@ export const cities: City[] = [
       'عاصمة منطقة القصيم. صفحات خدمات بريدة تغطي التشطيب، الصيانة، النظافة والنقل داخل المدينة وأحيائها.',
     descriptionEn:
       'Capital of Al Qassim. Buraydah service pages cover finishing, maintenance, cleaning, and moving across the city.',
-    image: img('photo-1545324418-cc1a3fa10c00'),
+    image: '/images/cities/buraydah.jpg',
     featured: true,
   },
   {

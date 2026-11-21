@@ -48,7 +48,7 @@ export function AdminLoginPage() {
 
         <div className="relative px-10 pt-10">
           <div className="flex items-center gap-3">
-            <BrandLogo variant="mark" size="md" className="size-12 rounded-2xl ring-1 ring-white/25" />
+            <BrandLogo variant="mark" size="md" className="size-12 ring-white/25" />
             <div>
               <p className="text-lg font-extrabold text-white">ساعدني</p>
               <p className="text-xs font-bold text-sand">Admin Board</p>

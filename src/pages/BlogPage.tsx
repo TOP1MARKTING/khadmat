@@ -1,15 +1,18 @@
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { Briefcase } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useCms } from '@/context/CmsContext'
 import { usePageMeta } from '@/hooks/usePageMeta'
+import { categories } from '@/data/services'
+import { getServiceIcon } from '@/lib/serviceIcons'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { Select } from '@/components/ui/Input'
+import { ModernSelect } from '@/components/ui/ModernSelect'
 import { ArticleCard } from '@/components/blog/ArticleCard'
 import { cn } from '@/lib/cn'
 
 export function BlogPage() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { services, publishedArticles } = useCms()
   const [params, setParams] = useSearchParams()
   const serviceFilter = params.get('service') || 'all'
@@ -28,7 +31,35 @@ export function BlogPage() {
     return articles.filter((a) => serviceFilter === 'all' || a.serviceSlug === serviceFilter)
   }, [articles, serviceFilter])
 
-  const serviceOptions = services.filter((s) => articles.some((a) => a.serviceSlug === s.slug))
+  const serviceOptions = useMemo(
+    () => services.filter((s) => articles.some((a) => a.serviceSlug === s.slug)),
+    [articles, services],
+  )
+
+  const selectOptions = useMemo(
+    () => [
+      {
+        value: 'all',
+        label: t('كل المهن', 'All trades'),
+        icon: <Briefcase className="size-4" />,
+      },
+      ...services.map((s) => {
+        const category = categories.find((c) => c.slug === s.categorySlug)
+        const Icon = getServiceIcon(s.slug, s.categorySlug)
+        return {
+          value: s.slug,
+          label: lang === 'ar' ? s.nameAr : s.nameEn,
+          group: category
+            ? lang === 'ar'
+              ? category.nameAr
+              : category.nameEn
+            : undefined,
+          icon: <Icon className="size-4" />,
+        }
+      }),
+    ],
+    [lang, services, t],
+  )
 
   return (
     <div className="section-pad">
@@ -51,10 +82,10 @@ export function BlogPage() {
               type="button"
               onClick={() => setParams({})}
               className={cn(
-                'whitespace-nowrap rounded-md border px-3 py-2 text-sm',
+                'whitespace-nowrap rounded-xl border px-3.5 py-2 text-sm font-bold transition-colors',
                 serviceFilter === 'all'
-                  ? 'border-brand bg-brand/10 text-brand'
-                  : 'border-line text-muted hover:text-ink',
+                  ? 'border-brand bg-brand text-white shadow-soft'
+                  : 'border-line bg-surface text-muted hover:border-brand/35 hover:text-brand',
               )}
             >
               {t('الكل', 'All')}
@@ -65,31 +96,28 @@ export function BlogPage() {
                 type="button"
                 onClick={() => setParams({ service: s.slug })}
                 className={cn(
-                  'whitespace-nowrap rounded-md border px-3 py-2 text-sm',
+                  'whitespace-nowrap rounded-xl border px-3.5 py-2 text-sm font-bold transition-colors',
                   serviceFilter === s.slug
-                    ? 'border-brand bg-brand/10 text-brand'
-                    : 'border-line text-muted hover:text-ink',
+                    ? 'border-brand bg-brand text-white shadow-soft'
+                    : 'border-line bg-surface text-muted hover:border-brand/35 hover:text-brand',
                 )}
               >
-                {s.nameAr}
+                {lang === 'ar' ? s.nameAr : s.nameEn}
               </button>
             ))}
           </div>
 
-          <Select
-            value={serviceFilter}
-            onChange={(e) =>
-              setParams(e.target.value === 'all' ? {} : { service: e.target.value })
-            }
-            className="lg:max-w-xs"
-          >
-            <option value="all">{t('كل المهن', 'All trades')}</option>
-            {services.map((s) => (
-              <option key={s.slug} value={s.slug}>
-                {s.nameAr}
-              </option>
-            ))}
-          </Select>
+          <div className="w-full lg:max-w-xs">
+            <ModernSelect
+              value={serviceFilter}
+              onChange={(value) => setParams(value === 'all' ? {} : { service: value })}
+              options={selectOptions}
+              placeholder={t('كل المهن', 'All trades')}
+              searchPlaceholder={t('ابحث عن مهنة...', 'Search a trade...')}
+              ariaLabel={t('تصفية حسب المهنة', 'Filter by trade')}
+              triggerClassName="h-11 rounded-xl border-line bg-cream/50"
+            />
+          </div>
         </div>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
