@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import {
-  BookOpen,
   Briefcase,
   ChevronLeft,
   Info,
@@ -16,7 +15,6 @@ import { cn } from '@/lib/cn'
 
 const nav = [
   { to: '/services', ar: 'المهن', en: 'Trades', icon: Briefcase },
-  { to: '/blog', ar: 'مقالات', en: 'Articles', icon: BookOpen },
   { to: '/about', ar: 'عن ساعدني', en: 'About', icon: Info },
   { to: '/contact', ar: 'تواصل', en: 'Contact', icon: MessageCircle },
 ]
@@ -57,12 +55,18 @@ export function Header() {
   const bar = (
     <div className="pointer-events-auto border-b border-line bg-surface">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-3.5 py-2.5 sm:px-5 sm:py-3 lg:px-6">
-        <Link to="/" className="group flex min-w-0 items-center gap-2.5" onClick={closeMenu}>
-          <BrandLogo
-            variant="mark"
-            size="md"
-            className="size-9 shrink-0 ring-line sm:size-10"
-          />
+        <Link
+          to="/"
+          className="group flex min-w-0 items-center gap-2.5 focus-ring"
+          onClick={closeMenu}
+        >
+          <span className="inline-flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-brand p-1 ring-1 ring-brand-dark/20 sm:size-11">
+            <BrandLogo
+              variant="header"
+              size="md"
+              className="size-full rounded-xl object-cover shadow-none ring-0"
+            />
+          </span>
           <span className="min-w-0 leading-tight">
             <span className="block truncate text-sm font-extrabold tracking-tight text-ink sm:text-base">
               {t('ساعدني', 'Saedni')}
@@ -84,7 +88,7 @@ export function Header() {
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
           <Button
             size="sm"
-            variant="primary"
+            variant="accent"
             className="!hidden h-9 rounded-full px-4 md:!inline-flex"
             onClick={() => navigate('/contact')}
           >
@@ -93,7 +97,7 @@ export function Header() {
           </Button>
           <button
             type="button"
-            className="inline-flex size-9 items-center justify-center rounded-xl border border-line bg-cream text-ink transition-colors hover:border-brand/40 hover:text-brand lg:hidden focus-ring sm:size-10"
+            className="inline-flex size-9 items-center justify-center rounded-xl border border-line bg-cream text-ink transition-colors hover:border-brand/40 hover:text-brand focus-ring sm:size-10 lg:hidden"
             aria-expanded={open}
             aria-controls="site-mobile-nav"
             aria-label={open ? t('إغلاق القائمة', 'Close menu') : t('فتح القائمة', 'Open menu')}
@@ -107,9 +111,9 @@ export function Header() {
       {open && (
         <div
           id="site-mobile-nav"
-          className="border-t border-line bg-surface px-3.5 py-3 sm:px-5 lg:hidden"
+          className="border-t border-line bg-gradient-to-b from-surface to-cream/40 px-3.5 py-4 sm:px-5 lg:hidden"
         >
-          <div className="mx-auto max-w-6xl space-y-1">
+          <div className="mx-auto max-w-6xl space-y-2">
             {nav.map((item) => {
               const Icon = item.icon
               return (
@@ -119,37 +123,51 @@ export function Header() {
                   onClick={closeMenu}
                   className={({ isActive }) =>
                     cn(
-                      'flex items-center gap-3 rounded-xl px-3 py-3 text-ink transition-colors',
-                      isActive ? 'bg-cream text-brand' : 'hover:bg-cream/80',
+                      'flex items-center gap-3 rounded-2xl border px-3.5 py-3.5 transition-colors',
+                      isActive
+                        ? 'border-brand/25 bg-brand/8 text-brand shadow-[var(--shadow-soft)]'
+                        : 'border-line/80 bg-surface text-ink hover:border-brand/20 hover:bg-cream/80',
                     )
                   }
                 >
-                  <span className="inline-flex size-9 items-center justify-center rounded-lg bg-cream text-brand">
-                    <Icon className="size-4" />
+                  <span
+                    className={cn(
+                      'inline-flex size-10 items-center justify-center rounded-xl',
+                      'bg-cream text-brand',
+                    )}
+                  >
+                    <Icon className="size-5" />
                   </span>
                   <span className="flex-1 text-sm font-extrabold">{t(item.ar, item.en)}</span>
-                  <ChevronLeft className="size-4 opacity-60 rtl:rotate-180" />
+                  <ChevronLeft className="size-4 opacity-50 rtl:rotate-180" />
                 </NavLink>
               )
             })}
+
             <Button
-              variant="primary"
-              className="mt-2 h-11 w-full rounded-xl md:hidden"
+              variant="accent"
+              className="mt-2 h-12 w-full rounded-2xl text-sm font-extrabold shadow-[0_8px_20px_rgba(166,123,75,0.28)]"
               onClick={() => {
                 closeMenu()
                 navigate('/contact')
               }}
             >
               <MessageCircle className="size-4" />
-              {t('تواصل', 'Contact')}
+              {t('تواصل مع Top1Markting', 'Contact Top1Markting')}
             </Button>
+
+            <p className="pt-1 text-center text-[11px] font-bold text-muted">
+              {t(
+                'فكرة وتصميم وإشراف Top1Markting',
+                'Idea, design & supervision by Top1Markting',
+              )}
+            </p>
           </div>
         </div>
       )}
     </div>
   )
 
-  // Flat full-width bar on every page (no floating pill).
   if (overlayNav) {
     return (
       <header className="pointer-events-none absolute inset-x-0 top-0 z-50">

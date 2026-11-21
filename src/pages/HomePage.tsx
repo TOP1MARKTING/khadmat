@@ -30,6 +30,7 @@ import {
 import { ServiceSearch } from '@/components/home/ServiceSearch'
 import { ArticleCard } from '@/components/blog/ArticleCard'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { getServiceIcon } from '@/lib/serviceIcons'
 
 const categoryIcons: Record<string, typeof Hammer> = {
   'construction-finishing': Hammer,
@@ -91,43 +92,50 @@ export function HomePage() {
 
   return (
     <>
-      {/* ===== Mobile first fold: image under glass bar + copy + search ===== */}
-      <section className="flex h-svh flex-col overflow-hidden border-b-4 border-accent sm:hidden">
-        <MobileWideHero
-          index={heroIndex}
-          className="aspect-[16/10] w-full shrink-0"
-        />
-        <div className="flex min-h-0 flex-1 flex-col bg-surface px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2">
-          <div className="mx-auto w-full max-w-md">
-            <p className="mb-1 inline-flex max-w-full items-center gap-1 rounded-full border border-line bg-cream px-2 py-0.5 text-[8px] font-bold tracking-wide text-accent">
-              <HardHat className="size-2.5 shrink-0" />
-              <span className="leading-snug">
-                {t('المهن والخدمات المحلية في السعودية', 'Local trades & services in Saudi Arabia')}
-              </span>
+      {/* ===== Mobile first fold: photo + overlapping modern sheet ===== */}
+      <section className="flex h-svh flex-col overflow-hidden border-b border-line sm:hidden">
+        <div className="relative shrink-0">
+          <MobileWideHero
+            index={heroIndex}
+            showDots={false}
+            className="aspect-[5/3] w-full"
+          />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-surface to-transparent" />
+          <div className="absolute inset-x-0 bottom-4">
+            <HeroSlideDots index={heroIndex} />
+          </div>
+        </div>
+
+        <div className="relative z-10 -mt-5 flex min-h-0 flex-1 flex-col rounded-t-[1.75rem] bg-surface px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-5 shadow-[0_-12px_40px_rgba(23,25,22,0.12)]">
+          <div className="mx-auto flex w-full max-w-md flex-1 flex-col items-center text-center">
+            <p className="text-[11px] font-extrabold tracking-[0.18em] text-accent">
+              {t('ساعدني', 'SAEDNI')}
             </p>
-            <h1 className="text-[1.25rem] font-extrabold leading-[1.2] text-ink">
+            <h1 className="mt-1.5 text-[1.45rem] font-extrabold leading-[1.25] tracking-tight text-ink">
               {t(
                 'تحتاج خدمة لمنزلك؟ ابدأ بفهمها قبل التنفيذ.',
                 'Need a home service? Understand it before you start.',
               )}
             </h1>
-            <p className="mt-1 text-[11px] font-semibold leading-snug text-muted">
+            <p className="mt-2 text-[13px] font-medium leading-relaxed text-muted">
               {t(
-                'ساعدني دليلك للمهن والخدمات المحلية في المملكة.',
-                'Saedni is your guide to local trades and services in the Kingdom.',
+                'دليلك للمهن والخدمات المحلية في المملكة — اختَر المهنة وابدأ.',
+                'Your guide to local trades in the Kingdom — pick a trade and start.',
               )}
             </p>
-            <div className="mt-2">
-              <Link
-                to="/services"
-                className="inline-flex h-9 w-full items-center justify-center rounded-lg bg-accent px-2.5 text-[11px] font-extrabold text-white"
-              >
-                {t('استكشف الخدمات', 'Explore services')}
-              </Link>
-            </div>
-            <div className="mt-2.5">
+
+            <div className="mt-4 w-full">
               <ServiceSearch compact />
             </div>
+
+            <Link
+              to="/services"
+              className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-2xl bg-accent text-[13px] font-extrabold text-white shadow-[0_8px_20px_rgba(166,123,75,0.28)] transition-colors hover:brightness-95"
+            >
+              <Compass className="size-4" />
+              {t('استكشف كل المهن', 'Explore all trades')}
+              <Arrow className="size-3.5 opacity-90" />
+            </Link>
           </div>
         </div>
       </section>
@@ -268,44 +276,82 @@ export function HomePage() {
       </section>
 
       {/* Popular */}
-      <section className="border-y border-line bg-surface section-pad">
-        <div className="container-page">
-          <div className="mb-3 flex items-center gap-2 text-brand">
+      <section className="relative overflow-hidden border-y border-line bg-surface section-pad">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -start-24 top-0 size-72 rounded-full bg-accent/10 blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -end-16 bottom-0 size-56 rounded-full bg-brand/10 blur-3xl"
+        />
+        <div className="container-page relative">
+          <div className="mb-3 flex items-center gap-2 text-accent">
             <Wrench className="size-5" />
-            <p className="text-xs font-bold tracking-wide uppercase">
+            <p className="text-xs font-extrabold tracking-[0.16em]">
               {t('الأكثر طلبًا', 'Most requested')}
             </p>
           </div>
           <SectionHeading
-            title={t('خدمات الناس بتدور عليها في المملكة', 'Services people look for in Saudi Arabia')}
+            title={t(
+              'خدمات الناس بتدور عليها في المملكة',
+              'Services people look for in Saudi Arabia',
+            )}
+            description={t(
+              'أدلة عملية للمهن الأكثر بحثًا — افهم نطاق العمل قبل ما تبدأ.',
+              'Practical guides for the most searched trades — understand the scope before you start.',
+            )}
           />
-          <div className="mt-6 overflow-hidden rounded-xl border-2 border-line bg-cream sm:mt-8">
-            {popular.map((service, index) => (
-              <Link
-                key={service.slug}
-                to={`/services/${service.slug}`}
-                className={`flex items-start justify-between gap-3 px-3.5 py-3.5 transition-colors hover:bg-surface active:bg-surface sm:gap-4 sm:px-5 sm:py-4 ${
-                  index !== 0 ? 'border-t border-line' : ''
-                }`}
-              >
-                <div className="flex gap-3">
-                  <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center border border-accent/40 bg-accent-soft text-xs font-extrabold text-brand">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <div>
-                    <h3 className="font-extrabold text-ink">
+
+          <div className="mt-7 grid gap-3 sm:mt-9 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            {popular.map((service, index) => {
+              const Icon = getServiceIcon(service.slug, service.categorySlug)
+              return (
+                <Link
+                  key={service.slug}
+                  to={`/services/${service.slug}`}
+                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-cream/60 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/40 hover:bg-cream hover:shadow-[0_16px_40px_rgba(23,25,22,0.08)]"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={lang === 'ar' ? service.nameAr : service.nameEn}
+                      className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-ink/10 to-transparent" />
+                    <span className="absolute start-3 top-3 inline-flex size-9 items-center justify-center rounded-xl bg-white/95 text-brand shadow-sm ring-1 ring-black/5">
+                      <Icon className="size-5" />
+                    </span>
+                    <span className="absolute end-3 top-3 rounded-lg bg-ink/70 px-2 py-1 text-[10px] font-extrabold tracking-wide text-white backdrop-blur-sm">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col gap-2 p-4 sm:p-5">
+                    <h3 className="text-base font-extrabold leading-snug text-ink transition-colors group-hover:text-brand sm:text-lg">
                       {lang === 'ar' ? service.nameAr : service.nameEn}
                     </h3>
-                    <p className="mt-1 text-sm text-muted">
+                    <p className="flex-1 text-sm leading-relaxed text-muted line-clamp-2">
                       {lang === 'ar' ? service.shortAr : service.shortEn}
                     </p>
+                    <span className="mt-1 inline-flex items-center gap-1.5 text-sm font-extrabold text-accent">
+                      {t('اقرأ الدليل', 'Read the guide')}
+                      <Arrow className="size-3.5 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
+                    </span>
                   </div>
-                </div>
-                <span className="hidden shrink-0 text-sm font-bold text-accent sm:inline">
-                  {t('تفاصيل', 'Details')}
-                </span>
-              </Link>
-            ))}
+                </Link>
+              )
+            })}
+          </div>
+
+          <div className="mt-7 flex justify-center sm:mt-8">
+            <Link
+              to="/services"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-brand px-5 text-sm font-extrabold text-white shadow-[0_10px_24px_rgba(45,90,61,0.25)] transition-transform hover:scale-[1.02] hover:bg-brand-dark"
+            >
+              {t('استكشف كل المهن', 'Explore all trades')}
+              <Arrow className="size-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -419,40 +465,42 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Guides */}
-      <section className="section-pad">
-        <div className="container-page">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div className="min-w-0">
-              <div className="mb-3 flex items-center gap-2 text-accent">
-                <BookOpen className="size-5 shrink-0" />
-                <p className="text-xs font-bold tracking-wide uppercase">
-                  {t('مقالات', 'Articles')}
-                </p>
+      {/* Guides — only when articles exist */}
+      {recentArticles.length > 0 ? (
+        <section className="section-pad">
+          <div className="container-page">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div className="min-w-0">
+                <div className="mb-3 flex items-center gap-2 text-accent">
+                  <BookOpen className="size-5 shrink-0" />
+                  <p className="text-xs font-bold tracking-wide uppercase">
+                    {t('مقالات', 'Articles')}
+                  </p>
+                </div>
+                <SectionHeading
+                  title={t('مقالات تساعدك قبل التنفيذ', 'Articles that help before execution')}
+                  description={t(
+                    'نكتب عن الأخطاء الشائعة والتجهيز قبل التنفيذ — عشان الباحث يفهم، والصفحة تبقى مفيدة.',
+                    'We write about common mistakes and prep before work — so searchers understand and pages stay useful.',
+                  )}
+                />
               </div>
-              <SectionHeading
-                title={t('مقالات تساعدك قبل التنفيذ', 'Articles that help before execution')}
-                description={t(
-                  'نكتب عن الأخطاء الشائعة والتجهيز قبل التنفيذ — عشان الباحث يفهم، والصفحة تبقى مفيدة.',
-                  'We write about common mistakes and prep before work — so searchers understand and pages stay useful.',
-                )}
-              />
+              <Link
+                to="/blog"
+                className="inline-flex h-11 w-full items-center justify-center gap-1 rounded-lg border-2 border-brand bg-brand px-4 text-sm font-bold text-white hover:bg-brand-dark sm:w-auto"
+              >
+                {t('كل الأدلة', 'All guides')}
+                <Arrow className="size-4" />
+              </Link>
             </div>
-            <Link
-              to="/blog"
-              className="inline-flex h-11 w-full items-center justify-center gap-1 rounded-lg border-2 border-brand bg-brand px-4 text-sm font-bold text-white hover:bg-brand-dark sm:w-auto"
-            >
-              {t('كل الأدلة', 'All guides')}
-              <Arrow className="size-4" />
-            </Link>
+            <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+              {recentArticles.map((article) => (
+                <ArticleCard key={article.slug} article={article} />
+              ))}
+            </div>
           </div>
-          <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-            {recentArticles.map((article) => (
-              <ArticleCard key={article.slug} article={article} />
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </>
   )
 }

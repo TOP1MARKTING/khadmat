@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   Building2,
   Hammer,
+  LayoutGrid,
   Search,
   Sparkles,
   Truck,
@@ -225,60 +226,90 @@ export function ServicesPage() {
               </div>
             </div>
 
-            <div className="flex gap-2 overflow-x-auto p-3 sm:p-4">
-              <button
-                type="button"
-                onClick={() => setParams({})}
-                className={cn(
-                  'inline-flex shrink-0 items-center gap-2 rounded-xl border px-3.5 py-2.5 text-sm font-bold transition-all duration-200',
-                  activeCategory === 'all'
-                    ? 'border-brand bg-brand text-white shadow-soft'
-                    : 'border-line bg-cream/70 text-ink/75 hover:border-brand/35 hover:text-brand',
-                )}
-              >
-                الكل
-                <span
+            <div className="relative p-3 sm:p-4">
+              <p className="mb-2.5 text-[11px] font-extrabold tracking-[0.14em] text-muted">
+                {t('التصنيفات', 'Categories')}
+              </p>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+                <button
+                  type="button"
+                  onClick={() => setParams({})}
                   className={cn(
-                    'rounded-md px-1.5 py-0.5 text-[10px] font-extrabold',
-                    activeCategory === 'all' ? 'bg-white/20 text-white' : 'bg-surface text-muted',
+                    'flex items-center gap-2.5 rounded-2xl border px-3 py-2.5 text-start transition-all duration-200',
+                    activeCategory === 'all'
+                      ? 'border-accent/50 bg-accent text-white shadow-[0_10px_22px_rgba(166,123,75,0.28)]'
+                      : 'border-line bg-cream/50 text-ink hover:border-accent/35 hover:bg-cream',
                   )}
                 >
-                  {categoryCounts.all}
-                </span>
-              </button>
-              {categories.map((cat) => {
-                const Icon = categoryIcons[cat.slug] || Wrench
-                const active = activeCategory === cat.slug
-                return (
-                  <button
-                    key={cat.slug}
-                    type="button"
-                    onClick={() => setParams({ category: cat.slug })}
+                  <span
                     className={cn(
-                      'inline-flex shrink-0 items-center gap-2 rounded-xl border px-3.5 py-2.5 text-sm font-bold transition-all duration-200',
-                      active
-                        ? 'border-brand bg-brand text-white shadow-soft'
-                        : 'border-line bg-cream/70 text-ink/75 hover:border-brand/35 hover:text-brand',
+                      'inline-flex size-9 shrink-0 items-center justify-center rounded-xl',
+                      activeCategory === 'all' ? 'bg-white/20 text-white' : 'bg-surface text-accent',
                     )}
                   >
-                    <Icon className="size-3.5 opacity-80" />
-                    {cat.nameAr}
+                    <LayoutGrid className="size-4" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[13px] font-extrabold leading-snug sm:text-sm">
+                      {t('الكل', 'All')}
+                    </span>
                     <span
                       className={cn(
-                        'rounded-md px-1.5 py-0.5 text-[10px] font-extrabold',
-                        active ? 'bg-white/20 text-white' : 'bg-surface text-muted',
+                        'mt-0.5 block text-[11px] font-bold',
+                        activeCategory === 'all' ? 'text-white/80' : 'text-muted',
                       )}
                     >
-                      {categoryCounts[cat.slug] || 0}
+                      {categoryCounts.all} {t('مهنة', 'trades')}
                     </span>
-                  </button>
-                )
-              })}
+                  </span>
+                </button>
+
+                {categories.map((cat) => {
+                  const Icon = categoryIcons[cat.slug] || Wrench
+                  const active = activeCategory === cat.slug
+                  const count = categoryCounts[cat.slug] || 0
+                  return (
+                    <button
+                      key={cat.slug}
+                      type="button"
+                      onClick={() => setParams({ category: cat.slug })}
+                      className={cn(
+                        'flex items-start gap-2.5 rounded-2xl border px-3 py-2.5 text-start transition-all duration-200',
+                        active
+                          ? 'border-accent/50 bg-accent text-white shadow-[0_10px_22px_rgba(166,123,75,0.28)]'
+                          : 'border-line bg-cream/50 text-ink hover:border-accent/35 hover:bg-cream',
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          'mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-xl',
+                          active ? 'bg-white/20 text-white' : 'bg-surface text-accent',
+                        )}
+                      >
+                        <Icon className="size-4" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-[13px] font-extrabold leading-snug sm:text-sm">
+                          {cat.nameAr}
+                        </span>
+                        <span
+                          className={cn(
+                            'mt-0.5 block text-[11px] font-bold',
+                            active ? 'text-white/80' : 'text-muted',
+                          )}
+                        >
+                          {count} {t('مهنة', 'trades')}
+                        </span>
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
             </div>
           </div>
 
           {activeCat ? (
-            <p className="mt-4 text-sm text-muted">{activeCat.descriptionAr}</p>
+            <p className="mt-4 text-sm leading-relaxed text-muted">{activeCat.descriptionAr}</p>
           ) : null}
         </div>
       </section>

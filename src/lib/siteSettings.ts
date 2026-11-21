@@ -14,13 +14,13 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   siteNameEn: 'Saedni',
   taglineAr: 'نساعد الناس تلاقي خدمتها في مدينتها',
   taglineEn: 'Helping people find services in their city',
-  whatsapp: '+966 5X XXX XXXX',
-  email: 'hello@saedni.sa',
-  coverageAr: 'التغطية: مدن المملكة العربية السعودية.',
-  coverageEn: 'Coverage: cities across the Kingdom of Saudi Arabia.',
+  whatsapp: '+966 54 988 1368',
+  email: 'top1markting.com',
+  coverageAr: 'الرياض · جدة · مكة · الدمام · دبي · أبوظبي · الشارقة',
+  coverageEn: 'Riyadh · Jeddah · Makkah · Dammam · Dubai · Abu Dhabi · Sharjah',
 }
 
-const STORAGE_KEY = 'saedni_site_settings_v1'
+const STORAGE_KEY = 'saedni_site_settings_v2'
 
 export function loadSiteSettings(): SiteSettings {
   try {

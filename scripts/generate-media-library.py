@@ -13,7 +13,7 @@ SKIP = {"favicon.svg", "favicon.png", "icons.svg", "top1markting-logo.png"}
 GROUP_META = {
     "hero": ("hero", "هيرو", "Hero"),
     "services": ("services", "المهن", "Services"),
-    "team": ("team", "الفريق", "Team"),
+    "team": ("team", "عمال المهن", "Trade workers"),
     "cities": ("cities", "المدن", "Cities"),
     "brand": ("brand", "الهوية", "Brand"),
 }
@@ -91,8 +91,8 @@ def main() -> None:
             label_ar = BRAND_AR.get(stem, stem)
             label_en = stem.replace("-", " ").title()
         elif group == "team":
-            label_ar = stem.replace("team-", "فريق ").replace("-", " ")
-            label_en = stem.replace("-", " ").title()
+            label_ar = stem.replace("team-", "عمال ").replace("-", " ")
+            label_en = stem.replace("team-", "Workers ").replace("-", " ").title()
         else:
             label_ar = (
                 stem.replace("hero-", "هيرو ")
@@ -120,7 +120,7 @@ def main() -> None:
         "  { id: 'brand', nameAr: 'الهوية', nameEn: 'Brand' },",
         "  { id: 'hero', nameAr: 'هيرو', nameEn: 'Hero' },",
         "  { id: 'services', nameAr: 'المهن', nameEn: 'Services' },",
-        "  { id: 'team', nameAr: 'الفريق', nameEn: 'Team' },",
+        "  { id: 'team', nameAr: 'عمال المهن', nameEn: 'Trade workers' },",
         "  { id: 'cities', nameAr: 'المدن', nameEn: 'Cities' },",
         "]",
         "",

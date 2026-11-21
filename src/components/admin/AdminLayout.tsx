@@ -76,7 +76,7 @@ export function AdminLayout() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgb(166_123_75_/_0.22),_transparent_55%)]" />
         <div className="relative border-b border-white/10 px-5 py-5">
           <div className="flex items-center gap-3">
-            <BrandLogo variant="mark" size="md" className="size-11 ring-white/20" />
+            <BrandLogo variant="mark-light" size="md" className="size-11 bg-brand ring-white/20" />
             <div>
               <p className="text-sm font-extrabold text-white">Admin Board</p>
               <p className="text-[11px] font-bold text-sand">ساعدني — لوحة التحكم</p>
@@ -163,7 +163,7 @@ export function AdminLayout() {
           <div className="absolute inset-y-0 start-0 flex w-[min(100%,300px)] flex-col bg-gradient-to-b from-ink via-ink to-brand-dark shadow-[var(--shadow-lift)]">
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-4">
               <div className="flex items-center gap-3">
-                <BrandLogo variant="mark" size="md" className="size-10 rounded-xl ring-1 ring-white/20" />
+                <BrandLogo variant="mark-light" size="md" className="size-10 rounded-full bg-brand ring-1 ring-white/20" />
                 <div>
                   <p className="text-sm font-extrabold text-white">Admin Board</p>
                   <p className="text-[11px] font-bold text-sand">ساعدني</p>

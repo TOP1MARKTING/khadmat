@@ -55,6 +55,7 @@ export function BlogPage() {
               : category.nameEn
             : undefined,
           icon: <Icon className="size-4" />,
+          keywords: [s.nameAr, s.nameEn, s.slug, s.slug.replace(/-/g, ' ')],
         }
       }),
     ],
@@ -120,11 +121,17 @@ export function BlogPage() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((article) => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
-        </div>
+        {filtered.length > 0 ? (
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((article) => (
+              <ArticleCard key={article.id} article={article} />
+            ))}
+          </div>
+        ) : (
+          <p className="mt-10 rounded-2xl border border-dashed border-line bg-cream/40 px-4 py-12 text-center text-sm text-muted">
+            {t('لا توجد مقالات حاليًا.', 'No articles yet.')}
+          </p>
+        )}
       </div>
     </div>
   )

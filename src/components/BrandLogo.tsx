@@ -1,6 +1,6 @@
 import { cn } from '@/lib/cn'
 
-type Variant = 'mark' | 'lockup' | 'lockup-dark'
+type Variant = 'mark' | 'mark-light' | 'header' | 'lockup' | 'lockup-dark'
 
 type Props = {
   className?: string
@@ -22,12 +22,15 @@ const lockupHeights = {
 
 const sources: Record<Variant, string> = {
   mark: '/logo.png',
+  'mark-light': '/logo-light.png',
+  header: '/logo-header.png',
   lockup: '/logo-lockup-light.png',
   'lockup-dark': '/logo-lockup-dark.png',
 }
 
 export function BrandLogo({ className, variant = 'mark', size = 'md' }: Props) {
-  const isLockup = variant !== 'mark'
+  const isMark =
+    variant === 'mark' || variant === 'mark-light' || variant === 'header'
 
   return (
     <img
@@ -35,12 +38,14 @@ export function BrandLogo({ className, variant = 'mark', size = 'md' }: Props) {
       alt="ساعدني | Saedni"
       className={cn(
         'shrink-0',
-        isLockup
-          ? cn(lockupHeights[size], 'w-auto object-contain')
-          : cn(
+        isMark
+          ? cn(
               markSizes[size],
-              'rounded-full object-cover shadow-sm ring-1 ring-black/10',
-            ),
+              variant === 'header'
+                ? 'rounded-2xl object-cover shadow-sm ring-1 ring-black/10'
+                : 'rounded-full object-cover shadow-sm ring-1 ring-black/10',
+            )
+          : cn(lockupHeights[size], 'w-auto object-contain'),
         className,
       )}
     />

@@ -2836,7 +2836,12 @@ export const services: Service[] = [
 <p>It suits homeowners and villa owners, rest houses, residential compounds, hotels and commercial sites, schools and offices, and owners of small or large outdoor spaces.</p>
 <p>Quality shows in plants suited to the local climate, placement by sun needs, suitable irrigation, proper soil prep, good drainage, sizes that fit the space, organized paths and seating, and easy access for maintenance.</p>
 <p>Stages: survey and measure → study soil and sun exposure → design and plant selection → prepare soil → irrigation network → plant → lawn and paths → lighting and décor → check irrigation and drainage → hand over with care guidance.</p>`,
-    gallery: ['/images/services/landscaping.jpg'],
+    gallery: [
+      '/images/services/landscaping.jpg',
+      '/images/hero/hero-13-landscaping-desktop.jpg',
+      '/images/hero/hero-13-landscaping.jpg',
+      '/images/team/team-01-villas.png',
+    ],
     benefitsAr: [
       'مساحة خارجية أوضح بالتصميم المناسب للمناخ والمساحة',
       'ري وتصريف مدروسان يقللان الهدر والأضرار',

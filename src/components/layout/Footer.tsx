@@ -6,7 +6,6 @@ import { BrandLogo } from '@/components/BrandLogo'
 
 const links = [
   { to: '/services', ar: 'المهن', en: 'Trades' },
-  { to: '/blog', ar: 'مقالات', en: 'Articles' },
   { to: '/about', ar: 'عن ساعدني', en: 'About' },
   { to: '/contact', ar: 'تواصل', en: 'Contact' },
 ]
@@ -19,13 +18,16 @@ export function Footer() {
   return (
     <footer className="border-t-4 border-accent bg-ink text-white">
       <div className="container-page flex flex-col items-center py-10 text-center sm:py-12">
-        <Link to="/" className="inline-flex items-center justify-center focus-ring">
+        <Link
+          to="/"
+          className="inline-flex flex-col items-center gap-3 focus-ring"
+        >
           <BrandLogo
-            variant="lockup"
+            variant="mark-light"
             size="lg"
-            className="h-[5.5rem] max-h-[5.5rem] sm:h-28 sm:max-h-28"
+            className="size-20 rounded-full bg-brand object-cover ring-2 ring-white/20 sm:size-24"
           />
-          <span className="sr-only">
+          <span className="text-lg font-extrabold tracking-tight text-white sm:text-xl">
             {lang === 'ar' ? settings.siteNameAr : settings.siteNameEn}
           </span>
         </Link>
@@ -59,29 +61,38 @@ export function Footer() {
             </button>{' '}
             {new Date().getFullYear()}{' '}
             {lang === 'ar' ? settings.siteNameAr : settings.siteNameEn}
-            <span className="mx-1.5 text-white/25">·</span>
-            <span dir="ltr">{settings.whatsapp}</span>
           </p>
 
-          <a
-            href="https://top1markting.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[#1a2744] shadow-[var(--shadow-soft)] transition-transform hover:scale-[1.02] focus-ring"
-            aria-label={t('إشراف وتصميم Top1Markting', 'Designed & built by Top1Markting')}
-          >
-            <img
-              src="/top1markting-logo.png"
-              alt="Top1Markting"
-              className="h-6 w-auto shrink-0 object-contain"
-            />
-            <span className="text-xs font-bold">
-              {t('إشراف وتصميم', 'Designed by')} Top
-              <span className="text-[#f0a11a]">1</span>
-              Markting
-            </span>
-            <ExternalLink className="size-3 shrink-0 opacity-70" aria-hidden />
-          </a>
+          <div className="flex flex-col items-center gap-2">
+            <p className="max-w-sm text-center text-[11px] leading-relaxed text-white/50">
+              {t(
+                'الفكرة · التصميم · التنفيذ · الإشراف — شركة Top1Markting',
+                'Idea · design · build · supervision — Top1Markting',
+              )}
+            </p>
+            <a
+              href="https://top1markting.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[#1a2744] shadow-[var(--shadow-soft)] transition-transform hover:scale-[1.02] focus-ring"
+              aria-label={t(
+                'فكرة وتصميم وإشراف Top1Markting',
+                'Idea, design & supervision by Top1Markting',
+              )}
+            >
+              <img
+                src="/top1markting-logo.png"
+                alt="Top1Markting"
+                className="h-6 w-auto shrink-0 object-contain"
+              />
+              <span className="text-xs font-bold">
+                {t('فكرة وتصميم وإشراف', 'Idea, design & supervision')} Top
+                <span className="text-[#f0a11a]">1</span>
+                Markting
+              </span>
+              <ExternalLink className="size-3 shrink-0 opacity-70" aria-hidden />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

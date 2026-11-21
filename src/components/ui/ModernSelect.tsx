@@ -12,12 +12,19 @@ import { createPortal } from 'react-dom'
 import { Check, ChevronDown, Search } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { cn } from '@/lib/cn'
+import {
+  findHighlightRange,
+  matchesSearch,
+  normalizeSearchText,
+} from '@/lib/searchText'
 
 export type SelectOption = {
   value: string
   label: string
   group?: string
   icon?: ReactNode
+  /** Extra terms for typeahead (aliases, EN name, slug…) */
+  keywords?: string[]
 }
 
 type Props = {
@@ -46,6 +53,54 @@ const GAP = 8
 const SEARCH_BLOCK = 62
 const EDGE = 12
 
+function optionMatches(option: SelectOption, query: string) {
+  if (matchesSearch(option.label, query)) return true
+  if (matchesSearch(option.group, query)) return true
+  return (option.keywords || []).some((k) => matchesSearch(k, query))
+}
+
+function rankOption(option: SelectOption, query: string) {
+  const q = normalizeSearchText(query)
+  if (!q) return 0
+  const label = normalizeSearchText(option.label)
+  if (label.startsWith(q)) return 0
+  if (label.split(' ').some((w) => w.startsWith(q))) return 1
+  if (label.includes(q)) return 2
+  return 3
+}
+
+function HighlightedLabel({
+  label,
+  query,
+  active,
+}: {
+  label: string
+  query: string
+  active: boolean
+}) {
+  const range = findHighlightRange(label, query)
+  if (!range) {
+    return <span className="truncate text-start font-medium">{label}</span>
+  }
+  const before = label.slice(0, range.start)
+  const match = label.slice(range.start, range.end)
+  const after = label.slice(range.end)
+  return (
+    <span className="truncate text-start font-medium">
+      {before}
+      <mark
+        className={cn(
+          'rounded px-0.5 font-extrabold',
+          active ? 'bg-white/25 text-inherit' : 'bg-accent/25 text-ink',
+        )}
+      >
+        {match}
+      </mark>
+      {after}
+    </span>
+  )
+}
+
 export function ModernSelect({
   value,
   onChange,
@@ -72,13 +127,11 @@ export function ModernSelect({
   const selected = options.find((o) => o.value === value)
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
+    const q = query.trim()
     if (!q) return options
-    return options.filter(
-      (o) =>
-        o.label.toLowerCase().includes(q) ||
-        (o.group && o.group.toLowerCase().includes(q)),
-    )
+    return options
+      .filter((o) => optionMatches(o, q))
+      .sort((a, b) => rankOption(a, q) - rankOption(b, q))
   }, [options, query])
 
   const groups = useMemo(() => {
@@ -99,11 +152,10 @@ export function ModernSelect({
     const vh = window.innerHeight
     const spaceBelow = vh - rect.bottom - GAP - EDGE
     const spaceAbove = rect.top - GAP - EDGE
-    // Prefer opening upward on phones when the field sits low
     const preferUp = spaceBelow < 220 && spaceAbove > spaceBelow
     const placement: 'up' | 'down' = preferUp ? 'up' : 'down'
     const available = Math.max(placement === 'down' ? spaceBelow : spaceAbove, 160)
-    const panelCap = Math.min(available, window.innerWidth < 640 ? 240 : 300)
+    const panelCap = Math.min(available, window.innerWidth < 640 ? 260 : 320)
     const maxHeight = Math.max(panelCap, 160)
 
     setPos({
@@ -127,7 +179,7 @@ export function ModernSelect({
       window.removeEventListener('resize', onScroll)
       window.removeEventListener('scroll', onScroll, true)
     }
-  }, [open])
+  }, [open, filtered.length, query])
 
   useEffect(() => {
     const onPointerDown = (event: MouseEvent) => {
@@ -154,18 +206,21 @@ export function ModernSelect({
 
   useEffect(() => {
     if (!open) return
-    const selectedIdx = filtered.findIndex((o) => o.value === value)
-    setActiveIndex(selectedIdx >= 0 ? selectedIdx : 0)
     if (searchable) {
       window.setTimeout(() => searchRef.current?.focus(), 10)
     }
-  }, [open, searchable, filtered, value])
+  }, [open, searchable])
+
+  useEffect(() => {
+    if (!open) return
+    setActiveIndex(0)
+  }, [query, open])
 
   useEffect(() => {
     if (!open) return
     const el = listRef.current?.querySelector<HTMLElement>(`[data-index="${activeIndex}"]`)
     el?.scrollIntoView({ block: 'nearest' })
-  }, [activeIndex, open])
+  }, [activeIndex, open, filtered])
 
   const pick = (next: string) => {
     onChange(next)
@@ -174,15 +229,19 @@ export function ModernSelect({
   }
 
   const onListKeyDown = (event: ReactKeyboardEvent) => {
-    if (!filtered.length) return
     if (event.key === 'ArrowDown') {
       event.preventDefault()
+      event.stopPropagation()
+      if (!filtered.length) return
       setActiveIndex((i) => (i + 1) % filtered.length)
     } else if (event.key === 'ArrowUp') {
       event.preventDefault()
+      event.stopPropagation()
+      if (!filtered.length) return
       setActiveIndex((i) => (i - 1 + filtered.length) % filtered.length)
     } else if (event.key === 'Enter') {
       event.preventDefault()
+      event.stopPropagation()
       const option = filtered[activeIndex]
       if (option) pick(option.value)
     }
@@ -233,8 +292,18 @@ export function ModernSelect({
                       'w-full rounded-xl border border-line bg-surface py-2.5 text-sm text-ink placeholder:text-muted-soft focus-ring',
                       isAr ? 'pr-10 pl-3' : 'pl-10 pr-3',
                     )}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
                   />
                 </div>
+                {query.trim() ? (
+                  <p className="mt-1.5 px-1 text-[11px] font-bold text-muted">
+                    {filtered.length
+                      ? t(`${filtered.length} نتيجة`, `${filtered.length} result(s)`)
+                      : t('لا توجد نتائج', 'No results')}
+                  </p>
+                ) : null}
               </div>
             )}
 
@@ -295,9 +364,11 @@ export function ModernSelect({
                                 {option.icon}
                               </span>
                             ) : null}
-                            <span className="truncate text-start font-medium">
-                              {option.label}
-                            </span>
+                            <HighlightedLabel
+                              label={option.label}
+                              query={query}
+                              active={active}
+                            />
                           </span>
                           {active && <Check className="size-4 shrink-0 opacity-90" />}
                         </button>
@@ -325,8 +396,9 @@ export function ModernSelect({
           setOpen((v) => {
             const next = !v
             if (next) {
-              // Position syncs in layout effect; seed immediately for first paint
               window.requestAnimationFrame(updatePos)
+            } else {
+              setQuery('')
             }
             return next
           })

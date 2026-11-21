@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Images } from 'lucide-react'
 import { useCms } from '@/context/CmsContext'
 import { cities } from '@/data/cities'
 import {
@@ -13,6 +14,7 @@ import { Button } from '@/components/ui/Button'
 import { FormSuccess, Input, Label, Textarea } from '@/components/ui/Input'
 import { ModernSelect } from '@/components/ui/ModernSelect'
 import { AdminPageHeader, AdminPanel } from '@/components/admin/AdminUI'
+import { MediaPickerModal } from '@/components/admin/MediaPickerModal'
 import { getServiceIcon } from '@/lib/serviceIcons'
 import { categories } from '@/data/services'
 
@@ -45,6 +47,9 @@ export function AdminBlogEditPage() {
   const [internalTarget, setInternalTarget] = useState('')
   const [imgAlt, setImgAlt] = useState('')
   const [imgCaption, setImgCaption] = useState('')
+  const [galleryOpen, setGalleryOpen] = useState(false)
+  const [galleryMode, setGalleryMode] = useState<'inline' | 'cover'>('inline')
+  const [pendingGallerySrc, setPendingGallerySrc] = useState('')
 
   if (!isNew && !existing) return <Navigate to="/admin/blog" replace />
 
@@ -102,9 +107,7 @@ export function AdminBlogEditPage() {
     insertAtCursor(`<a href="#${internalTarget}" class="text-brand underline">${text}</a>`)
   }
 
-  const insertImage = async (file: File | null, atEnd: boolean) => {
-    if (!file) return
-    const url = await fileToDataUrl(file)
+  const insertImageHtml = (url: string, atEnd: boolean) => {
     const alt = imgAlt || 'صورة المقال'
     const caption = imgCaption
       ? `<figcaption class="mt-2 text-sm text-muted">${imgCaption}</figcaption>`
@@ -114,6 +117,17 @@ export function AdminBlogEditPage() {
     else insertAtCursor(html)
     setImgAlt('')
     setImgCaption('')
+    setPendingGallerySrc('')
+  }
+
+  const insertImage = async (file: File | null, atEnd: boolean) => {
+    if (pendingGallerySrc) {
+      insertImageHtml(pendingGallerySrc, atEnd)
+      return
+    }
+    if (!file) return
+    const url = await fileToDataUrl(file)
+    insertImageHtml(url, atEnd)
   }
 
   const onSubmit = (e: FormEvent, status?: BlogStatus) => {
@@ -353,7 +367,9 @@ export function AdminBlogEditPage() {
 
           <div className="mt-4 rounded-xl border border-line bg-cream/50 p-4">
             <h3 className="text-sm font-extrabold text-ink">صور داخل المقال</h3>
-            <p className="mt-1 text-xs text-muted">ارفع صورة وحدد مكانها: عند المؤشر أو في نهاية المقال.</p>
+            <p className="mt-1 text-xs text-muted">
+              اختَر من المعرض أو ارفع صورة، ثم حدّد المكان: عند المؤشر أو نهاية المقال.
+            </p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <div>
                 <Label htmlFor="imgAlt">وصف الصورة (Alt)</Label>
@@ -374,14 +390,54 @@ export function AdminBlogEditPage() {
                 />
               </div>
             </div>
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button
+                type="button"
+                variant="primary"
+                size="sm"
+                className="rounded-xl"
+                onClick={() => {
+                  setGalleryMode('inline')
+                  setGalleryOpen(true)
+                }}
+              >
+                <Images className="size-3.5" />
+                اختيار من المعرض
+              </Button>
+            </div>
+
+            {pendingGallerySrc ? (
+              <div className="mt-3 flex items-center gap-3 rounded-xl border border-brand/25 bg-surface p-2.5">
+                <img
+                  src={pendingGallerySrc}
+                  alt=""
+                  className="size-14 shrink-0 rounded-lg object-cover ring-1 ring-line"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-extrabold text-ink">صورة مختارة من المعرض</p>
+                  <p className="mt-0.5 truncate font-mono text-[11px] text-muted" dir="ltr">
+                    {pendingGallerySrc}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="shrink-0 text-xs font-bold text-muted hover:text-brand"
+                  onClick={() => setPendingGallerySrc('')}
+                >
+                  إزالة
+                </button>
+              </div>
+            ) : null}
+
             <input
               type="file"
               accept="image/*"
               className="mt-3 block w-full text-sm text-muted file:me-3 file:rounded-lg file:border-0 file:bg-brand file:px-3 file:py-2 file:text-xs file:font-bold file:text-white"
               id="inline-image"
-              onChange={async (e) => {
+              onChange={(e) => {
                 const file = e.target.files?.[0] || null
-                ;(e.target as HTMLInputElement).dataset.ready = file ? '1' : ''
+                if (file) setPendingGallerySrc('')
               }}
             />
             <div className="mt-3 flex flex-wrap gap-2">
@@ -555,14 +611,19 @@ export function AdminBlogEditPage() {
 
         <AdminPanel
           title="صورة الغلاف"
-          description="تظهر أعلى المقال وفي بطاقات المدونة. انسخ مسارًا من معرض الصور والصقه هنا."
+          description="تظهر أعلى المقال وفي بطاقات المدونة. اختَر من المعرض أو الصق المسار."
           action={
-            <Link
-              to="/admin/media"
-              className="text-xs font-extrabold text-brand hover:text-brand-dark"
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 text-xs font-extrabold text-brand hover:text-brand-dark"
+              onClick={() => {
+                setGalleryMode('cover')
+                setGalleryOpen(true)
+              }}
             >
-              فتح معرض الصور
-            </Link>
+              <Images className="size-3.5" />
+              اختيار من المعرض
+            </button>
           }
         >
           <Input
@@ -650,6 +711,21 @@ export function AdminBlogEditPage() {
           </Button>
         </div>
       </form>
+
+      <MediaPickerModal
+        open={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+        title={galleryMode === 'cover' ? 'اختر صورة الغلاف' : 'اختر صورة للمقال'}
+        onSelect={(asset) => {
+          if (galleryMode === 'cover') {
+            set('image', asset.src)
+            if (!form.imageAltAr) set('imageAltAr', asset.labelAr)
+            return
+          }
+          setPendingGallerySrc(asset.src)
+          if (!imgAlt) setImgAlt(asset.labelAr)
+        }}
+      />
     </div>
   )
 }

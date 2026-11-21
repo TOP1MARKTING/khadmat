@@ -86,9 +86,11 @@ export function HeroBackground({ index }: { index: number }) {
 export function MobileWideHero({
   index,
   className,
+  showDots = true,
 }: {
   index: number
   className?: string
+  showDots?: boolean
 }) {
   return (
     <div
@@ -110,9 +112,12 @@ export function MobileWideHero({
           />
         </div>
       ))}
-      <div className="absolute inset-x-0 bottom-2">
-        <HeroSlideDots index={index} />
-      </div>
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(23,25,22,0.35)_78%,rgba(23,25,22,0.55)_100%)]" />
+      {showDots ? (
+        <div className="absolute inset-x-0 bottom-3">
+          <HeroSlideDots index={index} />
+        </div>
+      ) : null}
     </div>
   )
 }
