@@ -284,3 +284,29 @@ export async function fileToDataUrl(file: File): Promise<string> {
 export function articleHasCompany(article: Pick<CmsArticle, 'companyName'>) {
   return Boolean(article.companyName?.trim())
 }
+
+/** Remove undefined fields so Firestore setDoc accepts the payload. */
+export function normalizeForFirestore<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map((item) =>
+      item && typeof item === 'object'
+        ? normalizeForFirestore(item)
+        : item,
+    ) as T
+  }
+  if (!value || typeof value !== 'object') return value
+  const out: Record<string, unknown> = {}
+  for (const [key, v] of Object.entries(value as Record<string, unknown>)) {
+    if (v === undefined) continue
+    if (Array.isArray(v)) {
+      out[key] = v.map((item) =>
+        item && typeof item === 'object' ? normalizeForFirestore(item) : item,
+      )
+    } else if (v && typeof v === 'object' && !(v instanceof Date)) {
+      out[key] = normalizeForFirestore(v)
+    } else {
+      out[key] = v
+    }
+  }
+  return out as T
+}

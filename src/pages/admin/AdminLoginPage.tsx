@@ -20,12 +20,13 @@ const highlights = [
 ]
 
 export function AdminLoginPage() {
-  const { isAuthenticated, login } = useAdminAuth()
+  const { isAuthenticated, login, authNote } = useAdminAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [busy, setBusy] = useState(false)
 
   const from =
     (location.state as { from?: string } | null)?.from &&
@@ -37,14 +38,20 @@ export function AdminLoginPage() {
     return <Navigate to={from} replace />
   }
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    const ok = login(password)
-    if (!ok) {
-      setError('كلمة المرور غير صحيحة')
-      return
+    setBusy(true)
+    setError('')
+    try {
+      const ok = await login(password)
+      if (!ok) {
+        setError('كلمة المرور غير صحيحة')
+        return
+      }
+      navigate(from, { replace: true })
+    } finally {
+      setBusy(false)
     }
-    navigate(from, { replace: true })
   }
 
   return (
@@ -188,10 +195,17 @@ export function AdminLoginPage() {
                   type="submit"
                   className="h-12 w-full rounded-2xl text-sm font-extrabold shadow-[0_10px_24px_rgba(45,90,61,0.28)]"
                   variant="primary"
+                  disabled={busy}
                 >
-                  دخول إلى اللوحة
+                  {busy ? 'جاري الدخول…' : 'دخول إلى اللوحة'}
                 </Button>
               </form>
+
+              {authNote ? (
+                <p className="mt-4 text-center text-[11px] font-bold leading-relaxed text-muted">
+                  {authNote}
+                </p>
+              ) : null}
 
               <p className="mt-6 text-center text-[11px] font-bold text-muted">
                 فكرة وتصميم وإشراف{' '}

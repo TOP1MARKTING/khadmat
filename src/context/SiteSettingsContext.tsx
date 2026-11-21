@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -13,12 +14,17 @@ import {
   saveSiteSettings,
   type SiteSettings,
 } from '@/lib/siteSettings'
+import { isFirebaseConfigured } from '@/lib/firebase'
+import {
+  fetchSiteSettingsFromFirestore,
+  saveSiteSettingsToFirestore,
+} from '@/lib/firestoreData'
 
 type SiteSettingsContextValue = {
   settings: SiteSettings
-  updateSettings: (next: Partial<SiteSettings>) => void
-  replaceSettings: (next: SiteSettings) => void
-  resetSettings: () => void
+  updateSettings: (next: Partial<SiteSettings>) => Promise<void>
+  replaceSettings: (next: SiteSettings) => Promise<void>
+  resetSettings: () => Promise<void>
 }
 
 const SiteSettingsContext = createContext<SiteSettingsContextValue | null>(null)
@@ -26,22 +32,54 @@ const SiteSettingsContext = createContext<SiteSettingsContextValue | null>(null)
 export function SiteSettingsProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<SiteSettings>(() => loadSiteSettings())
 
-  const updateSettings = useCallback((next: Partial<SiteSettings>) => {
+  useEffect(() => {
+    if (!isFirebaseConfigured()) return
+    void (async () => {
+      try {
+        const remote = await fetchSiteSettingsFromFirestore()
+        if (remote) {
+          saveSiteSettings(remote)
+          setSettings(remote)
+        }
+      } catch (err) {
+        console.warn(err)
+      }
+    })()
+  }, [])
+
+  const updateSettings = useCallback(async (next: Partial<SiteSettings>) => {
     setSettings((prev) => {
       const merged = { ...prev, ...next }
       saveSiteSettings(merged)
+      if (isFirebaseConfigured()) {
+        void saveSiteSettingsToFirestore(merged).catch(console.error)
+      }
       return merged
     })
   }, [])
 
-  const replaceSettings = useCallback((next: SiteSettings) => {
+  const replaceSettings = useCallback(async (next: SiteSettings) => {
     saveSiteSettings(next)
     setSettings(next)
+    if (isFirebaseConfigured()) {
+      try {
+        await saveSiteSettingsToFirestore(next)
+      } catch (err) {
+        console.error(err)
+      }
+    }
   }, [])
 
-  const resetSettings = useCallback(() => {
+  const resetSettings = useCallback(async () => {
     const defaults = resetSiteSettings()
     setSettings(defaults)
+    if (isFirebaseConfigured()) {
+      try {
+        await saveSiteSettingsToFirestore(defaults)
+      } catch (err) {
+        console.error(err)
+      }
+    }
   }, [])
 
   const value = useMemo(

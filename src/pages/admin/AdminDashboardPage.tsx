@@ -1,17 +1,23 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowLeft,
   Briefcase,
+  CloudUpload,
   FileText,
   Images,
   Mail,
   Newspaper,
   Phone,
+  RefreshCw,
   Sparkles,
 } from 'lucide-react'
 import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { useCms } from '@/context/CmsContext'
 import { AdminPageHeader, AdminStatCard } from '@/components/admin/AdminUI'
+import { Button } from '@/components/ui/Button'
+import { isFirebaseConfigured } from '@/lib/firebase'
+import { exportAllDataToFirestore } from '@/lib/firestoreData'
 
 const shortcuts = [
   {
@@ -39,16 +45,42 @@ const shortcuts = [
 
 export function AdminDashboardPage() {
   const { settings } = useSiteSettings()
-  const { services, articles } = useCms()
+  const { services, articles, cmsSource, cmsError, refreshFromFirebase } = useCms()
   const published = articles.filter((a) => a.status === 'published').length
   const drafts = articles.filter((a) => a.status === 'draft').length
   const popular = services.filter((s) => s.popular).length
+  const [exporting, setExporting] = useState(false)
+  const [exportMsg, setExportMsg] = useState('')
+
+  const onExport = async () => {
+    setExporting(true)
+    setExportMsg('')
+    try {
+      const result = await exportAllDataToFirestore({
+        services,
+        articles,
+        settings,
+      })
+      setExportMsg(
+        `تم التصدير بدون حذف: ${result.services} مهنة · ${result.articles} مقال · ${result.cities} مدينة · ${result.categories} تصنيف · ${result.media} صورة · ${result.assets} أصل`,
+      )
+      await refreshFromFirebase()
+    } catch (err) {
+      setExportMsg(
+        err instanceof Error
+          ? `فشل التصدير: ${err.message}`
+          : 'فشل التصدير إلى Firebase',
+      )
+    } finally {
+      setExporting(false)
+    }
+  }
 
   return (
     <div className="space-y-8">
       <AdminPageHeader
         title="لوحة التحكم"
-        description="نظرة سريعة على المحتوى، مع اختصارات لإدارة المهن والمقالات."
+        description="نظرة سريعة على المحتوى، مع اختصارات وإدارة المزامنة مع Firebase."
       />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -63,6 +95,61 @@ export function AdminDashboardPage() {
           hint={settings.email}
         />
       </div>
+
+      {isFirebaseConfigured() ? (
+        <div className="rounded-2xl border border-line bg-surface p-5 shadow-[var(--shadow-soft)]">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h2 className="text-sm font-extrabold text-ink">Firebase</h2>
+              <p className="mt-1 text-sm text-muted">
+                المصدر الحالي:{' '}
+                <span className="font-extrabold text-ink">
+                  {cmsSource === 'firebase'
+                    ? 'Firestore'
+                    : cmsSource === 'hybrid'
+                      ? 'دمج محلي + Firestore'
+                      : 'محلي (بانتظار التصدير)'}
+                </span>
+              </p>
+              <p className="mt-1 text-xs text-muted">
+                التصدير يرفع كل البيانات (مهن، مقالات، مدن، تصنيفات، معرض، إعدادات) بدون مسح
+                مستندات أخرى في المشروع.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                className="rounded-xl"
+                onClick={() => void refreshFromFirebase()}
+              >
+                <RefreshCw className="size-4" />
+                تحديث من Firebase
+              </Button>
+              <Button
+                type="button"
+                variant="primary"
+                className="rounded-xl"
+                disabled={exporting}
+                onClick={() => void onExport()}
+              >
+                <CloudUpload className="size-4" />
+                {exporting ? 'جاري التصدير…' : 'تصدير الكل إلى Firebase'}
+              </Button>
+            </div>
+          </div>
+          {exportMsg ? (
+            <p className="mt-3 text-sm font-bold text-brand">{exportMsg}</p>
+          ) : null}
+          {cmsError ? (
+            <p className="mt-2 text-sm font-bold text-red-700">{cmsError}</p>
+          ) : null}
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-dashed border-line bg-cream/50 p-5 text-sm text-muted">
+          Firebase غير مُعدّ في `.env` — أضف مفاتيح `VITE_FIREBASE_*`.
+        </div>
+      )}
 
       <div>
         <div className="mb-3 flex items-center gap-2">

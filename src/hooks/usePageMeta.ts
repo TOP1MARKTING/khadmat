@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
+import { absoluteUrl } from '@/lib/siteConfig'
 
 type PageMeta = {
   titleAr: string
@@ -45,9 +46,12 @@ export function usePageMeta({
     upsertMeta('name', 'description', description)
     upsertMeta('property', 'og:title', title)
     upsertMeta('property', 'og:description', description)
+    upsertMeta('property', 'og:site_name', 'ساعدني | Saedni')
     upsertMeta('property', 'og:locale', lang === 'ar' ? 'ar_SA' : 'en_US')
     if (canonicalPath) {
-      upsertLink('canonical', `${window.location.origin}${canonicalPath}`)
+      const url = absoluteUrl(canonicalPath)
+      upsertLink('canonical', url)
+      upsertMeta('property', 'og:url', url)
     }
   }, [lang, titleAr, titleEn, descriptionAr, descriptionEn, canonicalPath])
 }

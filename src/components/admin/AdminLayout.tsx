@@ -27,7 +27,7 @@ export function AdminLayout() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const onLogout = () => {
-    logout()
+    void logout()
     navigate('/admin/login')
   }
 
