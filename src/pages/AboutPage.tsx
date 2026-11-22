@@ -108,9 +108,9 @@ export function AboutPage() {
       {/* Hero */}
       <section className="relative isolate min-h-[340px] overflow-hidden border-b border-line sm:min-h-[440px]">
         <img
-          src="/images/team/team-01-villas.jpg"
-          alt=""
-          className="absolute inset-0 size-full object-cover"
+          src="/images/team/team-trades-group.jpg"
+          alt={t('صورة توضيحية للمهن', 'An illustrative image of the trades')}
+          className="absolute inset-0 size-full object-cover object-[center_35%]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,25,22,0.4)_0%,rgba(23,25,22,0.55)_40%,rgba(23,25,22,0.9)_100%)]" />
         <div className="relative container-page flex min-h-[340px] flex-col justify-end pb-10 pt-24 sm:min-h-[440px] sm:pb-14 sm:pt-28">
@@ -246,19 +246,32 @@ export function AboutPage() {
         <div className="container-page section-pad">
           <p className="eyebrow mb-3">{t('من واقع الشغل', 'From the field')}</p>
           <h2 className="heading-section">
-            {t(
-              'عمال من جميع المهن واقفين جنب بعض',
-              'Workers from every trade standing side by side',
-            )}
+            {t('صورة توضيحية للمهن', 'An illustrative image of the trades')}
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
             {t(
-              'صور تمثيلية لعمال وفنيين من مهن مختلفة — صيانة ونظافة ونقل وغيرها. مش فريق موظفين لساعدني.',
-              'Representative photos of workers and technicians from different trades — maintenance, cleaning, moving and more. Not a Saedni staff team.',
+              'ستة مهن جنب بعض: سباكة، كهرباء، دهانات، سيراميك، حدائق وتكييف — صورة توضيحية للمهن، وليست فريق موظفين لساعدني.',
+              'Six trades side by side: plumbing, electrical, painting, tiling, landscaping, and AC — an illustrative image of the trades, not a Saedni staff team.',
             )}
           </p>
 
-          <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+          <figure className="group relative mt-8 overflow-hidden rounded-2xl border border-line shadow-[var(--shadow-soft)] sm:mt-10">
+            <img
+              src="/images/team/team-trades-group.jpg"
+              alt={t('صورة توضيحية للمهن', 'An illustrative image of the trades')}
+              className="aspect-[21/9] w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02] sm:aspect-[24/9]"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/5 to-transparent" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-4 text-sm font-bold text-white sm:p-5 sm:text-base">
+              {t(
+                'صورة توضيحية للمهن — سباكة، كهرباء، دهانات، سيراميك، حدائق وتكييف',
+                'Illustrative trades image — plumbing, electrical, painting, tiling, landscaping & AC',
+              )}
+            </figcaption>
+          </figure>
+
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:mt-5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {workerShots.map((shot) => (
               <figure
                 key={shot.src}

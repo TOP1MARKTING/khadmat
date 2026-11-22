@@ -80,6 +80,7 @@ export const mediaLibrary: MediaAsset[] = [
   { id: 'upholstery-cleaning', src: '/images/services/upholstery-cleaning.jpg', group: 'services', groupAr: 'المهن', groupEn: 'Services', labelAr: 'تنظيف المفروشات', labelEn: 'Upholstery Cleaning' },
   { id: 'water-tank-cleaning', src: '/images/services/water-tank-cleaning.jpg', group: 'services', groupAr: 'المهن', groupEn: 'Services', labelAr: 'تنظيف الخزانات', labelEn: 'Water Tank Cleaning' },
   { id: 'waterproofing', src: '/images/services/waterproofing.jpg', group: 'services', groupAr: 'المهن', groupEn: 'Services', labelAr: 'العزل', labelEn: 'Waterproofing' },
+  { id: 'team-trades-group', src: '/images/team/team-trades-group.jpg', group: 'team', groupAr: 'عمال المهن', groupEn: 'Trade workers', labelAr: 'صورة توضيحية للمهن', labelEn: 'Illustrative trades group' },
   { id: 'team-01-villas', src: '/images/team/team-01-villas.jpg', group: 'team', groupAr: 'عمال المهن', groupEn: 'Trade workers', labelAr: 'عمال 01 villas', labelEn: 'Workers 01 Villas' },
   { id: 'team-02-apartment', src: '/images/team/team-02-apartment.jpg', group: 'team', groupAr: 'عمال المهن', groupEn: 'Trade workers', labelAr: 'عمال 02 apartment', labelEn: 'Workers 02 Apartment' },
   { id: 'team-03-truck', src: '/images/team/team-03-truck.jpg', group: 'team', groupAr: 'عمال المهن', groupEn: 'Trade workers', labelAr: 'عمال 03 truck', labelEn: 'Workers 03 Truck' },
