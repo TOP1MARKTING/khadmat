@@ -19,18 +19,15 @@
 1. افتح مشروع `khadmat-5c5be`.
 2. فعّل **Firestore Database**.
 3. فعّل **Authentication** → Email/Password.
-4. أنشئ مستخدم:
-   - Email: نفس `VITE_FIREBASE_ADMIN_EMAIL` (افتراضي `admin@saedniksa.com`)
-   - Password: نفس `VITE_ADMIN_PASSWORD`
-5. انشر قواعد `firestore.rules` من هذا المشروع.
-6. (اختياري) Analytics مفعّل عبر `measurementId`.
+4. أنشئ مستخدم في Authentication:
+   - Email + Password (مثال: `admin@saedniksa.com`)
+5. صفحة `/admin/login` تطلب **البريد + كلمة المرور** عبر Firebase Auth فقط.
+6. انشر قواعد `firestore.rules` من هذا المشروع.
+7. (اختياري) Analytics مفعّل عبر `measurementId`.
 
-### تصدير أول مرة لو الكتابة مقفولة
+### تصدير أول مرة
 
-إما:
-
-- ادخل الأدمن بعد إنشاء مستخدم Auth، ثم اضغط التصدير،  
-أو مؤقتًا اسمح بالكتابة ثم أعد القواعد الآمنة.
+ادخل بالبريد وكلمة المرور من Firebase، ثم من اللوحة اضغط **تصدير الكل إلى Firebase**.
 
 ## متغيرات `.env`
 

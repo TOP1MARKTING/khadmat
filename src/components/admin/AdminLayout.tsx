@@ -22,7 +22,7 @@ const links = [
 ]
 
 export function AdminLayout() {
-  const { logout } = useAdminAuth()
+  const { logout, userEmail } = useAdminAuth()
   const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -85,6 +85,11 @@ export function AdminLayout() {
         </div>
         <div className="relative flex-1 py-3">{nav}</div>
         <div className="relative space-y-2 border-t border-white/10 p-3">
+          {userEmail ? (
+            <p className="truncate px-3 text-[11px] font-bold text-white/45" dir="ltr">
+              {userEmail}
+            </p>
+          ) : null}
           <Link
             to="/"
             className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-bold text-white/70 transition-colors hover:bg-white/8 hover:text-white"

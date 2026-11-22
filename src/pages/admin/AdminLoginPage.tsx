@@ -5,6 +5,7 @@ import {
   Eye,
   EyeOff,
   Lock,
+  Mail,
   ShieldCheck,
   Sparkles,
 } from 'lucide-react'
@@ -20,9 +21,12 @@ const highlights = [
 ]
 
 export function AdminLoginPage() {
-  const { isAuthenticated, login, authNote } = useAdminAuth()
+  const { isAuthenticated, authReady, login } = useAdminAuth()
   const navigate = useNavigate()
   const location = useLocation()
+  const [email, setEmail] = useState(
+    () => import.meta.env.VITE_FIREBASE_ADMIN_EMAIL || '',
+  )
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -34,7 +38,7 @@ export function AdminLoginPage() {
       ? (location.state as { from: string }).from
       : '/admin'
 
-  if (isAuthenticated) {
+  if (authReady && isAuthenticated) {
     return <Navigate to={from} replace />
   }
 
@@ -43,9 +47,9 @@ export function AdminLoginPage() {
     setBusy(true)
     setError('')
     try {
-      const ok = await login(password)
-      if (!ok) {
-        setError('كلمة المرور غير صحيحة')
+      const result = await login(email, password)
+      if (!result.ok) {
+        setError(result.message)
         return
       }
       navigate(from, { replace: true })
@@ -56,7 +60,6 @@ export function AdminLoginPage() {
 
   return (
     <div className="grid min-h-dvh lg:grid-cols-2">
-      {/* Brand panel — desktop */}
       <section className="relative hidden overflow-hidden lg:flex lg:flex-col lg:justify-between">
         <img
           src="/images/hero/hero-11-contracting-desktop.jpg"
@@ -104,9 +107,7 @@ export function AdminLoginPage() {
         </div>
       </section>
 
-      {/* Form panel */}
       <section className="relative flex flex-col bg-cream">
-        {/* Mobile visual strip */}
         <div className="relative h-36 overflow-hidden sm:h-44 lg:hidden">
           <img
             src="/images/team/team-01-villas.png"
@@ -152,17 +153,38 @@ export function AdminLoginPage() {
                 </span>
                 <div className="mt-4 inline-flex items-center gap-2 rounded-xl border border-brand/20 bg-brand/8 px-3 py-1 text-[11px] font-extrabold text-brand">
                   <Lock className="size-3.5" />
-                  دخول آمن
+                  دخول Firebase
                 </div>
                 <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-ink">
                   تسجيل دخول الأدمن
                 </h2>
                 <p className="mt-1.5 max-w-xs text-sm leading-relaxed text-muted">
-                  أدخل كلمة المرور للوصول إلى لوحة التحكم
+                  سجّل الدخول بالبريد وكلمة المرور من Firebase Authentication
                 </p>
               </div>
 
-              <form onSubmit={onSubmit} className="space-y-5">
+              <form onSubmit={onSubmit} className="space-y-4">
+                <div>
+                  <Label htmlFor="admin-email">البريد الإلكتروني</Label>
+                  <div className="relative mt-1.5">
+                    <Mail className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" />
+                    <Input
+                      id="admin-email"
+                      type="email"
+                      autoComplete="username"
+                      dir="ltr"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value)
+                        setError('')
+                      }}
+                      className="h-12 rounded-2xl ps-10 text-start"
+                      placeholder="admin@saedniksa.com"
+                      required
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <Label htmlFor="admin-password">كلمة المرور</Label>
                   <div className="relative mt-1.5">
@@ -178,6 +200,7 @@ export function AdminLoginPage() {
                       }}
                       className="h-12 rounded-2xl pe-11 ps-10"
                       placeholder="••••••••"
+                      required
                     />
                     <button
                       type="button"
@@ -195,17 +218,11 @@ export function AdminLoginPage() {
                   type="submit"
                   className="h-12 w-full rounded-2xl text-sm font-extrabold shadow-[0_10px_24px_rgba(45,90,61,0.28)]"
                   variant="primary"
-                  disabled={busy}
+                  disabled={busy || !authReady}
                 >
                   {busy ? 'جاري الدخول…' : 'دخول إلى اللوحة'}
                 </Button>
               </form>
-
-              {authNote ? (
-                <p className="mt-4 text-center text-[11px] font-bold leading-relaxed text-muted">
-                  {authNote}
-                </p>
-              ) : null}
 
               <p className="mt-6 text-center text-[11px] font-bold text-muted">
                 فكرة وتصميم وإشراف{' '}
