@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Link, Navigate, useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Briefcase } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useCms } from '@/context/CmsContext'
@@ -63,11 +63,6 @@ export function BlogPage() {
     [lang, services, t],
   )
 
-  // Empty blog should not look like a dead end — send visitors to trade guides.
-  if (articles.length === 0) {
-    return <Navigate to="/services" replace />
-  }
-
   return (
     <div className="section-pad">
       <div className="container-page">
@@ -83,49 +78,51 @@ export function BlogPage() {
           )}
         />
 
-        <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex gap-2 overflow-x-auto pb-1">
-            <button
-              type="button"
-              onClick={() => setParams({})}
-              className={cn(
-                'whitespace-nowrap rounded-xl border px-3.5 py-2 text-sm font-bold transition-colors',
-                serviceFilter === 'all'
-                  ? 'border-brand bg-brand text-white shadow-soft'
-                  : 'border-line bg-surface text-muted hover:border-brand/35 hover:text-brand',
-              )}
-            >
-              {t('الكل', 'All')}
-            </button>
-            {serviceOptions.slice(0, 8).map((s) => (
+        {articles.length > 0 ? (
+          <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex gap-2 overflow-x-auto pb-1">
               <button
-                key={s.slug}
                 type="button"
-                onClick={() => setParams({ service: s.slug })}
+                onClick={() => setParams({})}
                 className={cn(
                   'whitespace-nowrap rounded-xl border px-3.5 py-2 text-sm font-bold transition-colors',
-                  serviceFilter === s.slug
+                  serviceFilter === 'all'
                     ? 'border-brand bg-brand text-white shadow-soft'
                     : 'border-line bg-surface text-muted hover:border-brand/35 hover:text-brand',
                 )}
               >
-                {lang === 'ar' ? s.nameAr : s.nameEn}
+                {t('الكل', 'All')}
               </button>
-            ))}
-          </div>
+              {serviceOptions.slice(0, 8).map((s) => (
+                <button
+                  key={s.slug}
+                  type="button"
+                  onClick={() => setParams({ service: s.slug })}
+                  className={cn(
+                    'whitespace-nowrap rounded-xl border px-3.5 py-2 text-sm font-bold transition-colors',
+                    serviceFilter === s.slug
+                      ? 'border-brand bg-brand text-white shadow-soft'
+                      : 'border-line bg-surface text-muted hover:border-brand/35 hover:text-brand',
+                  )}
+                >
+                  {lang === 'ar' ? s.nameAr : s.nameEn}
+                </button>
+              ))}
+            </div>
 
-          <div className="w-full lg:max-w-xs">
-            <ModernSelect
-              value={serviceFilter}
-              onChange={(value) => setParams(value === 'all' ? {} : { service: value })}
-              options={selectOptions}
-              placeholder={t('كل المهن', 'All trades')}
-              searchPlaceholder={t('ابحث عن مهنة...', 'Search a trade...')}
-              ariaLabel={t('تصفية حسب المهنة', 'Filter by trade')}
-              triggerClassName="h-11 rounded-xl border-line bg-cream/50"
-            />
+            <div className="w-full lg:max-w-xs">
+              <ModernSelect
+                value={serviceFilter}
+                onChange={(value) => setParams(value === 'all' ? {} : { service: value })}
+                options={selectOptions}
+                placeholder={t('كل المهن', 'All trades')}
+                searchPlaceholder={t('ابحث عن مهنة...', 'Search a trade...')}
+                ariaLabel={t('تصفية حسب المهنة', 'Filter by trade')}
+                triggerClassName="h-11 rounded-xl border-line bg-cream/50"
+              />
+            </div>
           </div>
-        </div>
+        ) : null}
 
         {filtered.length > 0 ? (
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -136,7 +133,17 @@ export function BlogPage() {
         ) : (
           <div className="mt-10 rounded-2xl border border-dashed border-line bg-cream/40 px-4 py-12 text-center">
             <p className="text-sm font-bold text-ink">
-              {t('لا توجد مقالات في هذا التصنيف', 'No articles in this filter')}
+              {articles.length === 0
+                ? t('لا توجد مقالات منشورة حاليًا', 'No published articles yet')
+                : t('لا توجد مقالات في هذا التصنيف', 'No articles in this filter')}
+            </p>
+            <p className="mt-2 text-sm text-muted">
+              {articles.length === 0
+                ? t(
+                    'صفحة المدونة جاهزة — المقالات هتظهر هنا أول ما تتنشر من لوحة التحكم.',
+                    'The blog page is ready — articles will appear here once published from admin.',
+                  )
+                : null}
             </p>
             <Link
               to="/services"
