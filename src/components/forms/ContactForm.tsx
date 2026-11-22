@@ -1,10 +1,18 @@
-import { useState, type FormEvent } from 'react'
-import { MessageCircle } from 'lucide-react'
+import { useMemo, useState, type FormEvent } from 'react'
+import {
+  BookOpen,
+  CheckCircle2,
+  CircleHelp,
+  LifeBuoy,
+  MessageCircle,
+  MessagesSquare,
+} from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { openWhatsApp } from '@/lib/whatsapp'
 import { Button } from '@/components/ui/Button'
-import { FieldError, Input, Label, Select, Textarea } from '@/components/ui/Input'
+import { FieldError, Input, Label, Textarea } from '@/components/ui/Input'
+import { ModernSelect } from '@/components/ui/ModernSelect'
 
 export type ContactTopic = 'support' | 'content' | 'correction' | 'guide' | 'general'
 
@@ -15,12 +23,19 @@ type Props = {
   defaultTopic?: ContactTopic
 }
 
-const TOPIC_LABELS: Record<ContactTopic, { ar: string; en: string }> = {
-  support: { ar: 'دعم استخدام المنصة', en: 'Platform support' },
-  content: { ar: 'اقتراح محتوى أو مهنة', en: 'Suggest content or a trade' },
-  correction: { ar: 'تصحيح معلومة في دليل', en: 'Correct guide information' },
-  guide: { ar: 'سؤال عن دليل مهنة', en: 'Question about a trade guide' },
-  general: { ar: 'استفسار عام عن ساعدني', en: 'General Saedni inquiry' },
+const TOPIC_META: Record<
+  ContactTopic,
+  { ar: string; en: string; Icon: typeof LifeBuoy }
+> = {
+  support: { ar: 'دعم استخدام المنصة', en: 'Platform support', Icon: LifeBuoy },
+  content: { ar: 'اقتراح محتوى أو مهنة', en: 'Suggest content or a trade', Icon: BookOpen },
+  correction: {
+    ar: 'تصحيح معلومة في دليل',
+    en: 'Correct guide information',
+    Icon: CheckCircle2,
+  },
+  guide: { ar: 'سؤال عن دليل مهنة', en: 'Question about a trade guide', Icon: CircleHelp },
+  general: { ar: 'استفسار عام عن ساعدني', en: 'General Saedni inquiry', Icon: MessagesSquare },
 }
 
 export function ContactForm({
@@ -32,16 +47,30 @@ export function ContactForm({
   const { t } = useLanguage()
   const { settings } = useSiteSettings()
   const [errors, setErrors] = useState<Record<string, string>>({})
-
-  const initialTopic: ContactTopic =
+  const [topic, setTopic] = useState<ContactTopic>(
     defaultTopic ||
-    (intent === 'service' ? 'guide' : intent === 'rental' ? 'general' : 'support')
+      (intent === 'service' ? 'guide' : intent === 'rental' ? 'general' : 'support'),
+  )
+
+  const topicOptions = useMemo(
+    () =>
+      (Object.keys(TOPIC_META) as ContactTopic[]).map((key) => {
+        const meta = TOPIC_META[key]
+        const Icon = meta.Icon
+        return {
+          value: key,
+          label: t(meta.ar, meta.en),
+          icon: <Icon className="size-4" />,
+          keywords: [meta.ar, meta.en, key],
+        }
+      }),
+    [t],
+  )
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
     const name = String(fd.get('name') || '').trim()
-    const topic = String(fd.get('topic') || initialTopic) as ContactTopic
     const message = String(fd.get('message') || '').trim()
     const service = String(fd.get('service') || defaultService || '').trim()
     const city = String(fd.get('city') || defaultCity || '').trim()
@@ -53,7 +82,7 @@ export function ContactForm({
     setErrors(next)
     if (Object.keys(next).length) return
 
-    const topicLabel = TOPIC_LABELS[topic] || TOPIC_LABELS.general
+    const topicLabel = TOPIC_META[topic] || TOPIC_META.general
     const lines = [
       `مرحباً ساعدني — ${topicLabel.ar}`,
       `الاسم: ${name}`,
@@ -76,13 +105,17 @@ export function ContactForm({
 
       <div>
         <Label htmlFor="topic">{t('نوع الرسالة', 'Message type')}</Label>
-        <Select id="topic" name="topic" defaultValue={initialTopic}>
-          {(Object.keys(TOPIC_LABELS) as ContactTopic[]).map((key) => (
-            <option key={key} value={key}>
-              {t(TOPIC_LABELS[key].ar, TOPIC_LABELS[key].en)}
-            </option>
-          ))}
-        </Select>
+        <input type="hidden" name="topic" value={topic} />
+        <ModernSelect
+          id="topic"
+          value={topic}
+          onChange={(value) => setTopic(value as ContactTopic)}
+          options={topicOptions}
+          searchable={false}
+          placeholder={t('اختر نوع الرسالة', 'Choose message type')}
+          ariaLabel={t('نوع الرسالة', 'Message type')}
+          triggerClassName="rounded-md border-line bg-surface py-3 hover:border-sand"
+        />
       </div>
 
       {(defaultService || intent === 'service') && (
