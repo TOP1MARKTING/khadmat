@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seed:build": "vite-node scripts/build-seed-payload.ts",
+    "seed:firestore": "node scripts/seed-firestore.mjs"
   },
   "dependencies": {
     "firebase": "^13.4.0",

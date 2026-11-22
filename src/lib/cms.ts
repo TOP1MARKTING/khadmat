@@ -101,7 +101,8 @@ function normalizeArticle(a: CmsArticle): CmsArticle {
   }
 }
 
-function seedCmsServices(): CmsService[] {
+/** Stable seed ids so Firestore docs stay consistent across browsers/exports. */
+export function getSeedCmsServices(): CmsService[] {
   const now = new Date().toISOString()
   return seedServices.map((s) =>
     normalizeService({
@@ -113,21 +114,25 @@ function seedCmsServices(): CmsService[] {
       benefitsEn: s.benefitsEn || [],
       stepsAr: s.stepsAr || [],
       stepsEn: s.stepsEn || [],
-      id: uid('svc'),
+      id: `svc_${s.slug}`,
       updatedAt: now,
     }),
   )
+}
+
+function seedCmsServices(): CmsService[] {
+  return getSeedCmsServices()
 }
 
 function paragraphsToHtml(paragraphs: string[]) {
   return paragraphs.map((p) => `<p>${p}</p>`).join('\n')
 }
 
-function seedCmsArticles(): CmsArticle[] {
+export function getSeedCmsArticles(): CmsArticle[] {
   const now = new Date().toISOString()
   return blogArticles.map((a: BlogArticle) =>
     normalizeArticle({
-      id: uid('art'),
+      id: `art_${a.slug}`,
       slug: a.slug,
       serviceSlug: a.serviceSlug,
       citySlug: a.citySlug,
@@ -160,6 +165,10 @@ function seedCmsArticles(): CmsArticle[] {
       updatedAt: now,
     }),
   )
+}
+
+function seedCmsArticles(): CmsArticle[] {
+  return getSeedCmsArticles()
 }
 
 export function loadCmsServices(): CmsService[] {

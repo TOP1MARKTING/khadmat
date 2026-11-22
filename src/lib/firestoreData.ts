@@ -258,3 +258,18 @@ export async function firestoreHasServices() {
   const snap = await getDocs(collection(getDb(), COL.services))
   return !snap.empty
 }
+
+/**
+ * If Firestore is empty, push local/seed CMS data once.
+ * Requires signed-in admin (Firestore write rules).
+ */
+export async function ensureFirestoreSeeded(options?: {
+  services?: CmsService[]
+  articles?: CmsArticle[]
+  settings?: SiteSettings
+}): Promise<ExportResult | null> {
+  if (!isFirebaseConfigured()) return null
+  const has = await firestoreHasServices()
+  if (has) return null
+  return exportAllDataToFirestore(options)
+}

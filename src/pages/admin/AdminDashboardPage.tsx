@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -14,10 +14,14 @@ import {
 } from 'lucide-react'
 import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { useCms } from '@/context/CmsContext'
+import { useAdminAuth } from '@/context/AdminAuthContext'
 import { AdminPageHeader, AdminStatCard } from '@/components/admin/AdminUI'
 import { Button } from '@/components/ui/Button'
 import { isFirebaseConfigured } from '@/lib/firebase'
-import { exportAllDataToFirestore } from '@/lib/firestoreData'
+import {
+  ensureFirestoreSeeded,
+  exportAllDataToFirestore,
+} from '@/lib/firestoreData'
 
 const shortcuts = [
   {
@@ -45,12 +49,14 @@ const shortcuts = [
 
 export function AdminDashboardPage() {
   const { settings } = useSiteSettings()
+  const { isAuthenticated } = useAdminAuth()
   const { services, articles, cmsSource, cmsError, refreshFromFirebase } = useCms()
   const published = articles.filter((a) => a.status === 'published').length
   const drafts = articles.filter((a) => a.status === 'draft').length
   const popular = services.filter((s) => s.popular).length
   const [exporting, setExporting] = useState(false)
   const [exportMsg, setExportMsg] = useState('')
+  const autoSeedTried = useRef(false)
 
   const onExport = async () => {
     setExporting(true)
@@ -75,6 +81,40 @@ export function AdminDashboardPage() {
       setExporting(false)
     }
   }
+
+  // First admin visit: if Firestore empty, push all site data automatically.
+  useEffect(() => {
+    if (!isAuthenticated || !isFirebaseConfigured() || autoSeedTried.current) return
+    if (!services.length) return
+    autoSeedTried.current = true
+    void (async () => {
+      setExporting(true)
+      setExportMsg('جاري رفع بيانات الموقع إلى Firebase لأول مرة…')
+      try {
+        const result = await ensureFirestoreSeeded({
+          services,
+          articles,
+          settings,
+        })
+        if (result) {
+          setExportMsg(
+            `تم الربط ورفع البيانات: ${result.services} مهنة · ${result.articles} مقال · ${result.cities} مدينة · ${result.categories} تصنيف · ${result.media} صورة`,
+          )
+          await refreshFromFirebase()
+        } else {
+          setExportMsg('')
+        }
+      } catch (err) {
+        setExportMsg(
+          err instanceof Error
+            ? `تعذر الرفع التلقائي: ${err.message} — استخدم زر التصدير`
+            : 'تعذر الرفع التلقائي — استخدم زر التصدير',
+        )
+      } finally {
+        setExporting(false)
+      }
+    })()
+  }, [isAuthenticated, services, articles, settings, refreshFromFirebase])
 
   return (
     <div className="space-y-8">

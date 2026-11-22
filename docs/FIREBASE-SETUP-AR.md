@@ -27,7 +27,16 @@
 
 ### تصدير أول مرة
 
-ادخل بالبريد وكلمة المرور من Firebase، ثم من اللوحة اضغط **تصدير الكل إلى Firebase**.
+1. ادخل `/admin/login` بالبريد وكلمة المرور من Firebase Authentication.
+2. أول دخول للوحة يرفع البيانات تلقائيًا إذا كانت Firestore فاضية.
+3. أو اضغط يدويًا **تصدير الكل إلى Firebase**.
+
+رفع CLI (اختياري):
+
+```bash
+npx vite-node scripts/build-seed-payload.ts
+node scripts/seed-firestore.mjs your@email.com 'password'
+```
 
 ## متغيرات `.env`
 
