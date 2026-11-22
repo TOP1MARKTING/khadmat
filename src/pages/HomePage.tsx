@@ -91,6 +91,7 @@ export function HomePage() {
     descriptionEn:
       'Saedni is a knowledge reference for trades and services in Saudi Arabia — practical guides to understand the work and scope before you start.',
     canonicalPath: '/',
+    image: '/images/hero/hero-11-contracting-desktop.jpg',
   })
 
   return (

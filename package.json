@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-sitemap.mjs && tsc --noEmit && vite build",
+    "build": "node scripts/generate-sitemap.mjs && tsc --noEmit && vite build && node scripts/prerender-meta.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
+    "audit:sitemap": "node scripts/audit-sitemap-services.mjs",
     "preview": "vite preview",
     "seed:build": "vite-node scripts/build-seed-payload.ts",
     "seed:firestore": "node scripts/seed-firestore.mjs",

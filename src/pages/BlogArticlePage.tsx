@@ -31,6 +31,8 @@ export function BlogArticlePage() {
     descriptionAr: article?.metaDescriptionAr || article?.excerptAr || '',
     descriptionEn: article?.excerptEn || article?.excerptAr || '',
     canonicalPath: article ? `/blog/${article.slug}` : undefined,
+    image: article?.image,
+    ogType: 'article',
   })
 
   if (!article || article.status !== 'published') return <NotFoundPage />

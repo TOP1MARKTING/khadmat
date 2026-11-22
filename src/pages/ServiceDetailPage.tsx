@@ -52,6 +52,7 @@ export function ServiceDetailPage() {
       : '',
     descriptionEn: isPublic ? service!.shortEn || '' : '',
     canonicalPath: isPublic ? `/services/${service!.slug}` : undefined,
+    image: isPublic ? service!.image : undefined,
     robots: isPublic ? 'index,follow' : 'noindex,nofollow',
   })
 

@@ -18,6 +18,7 @@ export function CityPage() {
     descriptionAr: city?.descriptionAr || '',
     descriptionEn: city?.descriptionEn || '',
     canonicalPath: city ? `/locations/${city.slug}` : undefined,
+    image: city?.image,
   })
 
   if (!city) return <NotFoundPage />

@@ -1,0 +1,434 @@
+{
+  "/": {
+    "path": "/",
+    "title": "ساعدني | منصة المعلومات عن المهن والخدمات المحلية في السعودية",
+    "description": "ساعدني مرجع معرفي للمهن والخدمات في المملكة العربية السعودية — أدلة عملية تساعدك تفهم طبيعة الشغل ونطاقه قبل التنفيذ.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services": {
+    "path": "/services",
+    "title": "دليل المهن والخدمات | ساعدني",
+    "description": "تصفح مهن وخدمات ساعدني في مدن المملكة العربية السعودية.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations": {
+    "path": "/locations",
+    "title": "اختر مدينتك | ساعدني",
+    "description": "استكشف معلومات المهن والخدمات المحلية في مدن المملكة العربية السعودية مع ساعدني.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/about": {
+    "path": "/about",
+    "title": "عن ساعدني | منصة المهن من Top1Markting",
+    "description": "ساعدني منصة سعودية لأدلة المهن والخدمات — فكرة وتصميم وإشراف Top1Markting. معلومة واضحة بدون أسماء شركات وهمية.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/contact": {
+    "path": "/contact",
+    "title": "تواصل ودعم | ساعدني",
+    "description": "تواصل مع ساعدني للدعم، اقتراح المحتوى، أو تصحيح معلومات الأدلة — عبر واتساب المعتمد.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/blog": {
+    "path": "/blog",
+    "title": "المقالات | ساعدني",
+    "description": "مقالات عملية عن البلاط والسباكة والمقاولات والنقل في المملكة العربية السعودية.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "noindex,follow",
+    "type": "website"
+  },
+  "/privacy": {
+    "path": "/privacy",
+    "title": "سياسة الخصوصية | ساعدني",
+    "description": "كيف تتعامل منصة ساعدني مع البيانات في المرحلة الحالية: محتوى معرفي، تواصل عبر واتساب، وتخزين محلي محدود.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/terms": {
+    "path": "/terms",
+    "title": "شروط الاستخدام | ساعدني",
+    "description": "شروط استخدام منصة ساعدني كمرجع معرفي للمهن والخدمات في السعودية — دون تقديم خدمة تنفيذ أو وساطة حجوزات في المرحلة الحالية.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/general-contracting": {
+    "path": "/services/general-contracting",
+    "title": "المقاولات العامة | دليل العميل | ساعدني",
+    "description": "دليل عملي لأنواع أعمال المقاولات العامة، مراحل التنفيذ، وكيف تختار المقاول المناسب قبل التعاقد.",
+    "image": "https://www.saedniksa.com/images/services/general-contracting-01-planning.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/apartment-finishing": {
+    "path": "/services/apartment-finishing",
+    "title": "تشطيب الشقق | دليل العميل | ساعدني",
+    "description": "دليل عملي لمراحل تشطيب الشقق، أنواع الأعمال، التكاليف التخطيطية، وأهم الأسئلة قبل الاتفاق مع المقاول.",
+    "image": "https://www.saedniksa.com/images/services/apartment-finishing.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/ceramic-installation": {
+    "path": "/services/ceramic-installation",
+    "title": "تركيب السيراميك والبلاط | دليل العميل | ساعدني",
+    "description": "دليل عملي لأنواع السيراميك والبلاط، مراحل التركيب، وعلامات الجودة قبل التنفيذ والاستلام.",
+    "image": "https://www.saedniksa.com/images/hero/hero-03-tiling-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/painting": {
+    "path": "/services/painting",
+    "title": "أعمال الدهانات | دليل العميل | ساعدني",
+    "description": "دليل عملي لأنواع الدهانات، مراحل التنفيذ، وكيف تختار الدهان المناسب لمنزلك قبل الاتفاق مع الفني.",
+    "image": "https://www.saedniksa.com/images/services/painting.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/marble-porcelain": {
+    "path": "/services/marble-porcelain",
+    "title": "الرخام والبورسلان | دليل العميل | ساعدني",
+    "description": "دليل عملي لأنواع الرخام والبورسلان، الاستخدامات، مراحل التركيب، وأهم النصائح قبل التنفيذ.",
+    "image": "https://www.saedniksa.com/images/hero/hero-12-marble-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/gypsum-board": {
+    "path": "/services/gypsum-board",
+    "title": "الجبس بورد | دليل العميل | ساعدني",
+    "description": "دليل عملي للأسقف والقواطع والإضاءة المخفية: أنواع الجبس بورد، مراحل التركيب، وعلامات الجودة قبل الاتفاق.",
+    "image": "https://www.saedniksa.com/images/services/gypsum-board.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/waterproofing": {
+    "path": "/services/waterproofing",
+    "title": "العزل والعزل المائي | دليل العميل | ساعدني",
+    "description": "دليل عملي للعزل المائي والحراري: أنواع الأعمال، مراحل التنفيذ، وعلامات الجودة قبل التشطيب.",
+    "image": "https://www.saedniksa.com/images/services/waterproofing.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/renovation": {
+    "path": "/services/renovation",
+    "title": "الترميم والتجديد | دليل العميل | ساعدني",
+    "description": "دليل عملي للترميم والتجديد: إصلاح التلفيات وتحديث التشطيبات، مع المراحل والأسئلة قبل الاتفاق.",
+    "image": "https://www.saedniksa.com/images/services/renovation.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/plumbing": {
+    "path": "/services/plumbing",
+    "title": "السباكة | دليل العميل | ساعدني",
+    "description": "دليل عملي للسباكة: تأسيس الشبكات، إصلاح التسربات، الصرف، وعلامات الجودة قبل إغلاق التشطيبات.",
+    "image": "https://www.saedniksa.com/images/services/plumbing.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/electrical": {
+    "path": "/services/electrical",
+    "title": "الصيانة الكهربائية | دليل العميل | ساعدني",
+    "description": "دليل عملي للصيانة الكهربائية: الأعطال، اللوحات، القواطع، الإضاءة، وعلامات التشغيل الآمن قبل الاتفاق مع فني مؤهل.",
+    "image": "https://www.saedniksa.com/images/services/electrical.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/air-conditioning": {
+    "path": "/services/air-conditioning",
+    "title": "التكييف | دليل العميل | ساعدني",
+    "description": "دليل عملي لتركيب وصيانة وتنظيف المكيفات: اختيار القدرة، علامات الجودة، وأعطال التبريد الشائعة.",
+    "image": "https://www.saedniksa.com/images/services/air-conditioning.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/appliance-repair": {
+    "path": "/services/appliance-repair",
+    "title": "صيانة الأجهزة | دليل العميل | ساعدني",
+    "description": "دليل عملي لصيانة الأجهزة المنزلية: التشخيص قبل تغيير القطع، وأنواع الأعطال، والأسئلة قبل الاتفاق مع الفني.",
+    "image": "https://www.saedniksa.com/images/services/appliance-repair.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/leak-detection": {
+    "path": "/services/leak-detection",
+    "title": "كشف التسربات | دليل العميل | ساعدني",
+    "description": "دليل عملي لكشف تسربات المياه المخفية: أنواع التسرب، مراحل الفحص، وكيف تقلل التكسير العشوائي قبل الإصلاح.",
+    "image": "https://www.saedniksa.com/images/services/leak-detection.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/home-cleaning": {
+    "path": "/services/home-cleaning",
+    "title": "تنظيف المنازل | دليل العميل | ساعدني",
+    "description": "دليل عملي لتنظيف المنازل: أنواع التنظيف، المراحل، وعلامات الجودة قبل اختيار الخدمة المناسبة.",
+    "image": "https://www.saedniksa.com/images/services/home-cleaning.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/water-tank-cleaning": {
+    "path": "/services/water-tank-cleaning",
+    "title": "تنظيف خزانات المياه | دليل العميل | ساعدني",
+    "description": "دليل عملي لتنظيف خزانات المياه: الخطوات، أهمية الفحص، وعلامات الجودة قبل اختيار الخدمة المناسبة.",
+    "image": "https://www.saedniksa.com/images/services/water-tank-cleaning.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/post-construction-cleaning": {
+    "path": "/services/post-construction-cleaning",
+    "title": "نظافة ما بعد التشطيب | دليل العميل | ساعدني",
+    "description": "دليل عملي لنظافة ما بعد التشطيب: إزالة الأتربة وبقايا المواد وتجهيز المكان للسكن بدون خدش التشطيبات.",
+    "image": "https://www.saedniksa.com/images/hero/hero-02-finishing-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/pest-control": {
+    "path": "/services/pest-control",
+    "title": "مكافحة الحشرات | دليل العميل | ساعدني",
+    "description": "دليل عملي لمكافحة الحشرات: أنواع الآفات، طرق المكافحة، وعلامات الجودة قبل اختيار الخدمة المناسبة.",
+    "image": "https://www.saedniksa.com/images/services/pest-control.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/furniture-moving": {
+    "path": "/services/furniture-moving",
+    "title": "نقل الأثاث | دليل العميل | ساعدني",
+    "description": "دليل عملي لنقل الأثاث: المراحل، حماية العفش، وعلامات الجودة قبل اختيار خدمة النقل المناسبة.",
+    "image": "https://www.saedniksa.com/images/services/furniture-moving.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/packing": {
+    "path": "/services/packing",
+    "title": "التغليف وفك التغليف | دليل العميل | ساعدني",
+    "description": "دليل عملي للتغليف وفك التغليف: حماية الأثاث والمقتنيات أثناء النقل، وعلامات الجودة قبل الاتفاق.",
+    "image": "https://www.saedniksa.com/images/services/packing.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/storage": {
+    "path": "/services/storage",
+    "title": "خدمات التخزين | دليل العميل | ساعدني",
+    "description": "دليل عملي لخدمات التخزين: تخزين الأثاث والمقتنيات واختيار مكان مناسب قبل الاتفاق.",
+    "image": "https://www.saedniksa.com/images/services/storage.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/landscaping": {
+    "path": "/services/landscaping",
+    "title": "تنسيق الحدائق | دليل العميل | ساعدني",
+    "description": "دليل عملي لتنسيق الحدائق: التصميم والزراعة والري والعناية بالمساحات الخارجية قبل الاتفاق.",
+    "image": "https://www.saedniksa.com/images/services/landscaping.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/commercial-maintenance": {
+    "path": "/services/commercial-maintenance",
+    "title": "صيانة العقارات التجارية | دليل العميل | ساعدني",
+    "description": "دليل عملي لصيانة العقارات التجارية: أنواع الصيانة، الجداول، وعلامات الجودة قبل التعاقد.",
+    "image": "https://www.saedniksa.com/images/services/commercial-maintenance.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/riyadh": {
+    "path": "/locations/riyadh",
+    "title": "خدمات في الرياض | ساعدني",
+    "description": "عاصمة المملكة العربية السعودية ومركزها الأكبر. صفحات خدمات الرياض تغطي التشطيب، الصيانة، النظافة والنقل داخل الأحياء والشمال والشرق والغرب.",
+    "image": "https://www.saedniksa.com/images/cities/riyadh.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/al-kharj": {
+    "path": "/locations/al-kharj",
+    "title": "خدمات في الخرج | ساعدني",
+    "description": "تغطية محلية لخدمات المنازل والمنشآت في الخرج والمناطق القريبة جنوب الرياض.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/jeddah": {
+    "path": "/locations/jeddah",
+    "title": "خدمات في جدة | ساعدني",
+    "description": "بوابة البحر الأحمر ومدينة تجارية وسكنيّة كبيرة. صفحات جدة تستهدف السباكة، التكييف، التشطيب، النظافة ونقل العفش.",
+    "image": "https://www.saedniksa.com/images/cities/jeddah.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/makkah": {
+    "path": "/locations/makkah",
+    "title": "خدمات في مكة المكرمة | ساعدني",
+    "description": "صفحات محلية لخدمات المنازل والمنشآت في مكة المكرمة والأحياء المحيطة.",
+    "image": "https://www.saedniksa.com/images/cities/makkah.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/taif": {
+    "path": "/locations/taif",
+    "title": "خدمات في الطائف | ساعدني",
+    "description": "تغطية لخدمات التشطيب والصيانة والنظافة في الطائف والمنتجعات والأحياء السكنية.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/madinah": {
+    "path": "/locations/madinah",
+    "title": "خدمات في المدينة المنورة | ساعدني",
+    "description": "صفحات خدمات منزلية ومنشآت في المدينة المنورة: صيانة، تشطيب، نظافة ونقل.",
+    "image": "https://www.saedniksa.com/images/cities/madinah.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/dammam": {
+    "path": "/locations/dammam",
+    "title": "خدمات في الدمام | ساعدني",
+    "description": "مركز الشرقية التجاري. صفحات الدمام تغطي المقاولات، الصيانة، التكييف، النظافة ونقل العفش.",
+    "image": "https://www.saedniksa.com/images/cities/dammam.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/khobar": {
+    "path": "/locations/khobar",
+    "title": "خدمات في الخبر | ساعدني",
+    "description": "تغطية محلية لخدمات المنازل والمكاتب في الخبر والأحياء الساحلية.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/dhahran": {
+    "path": "/locations/dhahran",
+    "title": "خدمات في الظهران | ساعدني",
+    "description": "صفحات خدمات للصيانة والتشطيب والنظافة في الظهران والمناطق المجاورة.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/jubail": {
+    "path": "/locations/jubail",
+    "title": "خدمات في الجبيل | ساعدني",
+    "description": "تغطية لخدمات المنازل والمنشآت في الجبيل السكنية والصناعية حسب النطاق المحلي.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/ahsa": {
+    "path": "/locations/ahsa",
+    "title": "خدمات في الأحساء | ساعدني",
+    "description": "صفحات مهن محلية في الأحساء: سباكة، كهرباء، تشطيب، نظافة ونقل عفش.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/abha": {
+    "path": "/locations/abha",
+    "title": "خدمات في أبها | ساعدني",
+    "description": "تغطية لخدمات التشطيب والصيانة والحدائق في أبها والأحياء الجبلية المحيطة.",
+    "image": "https://www.saedniksa.com/images/cities/abha.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/khamis-mushait": {
+    "path": "/locations/khamis-mushait",
+    "title": "خدمات في خميس مشيط | ساعدني",
+    "description": "صفحات خدمات منزلية ومنشآت في خميس مشيط بنطاق محلي واضح.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/buraydah": {
+    "path": "/locations/buraydah",
+    "title": "خدمات في بريدة | ساعدني",
+    "description": "عاصمة منطقة القصيم. صفحات خدمات بريدة تغطي التشطيب، الصيانة، النظافة والنقل داخل المدينة وأحيائها.",
+    "image": "https://www.saedniksa.com/images/cities/buraydah.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/unaizah": {
+    "path": "/locations/unaizah",
+    "title": "خدمات في عنيزة | ساعدني",
+    "description": "مدينة تجارية وسكنيّة نشطة في القصيم مع صفحات محلية للخدمات المنزلية والمنشآت.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/ar-rass": {
+    "path": "/locations/ar-rass",
+    "title": "خدمات في الرس | ساعدني",
+    "description": "صفحات محلية في الرس للتشطيب، السباكة، التكييف وخدمات النقل.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/al-bukayriyah": {
+    "path": "/locations/al-bukayriyah",
+    "title": "خدمات في البكيرية | ساعدني",
+    "description": "تغطية لخدمات الصيانة والتشطيب المنزلي في البكيرية.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/hail": {
+    "path": "/locations/hail",
+    "title": "خدمات في حائل | ساعدني",
+    "description": "صفحات خدمات منزلية ومقاولات في حائل بنطاق محلي مرتب.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/tabuk": {
+    "path": "/locations/tabuk",
+    "title": "خدمات في تبوك | ساعدني",
+    "description": "تغطية لخدمات التشطيب والصيانة والنظافة والنقل في تبوك.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/jazan": {
+    "path": "/locations/jazan",
+    "title": "خدمات في جازان | ساعدني",
+    "description": "صفحات مهن محلية في جازان: سباكة، كهرباء، تشطيب، نظافة ونقل.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/najran": {
+    "path": "/locations/najran",
+    "title": "خدمات في نجران | ساعدني",
+    "description": "تغطية محلية لخدمات المنازل والمنشآت في نجران.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/al-baha": {
+    "path": "/locations/al-baha",
+    "title": "خدمات في الباحة | ساعدني",
+    "description": "صفحات خدمات التشطيب والصيانة والحدائق في الباحة.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/sakaka": {
+    "path": "/locations/sakaka",
+    "title": "خدمات في سكاكا | ساعدني",
+    "description": "تغطية لخدمات المنازل والصيانة في سكاكا والجوف.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/locations/arar": {
+    "path": "/locations/arar",
+    "title": "خدمات في عرعر | ساعدني",
+    "description": "صفحات مهن محلية في عرعر والحدود الشمالية.",
+    "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  }
+}
