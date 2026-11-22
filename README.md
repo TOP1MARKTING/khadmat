@@ -4,8 +4,8 @@ Frontend prototype for a Saudi local trades content platform covering cities acr
 
 ## Stack
 
-- Vite + React + TypeScript
-- Tailwind CSS v4
+- React + TypeScript
+- Tailwind CSS
 - React Router
 - Tajawal + IBM Plex Sans Arabic (RTL-first)
 
@@ -19,6 +19,5 @@ npm run build
 
 ## Notes
 
-- Arabic is the default language; English switcher is available in the header.
-- Forms are frontend-only (success states, no backend).
-- Content-first public site; business collaboration pages exist separately.
+- Arabic-first knowledge site for trades and services in Saudi Arabia.
+- Public site is content-only in the current phase.

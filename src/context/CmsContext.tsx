@@ -93,7 +93,7 @@ export function CmsProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.error(err)
       setCmsError(
-        err instanceof Error ? err.message : 'تعذر الاتصال بـ Firebase — نعرض النسخة المحلية',
+        err instanceof Error ? err.message : 'تعذر الاتصال بالسحابة — نعرض النسخة المحلية',
       )
       setCmsSource('local')
       setCmsReady(true)
@@ -121,8 +121,8 @@ export function CmsProvider({ children }: { children: ReactNode }) {
         console.error(err)
         setCmsError(
           err instanceof Error
-            ? `حُفظ محليًا، لكن رفع Firebase فشل: ${err.message}`
-            : 'حُفظ محليًا، لكن رفع Firebase فشل',
+            ? `حُفظ محليًا، لكن الرفع للسحابة فشل: ${err.message}`
+            : 'حُفظ محليًا، لكن الرفع للسحابة فشل',
         )
       }
     }
@@ -141,8 +141,8 @@ export function CmsProvider({ children }: { children: ReactNode }) {
         console.error(err)
         setCmsError(
           err instanceof Error
-            ? `حُذف محليًا، لكن Firebase فشل: ${err.message}`
-            : 'حُذف محليًا، لكن Firebase فشل',
+            ? `حُذف محليًا، لكن الحذف من السحابة فشل: ${err.message}`
+            : 'حُذف محليًا، لكن الحذف من السحابة فشل',
         )
       }
     }
@@ -165,8 +165,8 @@ export function CmsProvider({ children }: { children: ReactNode }) {
         console.error(err)
         setCmsError(
           err instanceof Error
-            ? `حُفظ محليًا، لكن رفع Firebase فشل: ${err.message}`
-            : 'حُفظ محليًا، لكن رفع Firebase فشل',
+            ? `حُفظ محليًا، لكن الرفع للسحابة فشل: ${err.message}`
+            : 'حُفظ محليًا، لكن الرفع للسحابة فشل',
         )
       }
     }
@@ -185,8 +185,8 @@ export function CmsProvider({ children }: { children: ReactNode }) {
         console.error(err)
         setCmsError(
           err instanceof Error
-            ? `حُذف محليًا، لكن Firebase فشل: ${err.message}`
-            : 'حُذف محليًا، لكن Firebase فشل',
+            ? `حُذف محليًا، لكن الحذف من السحابة فشل: ${err.message}`
+            : 'حُذف محليًا، لكن الحذف من السحابة فشل',
         )
       }
     }

@@ -101,7 +101,7 @@ function normalizeArticle(a: CmsArticle): CmsArticle {
   }
 }
 
-/** Stable seed ids so Firestore docs stay consistent across browsers/exports. */
+/** Stable seed ids so cloud docs stay consistent across browsers/exports. */
 export function getSeedCmsServices(): CmsService[] {
   const now = new Date().toISOString()
   return seedServices.map((s) =>
@@ -294,7 +294,7 @@ export function articleHasCompany(article: Pick<CmsArticle, 'companyName'>) {
   return Boolean(article.companyName?.trim())
 }
 
-/** Remove undefined fields so Firestore setDoc accepts the payload. */
+/** Remove undefined fields so cloud writes accept the payload. */
 export function normalizeForFirestore<T>(value: T): T {
   if (Array.isArray(value)) {
     return value.map((item) =>

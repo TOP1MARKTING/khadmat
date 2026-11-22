@@ -3,10 +3,7 @@ import { getAnalytics, isSupported, type Analytics } from 'firebase/analytics'
 import { getAuth, type Auth } from 'firebase/auth'
 import { getFirestore, type Firestore } from 'firebase/firestore'
 
-/**
- * Firebase web config is public by design (security is Auth + Firestore rules).
- * Env vars override when present (local .env / Vercel).
- */
+/** Cloud client config. Env vars override when present. */
 const firebaseConfig = {
   apiKey:
     import.meta.env.VITE_FIREBASE_API_KEY ||
@@ -43,7 +40,7 @@ let analytics: Analytics | undefined
 
 export function getFirebaseApp() {
   if (!isFirebaseConfigured()) {
-    throw new Error('Firebase is not configured')
+    throw new Error('Cloud sync is not configured')
   }
   if (!app) {
     app = getApps().length ? getApps()[0]! : initializeApp(firebaseConfig)

@@ -151,13 +151,13 @@ export function AdminLoginPage() {
                 </span>
                 <div className="mt-4 inline-flex items-center gap-2 rounded-xl border border-brand/20 bg-brand/8 px-3 py-1 text-[11px] font-extrabold text-brand">
                   <Lock className="size-3.5" />
-                  دخول Firebase
+                  دخول محمي
                 </div>
                 <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-ink">
                   تسجيل دخول الأدمن
                 </h2>
                 <p className="mt-1.5 max-w-xs text-sm leading-relaxed text-muted">
-                  سجّل الدخول بالبريد وكلمة المرور من Firebase Authentication
+                  سجّل الدخول بالبريد الإلكتروني وكلمة المرور الخاصة بلوحة التحكم
                 </p>
               </div>
 

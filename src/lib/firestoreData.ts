@@ -138,8 +138,8 @@ export type ExportResult = {
 }
 
 /**
- * Export ALL local seed + localStorage CMS data to Firestore.
- * Never deletes Firestore docs that aren't in the export set.
+ * Export ALL local seed + localStorage CMS data to the cloud store.
+ * Never deletes remote docs that aren't in the export set.
  * Uses merge/set by id so existing remote data for same ids is updated, not wiped globally.
  */
 export async function exportAllDataToFirestore(options?: {
@@ -148,7 +148,7 @@ export async function exportAllDataToFirestore(options?: {
   settings?: SiteSettings
 }): Promise<ExportResult> {
   if (!isFirebaseConfigured()) {
-    throw new Error('Firebase غير مُعدّ. راجع ملف .env')
+    throw new Error('المزامنة السحابية غير مفعّلة')
   }
 
   const services = options?.services ?? loadCmsServices()
@@ -232,7 +232,7 @@ export async function exportAllDataToFirestore(options?: {
   }
 }
 
-/** Prefer Firestore rows; fill missing ids from local so nothing is lost in memory. */
+/** Prefer remote rows; fill missing ids from local so nothing is lost in memory. */
 export function mergeByIdPreferRemote<T extends { id: string; updatedAt?: string }>(
   remote: T[],
   local: T[],
@@ -260,8 +260,8 @@ export async function firestoreHasServices() {
 }
 
 /**
- * If Firestore is empty, push local/seed CMS data once.
- * Requires signed-in admin (Firestore write rules).
+ * If the cloud store is empty, push local/seed CMS data once.
+ * Requires signed-in admin (write rules).
  */
 export async function ensureFirestoreSeeded(options?: {
   services?: CmsService[]

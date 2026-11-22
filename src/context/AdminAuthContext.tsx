@@ -74,7 +74,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     if (!isFirebaseConfigured()) {
       return {
         ok: false,
-        message: 'تعذر تهيئة Firebase. حدّث الصفحة أو راجع إعدادات المشروع.',
+        message: 'تعذر تهيئة نظام الدخول. حدّث الصفحة أو راجع إعدادات المشروع.',
       }
     }
     try {

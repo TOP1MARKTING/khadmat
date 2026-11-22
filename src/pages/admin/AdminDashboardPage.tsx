@@ -68,28 +68,28 @@ export function AdminDashboardPage() {
         settings,
       })
       setExportMsg(
-        `تم التصدير بدون حذف: ${result.services} مهنة · ${result.articles} مقال · ${result.cities} مدينة · ${result.categories} تصنيف · ${result.media} صورة · ${result.assets} أصل`,
+        `تم الرفع بدون حذف: ${result.services} مهنة · ${result.articles} مقال · ${result.cities} مدينة · ${result.categories} تصنيف · ${result.media} صورة · ${result.assets} أصل`,
       )
       await refreshFromFirebase()
     } catch (err) {
       setExportMsg(
         err instanceof Error
           ? `فشل التصدير: ${err.message}`
-          : 'فشل التصدير إلى Firebase',
+          : 'فشل رفع البيانات إلى السحابة',
       )
     } finally {
       setExporting(false)
     }
   }
 
-  // First admin visit: if Firestore empty, push all site data automatically.
+  // First admin visit: if remote store empty, push all site data automatically.
   useEffect(() => {
     if (!isAuthenticated || !isFirebaseConfigured() || autoSeedTried.current) return
     if (!services.length) return
     autoSeedTried.current = true
     void (async () => {
       setExporting(true)
-      setExportMsg('جاري رفع بيانات الموقع إلى Firebase لأول مرة…')
+      setExportMsg('جاري رفع بيانات الموقع لأول مرة…')
       try {
         const result = await ensureFirestoreSeeded({
           services,
@@ -98,7 +98,7 @@ export function AdminDashboardPage() {
         })
         if (result) {
           setExportMsg(
-            `تم الربط ورفع البيانات: ${result.services} مهنة · ${result.articles} مقال · ${result.cities} مدينة · ${result.categories} تصنيف · ${result.media} صورة`,
+            `تم رفع البيانات: ${result.services} مهنة · ${result.articles} مقال · ${result.cities} مدينة · ${result.categories} تصنيف · ${result.media} صورة`,
           )
           await refreshFromFirebase()
         } else {
@@ -107,8 +107,8 @@ export function AdminDashboardPage() {
       } catch (err) {
         setExportMsg(
           err instanceof Error
-            ? `تعذر الرفع التلقائي: ${err.message} — استخدم زر التصدير`
-            : 'تعذر الرفع التلقائي — استخدم زر التصدير',
+            ? `تعذر الرفع التلقائي: ${err.message} — استخدم زر الرفع`
+            : 'تعذر الرفع التلقائي — استخدم زر الرفع',
         )
       } finally {
         setExporting(false)
@@ -120,7 +120,7 @@ export function AdminDashboardPage() {
     <div className="space-y-8">
       <AdminPageHeader
         title="لوحة التحكم"
-        description="نظرة سريعة على المحتوى، مع اختصارات وإدارة المزامنة مع Firebase."
+        description="نظرة سريعة على المحتوى، مع اختصارات وإدارة المزامنة."
       />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -140,20 +140,20 @@ export function AdminDashboardPage() {
         <div className="rounded-2xl border border-line bg-surface p-5 shadow-[var(--shadow-soft)]">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <h2 className="text-sm font-extrabold text-ink">Firebase</h2>
+              <h2 className="text-sm font-extrabold text-ink">المزامنة</h2>
               <p className="mt-1 text-sm text-muted">
                 المصدر الحالي:{' '}
                 <span className="font-extrabold text-ink">
                   {cmsSource === 'firebase'
-                    ? 'Firestore'
+                    ? 'السحابة'
                     : cmsSource === 'hybrid'
-                      ? 'دمج محلي + Firestore'
-                      : 'محلي (بانتظار التصدير)'}
+                      ? 'محلي + سحابة'
+                      : 'محلي (بانتظار الرفع)'}
                 </span>
               </p>
               <p className="mt-1 text-xs text-muted">
-                التصدير يرفع كل البيانات (مهن، مقالات، مدن، تصنيفات، معرض، إعدادات) بدون مسح
-                مستندات أخرى في المشروع.
+                الرفع يحفظ كل البيانات (مهن، مقالات، مدن، تصنيفات، معرض، إعدادات) بدون مسح
+                سجلات أخرى موجودة مسبقًا.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -164,7 +164,7 @@ export function AdminDashboardPage() {
                 onClick={() => void refreshFromFirebase()}
               >
                 <RefreshCw className="size-4" />
-                تحديث من Firebase
+                تحديث من السحابة
               </Button>
               <Button
                 type="button"
@@ -174,7 +174,7 @@ export function AdminDashboardPage() {
                 onClick={() => void onExport()}
               >
                 <CloudUpload className="size-4" />
-                {exporting ? 'جاري التصدير…' : 'تصدير الكل إلى Firebase'}
+                {exporting ? 'جاري الرفع…' : 'رفع الكل إلى السحابة'}
               </Button>
             </div>
           </div>
@@ -187,7 +187,7 @@ export function AdminDashboardPage() {
         </div>
       ) : (
         <div className="rounded-2xl border border-dashed border-line bg-cream/50 p-5 text-sm text-muted">
-          Firebase غير مُعدّ في `.env` — أضف مفاتيح `VITE_FIREBASE_*`.
+          المزامنة السحابية غير مفعّلة حاليًا. راجع إعدادات المشروع مع المطوّر.
         </div>
       )}
 
