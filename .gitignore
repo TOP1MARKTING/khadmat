@@ -15,6 +15,9 @@ dist-ssr
 .env.local
 .env.*.local
 scripts/.seed-payload.json
+firestore-debug.log
+firebase-debug.log
+*.log
 
 # Editor directories and files
 .vscode/*

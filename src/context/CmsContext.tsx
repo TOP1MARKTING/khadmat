@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { onAuthStateChanged } from 'firebase/auth'
 import {
   emptyArticle,
   emptyService,
@@ -17,16 +18,20 @@ import {
   type CmsArticle,
   type CmsService,
 } from '@/lib/cms'
-import { isFirebaseConfigured } from '@/lib/firebase'
+import { getFirebaseAuth, isFirebaseConfigured } from '@/lib/firebase'
 import {
   deleteArticleFromFirestore,
   deleteServiceFromFirestore,
-  fetchArticlesFromFirestore,
-  fetchServicesFromFirestore,
+  fetchAllArticlesFromFirestore,
+  fetchAllServicesFromFirestore,
+  fetchPublishedArticlesFromFirestore,
+  fetchPublishedServicesFromFirestore,
   mergeByIdPreferRemote,
   saveArticleToFirestore,
   saveServiceToFirestore,
 } from '@/lib/firestoreData'
+
+export type SaveState = 'idle' | 'saving' | 'saved' | 'error'
 
 type CmsContextValue = {
   services: CmsService[]
@@ -34,6 +39,9 @@ type CmsContextValue = {
   cmsReady: boolean
   cmsSource: 'local' | 'firebase' | 'hybrid'
   cmsError: string
+  saveState: SaveState
+  saveError: string
+  isAdminSession: boolean
   refreshFromFirebase: () => Promise<void>
   upsertService: (service: CmsService) => Promise<void>
   deleteService: (id: string) => Promise<void>
@@ -45,16 +53,32 @@ type CmsContextValue = {
   createBlankService: () => CmsService
   createBlankArticle: () => CmsArticle
   publishedArticles: () => CmsArticle[]
+  publishedServices: () => CmsService[]
 }
 
 const CmsContext = createContext<CmsContextValue | null>(null)
 
+function publicOnlyServices(list: CmsService[]) {
+  return list.filter((s) => s.status !== 'draft')
+}
+
+function publicOnlyArticles(list: CmsArticle[]) {
+  return list.filter((a) => a.status === 'published')
+}
+
 export function CmsProvider({ children }: { children: ReactNode }) {
-  const [services, setServices] = useState<CmsService[]>(() => loadCmsServices())
-  const [articles, setArticles] = useState<CmsArticle[]>(() => loadCmsArticles())
+  const [services, setServices] = useState<CmsService[]>(() =>
+    publicOnlyServices(loadCmsServices()),
+  )
+  const [articles, setArticles] = useState<CmsArticle[]>(() =>
+    publicOnlyArticles(loadCmsArticles()),
+  )
   const [cmsReady, setCmsReady] = useState(!isFirebaseConfigured())
   const [cmsSource, setCmsSource] = useState<'local' | 'firebase' | 'hybrid'>('local')
   const [cmsError, setCmsError] = useState('')
+  const [saveState, setSaveState] = useState<SaveState>('idle')
+  const [saveError, setSaveError] = useState('')
+  const [isAdminSession, setIsAdminSession] = useState(false)
 
   const refreshFromFirebase = useCallback(async () => {
     if (!isFirebaseConfigured()) {
@@ -64,17 +88,35 @@ export function CmsProvider({ children }: { children: ReactNode }) {
     }
     try {
       setCmsError('')
+      const admin = Boolean(getFirebaseAuth().currentUser)
+      setIsAdminSession(admin)
+
       const localServices = loadCmsServices()
       const localArticles = loadCmsArticles()
-      const [remoteServices, remoteArticles] = await Promise.all([
-        fetchServicesFromFirestore(),
-        fetchArticlesFromFirestore(),
-      ])
+
+      const [remoteServices, remoteArticles] = admin
+        ? await Promise.all([
+            fetchAllServicesFromFirestore(),
+            fetchAllArticlesFromFirestore(),
+          ])
+        : await Promise.all([
+            fetchPublishedServicesFromFirestore(),
+            fetchPublishedArticlesFromFirestore(),
+          ])
 
       if (remoteServices.length === 0 && remoteArticles.length === 0) {
-        // Keep all local data; nothing deleted. Wait for admin export.
-        setServices(localServices)
-        setArticles(localArticles)
+        const localViewServices = admin
+          ? localServices
+          : publicOnlyServices(localServices)
+        const localViewArticles = admin
+          ? localArticles
+          : publicOnlyArticles(localArticles)
+        setServices(localViewServices)
+        setArticles(localViewArticles)
+        if (!admin) {
+          saveCmsServices(publicOnlyServices(localServices))
+          saveCmsArticles(publicOnlyArticles(localArticles))
+        }
         setCmsSource('local')
         setCmsReady(true)
         return
@@ -82,10 +124,21 @@ export function CmsProvider({ children }: { children: ReactNode }) {
 
       const mergedServices = mergeByIdPreferRemote(remoteServices, localServices)
       const mergedArticles = mergeByIdPreferRemote(remoteArticles, localArticles)
-      setServices(mergedServices)
-      setArticles(mergedArticles)
-      saveCmsServices(mergedServices)
-      saveCmsArticles(mergedArticles)
+
+      if (admin) {
+        setServices(mergedServices)
+        setArticles(mergedArticles)
+        saveCmsServices(mergedServices)
+        saveCmsArticles(mergedArticles)
+      } else {
+        const pubS = publicOnlyServices(mergedServices)
+        const pubA = publicOnlyArticles(mergedArticles)
+        setServices(pubS)
+        setArticles(pubA)
+        saveCmsServices(pubS)
+        saveCmsArticles(pubA)
+      }
+
       setCmsSource(
         localServices.length || localArticles.length ? 'hybrid' : 'firebase',
       )
@@ -93,7 +146,9 @@ export function CmsProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.error(err)
       setCmsError(
-        err instanceof Error ? err.message : 'تعذر الاتصال بالسحابة — نعرض النسخة المحلية',
+        err instanceof Error
+          ? err.message
+          : 'تعذر الاتصال بالسحابة — نعرض النسخة المحلية',
       )
       setCmsSource('local')
       setCmsReady(true)
@@ -104,8 +159,19 @@ export function CmsProvider({ children }: { children: ReactNode }) {
     void refreshFromFirebase()
   }, [refreshFromFirebase])
 
+  useEffect(() => {
+    if (!isFirebaseConfigured()) return
+    return onAuthStateChanged(getFirebaseAuth(), () => {
+      void refreshFromFirebase()
+    })
+  }, [refreshFromFirebase])
+
   const upsertService = useCallback(async (service: CmsService) => {
-    const item = { ...service, updatedAt: new Date().toISOString() }
+    const item = {
+      ...service,
+      status: service.status === 'draft' ? ('draft' as const) : ('published' as const),
+      updatedAt: new Date().toISOString(),
+    }
     setServices((prev) => {
       const next = [...prev]
       const idx = next.findIndex((s) => s.id === item.id)
@@ -114,17 +180,24 @@ export function CmsProvider({ children }: { children: ReactNode }) {
       saveCmsServices(next)
       return next
     })
-    if (isFirebaseConfigured()) {
+    if (isFirebaseConfigured() && getFirebaseAuth().currentUser) {
+      setSaveState('saving')
+      setSaveError('')
       try {
         await saveServiceToFirestore(item)
+        setSaveState('saved')
       } catch (err) {
         console.error(err)
-        setCmsError(
+        const msg =
           err instanceof Error
             ? `حُفظ محليًا، لكن الرفع للسحابة فشل: ${err.message}`
-            : 'حُفظ محليًا، لكن الرفع للسحابة فشل',
-        )
+            : 'حُفظ محليًا، لكن الرفع للسحابة فشل'
+        setSaveState('error')
+        setSaveError(msg)
+        setCmsError(msg)
       }
+    } else {
+      setSaveState('saved')
     }
   }, [])
 
@@ -134,7 +207,7 @@ export function CmsProvider({ children }: { children: ReactNode }) {
       saveCmsServices(next)
       return next
     })
-    if (isFirebaseConfigured()) {
+    if (isFirebaseConfigured() && getFirebaseAuth().currentUser) {
       try {
         await deleteServiceFromFirestore(id)
       } catch (err) {
@@ -158,17 +231,24 @@ export function CmsProvider({ children }: { children: ReactNode }) {
       saveCmsArticles(next)
       return next
     })
-    if (isFirebaseConfigured()) {
+    if (isFirebaseConfigured() && getFirebaseAuth().currentUser) {
+      setSaveState('saving')
+      setSaveError('')
       try {
         await saveArticleToFirestore(item)
+        setSaveState('saved')
       } catch (err) {
         console.error(err)
-        setCmsError(
+        const msg =
           err instanceof Error
             ? `حُفظ محليًا، لكن الرفع للسحابة فشل: ${err.message}`
-            : 'حُفظ محليًا، لكن الرفع للسحابة فشل',
-        )
+            : 'حُفظ محليًا، لكن الرفع للسحابة فشل'
+        setSaveState('error')
+        setSaveError(msg)
+        setCmsError(msg)
       }
+    } else {
+      setSaveState('saved')
     }
   }, [])
 
@@ -178,7 +258,7 @@ export function CmsProvider({ children }: { children: ReactNode }) {
       saveCmsArticles(next)
       return next
     })
-    if (isFirebaseConfigured()) {
+    if (isFirebaseConfigured() && getFirebaseAuth().currentUser) {
       try {
         await deleteArticleFromFirestore(id)
       } catch (err) {
@@ -199,6 +279,9 @@ export function CmsProvider({ children }: { children: ReactNode }) {
       cmsReady,
       cmsSource,
       cmsError,
+      saveState,
+      saveError,
+      isAdminSession,
       refreshFromFirebase,
       upsertService,
       deleteService,
@@ -216,6 +299,7 @@ export function CmsProvider({ children }: { children: ReactNode }) {
             if (a.featured !== b.featured) return a.featured ? -1 : 1
             return b.publishedAt.localeCompare(a.publishedAt)
           }),
+      publishedServices: () => services.filter((s) => s.status !== 'draft'),
     }),
     [
       services,
@@ -223,6 +307,9 @@ export function CmsProvider({ children }: { children: ReactNode }) {
       cmsReady,
       cmsSource,
       cmsError,
+      saveState,
+      saveError,
+      isAdminSession,
       refreshFromFirebase,
       upsertService,
       deleteService,

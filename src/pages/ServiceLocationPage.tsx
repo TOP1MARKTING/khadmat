@@ -51,10 +51,8 @@ export function ServiceLocationPage() {
       valid && city && service
         ? `${service.nameEn} services in ${city.nameEn}, ${city.regionEn}. Review coverage and send an inquiry.`
         : '',
-    canonicalPath:
-      valid && city && service
-        ? `/sa/${city.regionSlug}/${city.slug}/${service.slug}`
-        : undefined,
+    canonicalPath: undefined,
+    robots: 'noindex,nofollow',
   })
 
   if (!valid || !city || !service) return <NotFoundPage />

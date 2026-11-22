@@ -1,9 +1,18 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '@/context/LanguageContext'
+import { usePageMeta } from '@/hooks/usePageMeta'
 import { Button } from '@/components/ui/Button'
 
 export function NotFoundPage() {
   const { t } = useLanguage()
+
+  usePageMeta({
+    titleAr: 'الصفحة غير موجودة | ساعدني',
+    titleEn: 'Page not found | Saedni',
+    descriptionAr: 'الصفحة المطلوبة غير متاحة.',
+    descriptionEn: 'The requested page is not available.',
+    robots: 'noindex,nofollow',
+  })
 
   return (
     <div className="container-page flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">

@@ -15,20 +15,23 @@ import { getCategory } from '@/data/services'
 import { getServiceIcon } from '@/lib/serviceIcons'
 import { useCms } from '@/context/CmsContext'
 import { RelatedArticles } from '@/components/blog/RelatedArticles'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { absoluteUrl } from '@/lib/siteConfig'
 import { NotFoundPage } from './NotFoundPage'
 
 export function ServiceDetailPage() {
   const { serviceSlug } = useParams()
   const { t, lang, isAr } = useLanguage()
   const Arrow = isAr ? ArrowLeft : ArrowRight
-  const { getServiceBySlug, services, publishedArticles } = useCms()
+  const { getServiceBySlug, publishedServices, publishedArticles } = useCms()
   const service = getServiceBySlug(serviceSlug || '')
+  const isPublic = Boolean(service && service.status !== 'draft')
   const category = service ? getCategory(service.categorySlug) : undefined
   const Icon = service
     ? getServiceIcon(service.slug, service.categorySlug)
     : Sparkles
   const related = service
-    ? services
+    ? publishedServices()
         .filter((s) => s.categorySlug === service.categorySlug && s.slug !== service.slug)
         .slice(0, 4)
     : []
@@ -38,14 +41,21 @@ export function ServiceDetailPage() {
   const cityArticles = articles.filter((a) => a.citySlug)
 
   usePageMeta({
-    titleAr: service ? `${service.nameAr} | دليل العميل | ساعدني` : 'خدمة غير موجودة | ساعدني',
-    titleEn: service ? `${service.nameEn} | Customer guide | Saedni` : 'Service not found | Saedni',
-    descriptionAr: service?.shortAr || '',
-    descriptionEn: service?.shortEn || '',
-    canonicalPath: service ? `/services/${service.slug}` : undefined,
+    titleAr: isPublic
+      ? `${service!.metaTitleAr || service!.nameAr} | دليل العميل | ساعدني`
+      : 'خدمة غير موجودة | ساعدني',
+    titleEn: isPublic
+      ? `${service!.nameEn} | Customer guide | Saedni`
+      : 'Service not found | Saedni',
+    descriptionAr: isPublic
+      ? service!.metaDescriptionAr || service!.shortAr || ''
+      : '',
+    descriptionEn: isPublic ? service!.shortEn || '' : '',
+    canonicalPath: isPublic ? `/services/${service!.slug}` : undefined,
+    robots: isPublic ? 'index,follow' : 'noindex,nofollow',
   })
 
-  if (!service) return <NotFoundPage />
+  if (!isPublic || !service) return <NotFoundPage />
 
   const name = lang === 'ar' ? service.nameAr : service.nameEn
   const intro = lang === 'ar' ? service.introAr : service.introEn
@@ -77,6 +87,18 @@ export function ServiceDetailPage() {
 
   return (
     <div>
+      <JsonLd
+        id={`service-${service.slug}`}
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: service.nameAr,
+          description: service.metaDescriptionAr || service.shortAr,
+          url: absoluteUrl(`/services/${service.slug}`),
+          inLanguage: 'ar-SA',
+          isPartOf: { '@type': 'WebSite', name: 'ساعدني', url: absoluteUrl('/') },
+        }}
+      />
       {/* Modern photo hero */}
       <section className="relative isolate min-h-[320px] overflow-hidden border-b border-line sm:min-h-[420px]">
         <img

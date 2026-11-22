@@ -15,6 +15,7 @@ import {
 } from 'firebase/auth'
 import { FirebaseError } from 'firebase/app'
 import { getFirebaseAuth, isFirebaseConfigured } from '@/lib/firebase'
+import { isEmailAllowedAdmin } from '@/lib/adminAllowlist'
 
 type LoginResult = { ok: true } | { ok: false; message: string }
 
@@ -59,7 +60,17 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
       return
     }
     const auth = getFirebaseAuth()
-    return onAuthStateChanged(auth, (next) => {
+    return onAuthStateChanged(auth, async (next) => {
+      if (next && !isEmailAllowedAdmin(next.email)) {
+        try {
+          await signOut(auth)
+        } catch {
+          /* ignore */
+        }
+        setUser(null)
+        setAuthReady(true)
+        return
+      }
       setUser(next)
       setAuthReady(true)
     })
@@ -71,6 +82,9 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     if (!trimmedEmail || !trimmedPassword) {
       return { ok: false, message: 'أدخل البريد الإلكتروني وكلمة المرور' }
     }
+    if (!isEmailAllowedAdmin(trimmedEmail)) {
+      return { ok: false, message: 'هذا الحساب غير مصرح له بدخول لوحة التحكم' }
+    }
     if (!isFirebaseConfigured()) {
       return {
         ok: false,
@@ -78,11 +92,15 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
       }
     }
     try {
-      await signInWithEmailAndPassword(
+      const cred = await signInWithEmailAndPassword(
         getFirebaseAuth(),
         trimmedEmail,
         trimmedPassword,
       )
+      if (!isEmailAllowedAdmin(cred.user.email)) {
+        await signOut(getFirebaseAuth())
+        return { ok: false, message: 'هذا الحساب غير مصرح له بدخول لوحة التحكم' }
+      }
       return { ok: true }
     } catch (err) {
       console.warn(err)

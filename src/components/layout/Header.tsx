@@ -6,6 +6,7 @@ import {
   Info,
   Menu,
   MessageCircle,
+  Newspaper,
   X,
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
@@ -15,6 +16,7 @@ import { cn } from '@/lib/cn'
 
 const nav = [
   { to: '/services', ar: 'المهن', en: 'Trades', icon: Briefcase },
+  { to: '/blog', ar: 'المدونات', en: 'Blog', icon: Newspaper },
   { to: '/about', ar: 'عن ساعدني', en: 'About', icon: Info },
   { to: '/contact', ar: 'تواصل', en: 'Contact', icon: MessageCircle },
 ]

@@ -8,6 +8,8 @@ type PageMeta = {
   descriptionAr: string
   descriptionEn: string
   canonicalPath?: string
+  /** Default index,follow. Use noindex for 404 / thin / private preview pages. */
+  robots?: string
 }
 
 function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
@@ -30,12 +32,17 @@ function upsertLink(rel: string, href: string) {
   el.href = href
 }
 
+function removeCanonical() {
+  document.head.querySelectorAll('link[rel="canonical"]').forEach((el) => el.remove())
+}
+
 export function usePageMeta({
   titleAr,
   titleEn,
   descriptionAr,
   descriptionEn,
   canonicalPath,
+  robots = 'index,follow',
 }: PageMeta) {
   const { lang } = useLanguage()
 
@@ -44,14 +51,17 @@ export function usePageMeta({
     const description = lang === 'ar' ? descriptionAr : descriptionEn
     document.title = title
     upsertMeta('name', 'description', description)
+    upsertMeta('name', 'robots', robots)
     upsertMeta('property', 'og:title', title)
     upsertMeta('property', 'og:description', description)
     upsertMeta('property', 'og:site_name', 'ساعدني | Saedni')
     upsertMeta('property', 'og:locale', lang === 'ar' ? 'ar_SA' : 'en_US')
-    if (canonicalPath) {
+    if (canonicalPath && !robots.includes('noindex')) {
       const url = absoluteUrl(canonicalPath)
       upsertLink('canonical', url)
       upsertMeta('property', 'og:url', url)
+    } else {
+      removeCanonical()
     }
-  }, [lang, titleAr, titleEn, descriptionAr, descriptionEn, canonicalPath])
+  }, [lang, titleAr, titleEn, descriptionAr, descriptionEn, canonicalPath, robots])
 }

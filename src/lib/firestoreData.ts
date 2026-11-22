@@ -7,8 +7,10 @@ import {
   deleteDoc,
   writeBatch,
   serverTimestamp,
+  query,
+  where,
 } from 'firebase/firestore'
-import { getDb, isFirebaseConfigured } from '@/lib/firebase'
+import { getDb, getFirebaseAuth, isFirebaseConfigured } from '@/lib/firebase'
 import {
   loadCmsArticles,
   loadCmsServices,
@@ -16,6 +18,7 @@ import {
   type CmsArticle,
   type CmsService,
 } from '@/lib/cms'
+import { saveRevision } from '@/lib/revisions'
 import { categories } from '@/data/services'
 import { cities } from '@/data/cities'
 import { digitalAssets } from '@/data/assets'
@@ -48,22 +51,53 @@ function stripUndefined<T extends Record<string, unknown>>(obj: T): T {
   return out
 }
 
-export async function fetchServicesFromFirestore(): Promise<CmsService[]> {
-  if (!isFirebaseConfigured()) return []
-  const snap = await getDocs(collection(getDb(), COL.services))
+function mapServices(snap: Awaited<ReturnType<typeof getDocs>>): CmsService[] {
   return snap.docs.map((d) => {
     const data = d.data() as CmsService
-    return { ...data, id: data.id || d.id }
+    return { ...data, id: data.id || d.id, status: data.status === 'draft' ? 'draft' : 'published' }
   })
 }
 
-export async function fetchArticlesFromFirestore(): Promise<CmsArticle[]> {
-  if (!isFirebaseConfigured()) return []
-  const snap = await getDocs(collection(getDb(), COL.articles))
+function mapArticles(snap: Awaited<ReturnType<typeof getDocs>>): CmsArticle[] {
   return snap.docs.map((d) => {
     const data = d.data() as CmsArticle
     return { ...data, id: data.id || d.id }
   })
+}
+
+/** Public: published only (rules + query). */
+export async function fetchPublishedServicesFromFirestore(): Promise<CmsService[]> {
+  if (!isFirebaseConfigured()) return []
+  const q = query(collection(getDb(), COL.services), where('status', '==', 'published'))
+  return mapServices(await getDocs(q))
+}
+
+export async function fetchPublishedArticlesFromFirestore(): Promise<CmsArticle[]> {
+  if (!isFirebaseConfigured()) return []
+  const q = query(collection(getDb(), COL.articles), where('status', '==', 'published'))
+  return mapArticles(await getDocs(q))
+}
+
+/** Admin (signed-in): all rows including drafts. */
+export async function fetchAllServicesFromFirestore(): Promise<CmsService[]> {
+  if (!isFirebaseConfigured()) return []
+  return mapServices(await getDocs(collection(getDb(), COL.services)))
+}
+
+export async function fetchAllArticlesFromFirestore(): Promise<CmsArticle[]> {
+  if (!isFirebaseConfigured()) return []
+  return mapArticles(await getDocs(collection(getDb(), COL.articles)))
+}
+
+/** @deprecated Prefer published/all helpers */
+export async function fetchServicesFromFirestore(): Promise<CmsService[]> {
+  const auth = isFirebaseConfigured() ? getFirebaseAuth().currentUser : null
+  return auth ? fetchAllServicesFromFirestore() : fetchPublishedServicesFromFirestore()
+}
+
+export async function fetchArticlesFromFirestore(): Promise<CmsArticle[]> {
+  const auth = isFirebaseConfigured() ? getFirebaseAuth().currentUser : null
+  return auth ? fetchAllArticlesFromFirestore() : fetchPublishedArticlesFromFirestore()
 }
 
 export async function fetchSiteSettingsFromFirestore(): Promise<SiteSettings | null> {
@@ -74,10 +108,18 @@ export async function fetchSiteSettingsFromFirestore(): Promise<SiteSettings | n
 }
 
 export async function saveServiceToFirestore(service: CmsService) {
+  const ref = doc(getDb(), COL.services, service.id)
+  const prev = await getDoc(ref)
+  if (prev.exists()) {
+    await saveRevision('services', service.id, prev.data() as Record<string, unknown>)
+  }
   const payload = stripUndefined(
-    normalizeForFirestore(service) as unknown as Record<string, unknown>,
+    normalizeForFirestore({
+      ...service,
+      status: service.status === 'draft' ? 'draft' : 'published',
+    }) as unknown as Record<string, unknown>,
   )
-  await setDoc(doc(getDb(), COL.services, service.id), {
+  await setDoc(ref, {
     ...payload,
     syncedAt: serverTimestamp(),
   })
@@ -88,13 +130,60 @@ export async function deleteServiceFromFirestore(id: string) {
 }
 
 export async function saveArticleToFirestore(article: CmsArticle) {
+  const ref = doc(getDb(), COL.articles, article.id)
+  const prev = await getDoc(ref)
+  if (prev.exists()) {
+    await saveRevision('articles', article.id, prev.data() as Record<string, unknown>)
+  }
   const payload = stripUndefined(
     normalizeForFirestore(article) as unknown as Record<string, unknown>,
   )
-  await setDoc(doc(getDb(), COL.articles, article.id), {
+  await setDoc(ref, {
     ...payload,
     syncedAt: serverTimestamp(),
   })
+}
+
+/**
+ * Count docs missing explicit status (do NOT auto-publish).
+ * Admin must review and set status manually before public visibility.
+ */
+export async function countMissingPublishStatus() {
+  if (!isFirebaseConfigured() || !getFirebaseAuth().currentUser) {
+    return { services: 0, articles: 0 }
+  }
+  const db = getDb()
+  const [services, articles] = await Promise.all([
+    getDocs(collection(db, COL.services)),
+    getDocs(collection(db, COL.articles)),
+  ])
+  return {
+    services: services.docs.filter((d) => !('status' in d.data())).length,
+    articles: articles.docs.filter((d) => !('status' in d.data())).length,
+  }
+}
+
+/** Snapshot current cloud content before a bulk export/import. */
+export async function createCloudBackup(label = 'pre-export') {
+  if (!isFirebaseConfigured()) return null
+  const auth = getFirebaseAuth().currentUser
+  if (!auth) throw new Error('يلزم تسجيل الدخول لإنشاء نسخة احتياطية')
+  const [services, articles] = await Promise.all([
+    fetchAllServicesFromFirestore(),
+    fetchAllArticlesFromFirestore(),
+  ])
+  const id = `bak_${Date.now()}`
+  await setDoc(doc(getDb(), 'backups', id), {
+    id,
+    label,
+    byEmail: auth.email || '',
+    createdAt: new Date().toISOString(),
+    counts: { services: services.length, articles: articles.length },
+    services,
+    articles,
+    syncedAt: serverTimestamp(),
+  })
+  return id
 }
 
 export async function deleteArticleFromFirestore(id: string) {
@@ -151,9 +240,15 @@ export async function exportAllDataToFirestore(options?: {
     throw new Error('المزامنة السحابية غير مفعّلة')
   }
 
-  const services = options?.services ?? loadCmsServices()
+  const services = (options?.services ?? loadCmsServices()).map((s) => ({
+    ...s,
+    status: s.status === 'draft' ? ('draft' as const) : ('published' as const),
+  }))
   const articles = options?.articles ?? loadCmsArticles()
   const settings = options?.settings ?? loadSiteSettings()
+
+  // Safety snapshot before bulk write
+  await createCloudBackup('pre-bulk-export')
 
   await batchSet(
     COL.services,

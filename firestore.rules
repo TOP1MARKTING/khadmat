@@ -1,35 +1,72 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Public read for the knowledge site
-    match /{document=**} {
-      allow read: if true;
+    // KEEP IN SYNC with src/lib/adminEmails.ts (BUILTIN_ADMIN_EMAILS)
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email is string
+        && request.auth.token.email.lower() in [
+          'top1@admin.com'
+        ];
     }
 
-    // Writes: signed-in admin only (create user in Firebase Authentication)
+    // Public only when status is explicitly "published" (missing status ≠ published)
+    function isExplicitlyPublished() {
+      return resource.data.keys().hasAll(['status'])
+        && resource.data.status == 'published';
+    }
+
+    // Actual CMS collections used by the app: services + articles (not "professions")
     match /services/{id} {
-      allow write: if request.auth != null;
+      allow read: if isExplicitlyPublished() || isAdmin();
+      allow create, update, delete: if isAdmin();
     }
+
     match /articles/{id} {
-      allow write: if request.auth != null;
+      allow read: if isExplicitlyPublished() || isAdmin();
+      allow create, update, delete: if isAdmin();
     }
+
     match /categories/{id} {
-      allow write: if request.auth != null;
+      allow read: if true;
+      allow write: if isAdmin();
     }
+
     match /cities/{id} {
-      allow write: if request.auth != null;
+      allow read: if true;
+      allow write: if isAdmin();
     }
+
+    // Commercial inventory — never public
     match /digitalAssets/{id} {
-      allow write: if request.auth != null;
+      allow read, write: if isAdmin();
     }
+
+    // Public site media catalog only (paths/labels). App also ships the same
+    // catalog in static code; Firestore copy is not required for visitors.
+    // Locked to admin so a future private asset cannot leak via public read.
     match /mediaLibrary/{id} {
-      allow write: if request.auth != null;
+      allow read, write: if isAdmin();
     }
+
+    // Public marketing settings only (name/tagline/contact). No secrets stored.
     match /settings/{id} {
-      allow write: if request.auth != null;
+      allow read: if true;
+      allow write: if isAdmin();
     }
+
+    match /revisions/{id} {
+      allow read, write: if isAdmin();
+    }
+
+    match /backups/{id} {
+      allow read, write: if isAdmin();
+    }
+
     match /meta/{id} {
-      allow write: if request.auth != null;
+      allow read, write: if isAdmin();
     }
+
+    // Unmatched collections are denied by default.
   }
 }

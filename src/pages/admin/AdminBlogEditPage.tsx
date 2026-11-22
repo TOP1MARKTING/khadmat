@@ -1,7 +1,8 @@
-import { useMemo, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
-import { Images } from 'lucide-react'
+import { History, Images } from 'lucide-react'
 import { useCms } from '@/context/CmsContext'
+import { listRevisions, type ContentRevision } from '@/lib/revisions'
 import { cities } from '@/data/cities'
 import {
   fileToDataUrl,
@@ -31,8 +32,17 @@ export function AdminBlogEditPage() {
   const { articleId } = useParams()
   const isNew = articleId === 'new'
   const navigate = useNavigate()
-  const { articles, services, upsertArticle, createBlankArticle, getArticleBySlug } = useCms()
+  const {
+    articles,
+    services,
+    upsertArticle,
+    createBlankArticle,
+    getArticleBySlug,
+    saveState,
+    saveError,
+  } = useCms()
   const contentRef = useRef<HTMLTextAreaElement>(null)
+  const [revisions, setRevisions] = useState<ContentRevision[]>([])
 
   const existing = useMemo(
     () => (isNew ? null : articles.find((a) => a.id === articleId) || null),
@@ -50,6 +60,11 @@ export function AdminBlogEditPage() {
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [galleryMode, setGalleryMode] = useState<'inline' | 'cover'>('inline')
   const [pendingGallerySrc, setPendingGallerySrc] = useState('')
+
+  useEffect(() => {
+    if (!form.id || isNew) return
+    void listRevisions('articles', form.id).then(setRevisions).catch(() => setRevisions([]))
+  }, [form.id, isNew, saved, saveState])
 
   if (!isNew && !existing) return <Navigate to="/admin/blog" replace />
 
@@ -157,24 +172,34 @@ export function AdminBlogEditPage() {
       readMinutes: Math.max(2, Math.ceil(form.contentHtmlAr.replace(/<[^>]+>/g, '').length / 700)),
     }
 
-    upsertArticle(payload)
-    setForm(payload)
-    setSaved(true)
-    if (isNew) navigate(`/admin/blog/${payload.id}`, { replace: true })
+    void upsertArticle(payload).then(() => {
+      setForm(payload)
+      setSaved(true)
+      if (isNew) navigate(`/admin/blog/${payload.id}`, { replace: true })
+    })
   }
 
   return (
     <div className="space-y-6">
       <AdminPageHeader
         title={isNew ? 'مقال جديد' : 'تعديل مقال'}
-        description="اكتب محتوى مفيد للعميل أولًا. اربط المقال بمهنة ومدينة، وأضف اسم/شعار شركة لاحقًا عند الاتفاق."
+        description="اكتب محتوى معرفيًا مفيدًا للعميل. اربط المقال بمهنة ومدينة عند الحاجة."
         backTo="/admin/blog"
         action={
-          <Link to="/admin/blog/new">
-            <Button variant="outline" size="sm" className="rounded-xl">
-              مقال جديد
-            </Button>
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            {!isNew ? (
+              <Link to={`/admin/preview/article/${form.id}`}>
+                <Button variant="accent" size="sm" className="rounded-xl">
+                  معاينة
+                </Button>
+              </Link>
+            ) : null}
+            <Link to="/admin/blog/new">
+              <Button variant="outline" size="sm" className="rounded-xl">
+                مقال جديد
+              </Button>
+            </Link>
+          </div>
         }
       />
 
@@ -684,6 +709,44 @@ export function AdminBlogEditPage() {
           </div>
         </AdminPanel>
 
+        {!isNew && revisions.length > 0 ? (
+          <AdminPanel title="سجل التعديلات">
+            <ul className="space-y-2 text-sm">
+              {revisions.slice(0, 8).map((r) => (
+                <li
+                  key={r.id}
+                  className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line px-3 py-2"
+                >
+                  <span className="text-muted">
+                    <History className="me-1 inline size-3.5" />
+                    {r.createdAt || r.id}
+                  </span>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="rounded-lg"
+                    onClick={() => {
+                      const snap = r.snapshot as unknown as CmsArticle
+                      if (!snap?.id) return
+                      setForm({ ...snap, id: form.id })
+                      setSaved(false)
+                    }}
+                  >
+                    استرجاع للتحرير
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </AdminPanel>
+        ) : null}
+
+        {saveState === 'error' || saveError ? (
+          <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">
+            {saveError || 'فشل الرفع للسحابة'}
+          </p>
+        ) : null}
+
         <div className="sticky bottom-4 z-10 flex flex-wrap gap-2.5 rounded-2xl border border-line bg-surface/95 p-3 shadow-[var(--shadow-lift)] backdrop-blur-md">
           <Button
             type="submit"
@@ -709,6 +772,16 @@ export function AdminBlogEditPage() {
           >
             نشر
           </Button>
+          {form.status === 'published' ? (
+            <Button
+              type="button"
+              variant="outline"
+              className="rounded-xl"
+              onClick={(e) => onSubmit(e as unknown as FormEvent, 'draft')}
+            >
+              إلغاء النشر
+            </Button>
+          ) : null}
         </div>
       </form>
 

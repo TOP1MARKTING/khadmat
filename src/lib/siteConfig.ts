@@ -6,6 +6,8 @@ export const SITE_URL = (
 ).replace(/\/$/, '')
 
 export function absoluteUrl(path = '/') {
+  if (!path) return `${SITE_URL}/`
+  if (/^https?:\/\//i.test(path)) return path
   const normalized = path.startsWith('/') ? path : `/${path}`
   return `${SITE_URL}${normalized === '/' ? '/' : normalized}`
 }

@@ -18,6 +18,8 @@ import {
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { usePageMeta } from '@/hooks/usePageMeta'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { absoluteUrl } from '@/lib/siteConfig'
 import { getFeaturedCities } from '@/data/cities'
 import { categories } from '@/data/services'
 import { useCms } from '@/context/CmsContext'
@@ -75,7 +77,8 @@ export function HomePage() {
   const { t, lang, isAr } = useLanguage()
   const Arrow = isAr ? ArrowLeft : ArrowRight
   const featuredCities = getFeaturedCities()
-  const { services, publishedArticles } = useCms()
+  const { publishedServices, publishedArticles } = useCms()
+  const services = publishedServices()
   const popular = services.filter((s) => s.popular).slice(0, 6)
   const recentArticles = publishedArticles().slice(0, 3)
   const heroIndex = useHeroSlider()
@@ -92,6 +95,19 @@ export function HomePage() {
 
   return (
     <>
+      <JsonLd
+        id="website"
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'ساعدني',
+          alternateName: 'Saedni',
+          url: absoluteUrl('/'),
+          inLanguage: 'ar-SA',
+          description:
+            'مرجع معرفي للمهن والخدمات في المملكة العربية السعودية',
+        }}
+      />
       {/* ===== Mobile first fold: photo + overlapping modern sheet ===== */}
       <section className="flex h-svh flex-col overflow-hidden border-b border-line sm:hidden">
         <div className="relative shrink-0">

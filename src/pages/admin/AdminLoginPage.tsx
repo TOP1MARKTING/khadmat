@@ -177,7 +177,7 @@ export function AdminLoginPage() {
                         setError('')
                       }}
                       className="h-12 rounded-2xl ps-10 text-start"
-                      placeholder="admin@saedniksa.com"
+                      placeholder="top1@admin.com"
                       required
                     />
                   </div>

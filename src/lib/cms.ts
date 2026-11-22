@@ -1,9 +1,12 @@
 import { blogArticles, type BlogArticle } from '@/data/blog'
 import { services as seedServices, type Service } from '@/data/services'
 
+export type PublishStatus = 'draft' | 'published'
+
 export type CmsService = Service & {
   id: string
   updatedAt: string
+  status: PublishStatus
   bodyAr: string
   bodyEn: string
   gallery: string[]
@@ -11,9 +14,12 @@ export type CmsService = Service & {
   benefitsEn: string[]
   stepsAr: string[]
   stepsEn: string[]
+  metaTitleAr?: string
+  metaDescriptionAr?: string
+  imageAltAr?: string
 }
 
-export type BlogStatus = 'draft' | 'published'
+export type BlogStatus = PublishStatus
 export type BlogCategory = 'web-design' | 'seo' | 'trades'
 
 export type CmsArticle = {
@@ -64,6 +70,7 @@ function uid(prefix: string) {
 function normalizeService(s: CmsService): CmsService {
   return {
     ...s,
+    status: s.status === 'draft' ? 'draft' : 'published',
     bodyAr: s.bodyAr || '',
     bodyEn: s.bodyEn || '',
     gallery: Array.isArray(s.gallery) ? s.gallery.filter(Boolean) : [],
@@ -75,6 +82,9 @@ function normalizeService(s: CmsService): CmsService {
     typesEn: Array.isArray(s.typesEn) ? s.typesEn : [],
     faqAr: Array.isArray(s.faqAr) ? s.faqAr : [],
     faqEn: Array.isArray(s.faqEn) ? s.faqEn : [],
+    metaTitleAr: s.metaTitleAr || '',
+    metaDescriptionAr: s.metaDescriptionAr || '',
+    imageAltAr: s.imageAltAr || s.nameAr || '',
   }
 }
 
@@ -115,6 +125,7 @@ export function getSeedCmsServices(): CmsService[] {
       stepsAr: s.stepsAr || [],
       stepsEn: s.stepsEn || [],
       id: `svc_${s.slug}`,
+      status: 'published',
       updatedAt: now,
     }),
   )
@@ -266,7 +277,11 @@ export function emptyService(categorySlug = 'home-maintenance'): CmsService {
     faqAr: [],
     faqEn: [],
     image: '/images/hero/hero-01-plumbing-desktop.jpg',
+    imageAltAr: '',
+    metaTitleAr: '',
+    metaDescriptionAr: '',
     popular: false,
+    status: 'draft',
     updatedAt: new Date().toISOString(),
   })
 }

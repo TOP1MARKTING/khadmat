@@ -6,6 +6,7 @@ import { BrandLogo } from '@/components/BrandLogo'
 
 const links = [
   { to: '/services', ar: 'المهن', en: 'Trades' },
+  { to: '/blog', ar: 'المدونات', en: 'Blog' },
   { to: '/about', ar: 'عن ساعدني', en: 'About' },
   { to: '/contact', ar: 'تواصل', en: 'Contact' },
 ]

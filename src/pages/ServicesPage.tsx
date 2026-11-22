@@ -29,7 +29,8 @@ const HERO_IMAGE = '/images/team/team-01-villas.png'
 
 export function ServicesPage() {
   const { t } = useLanguage()
-  const { services } = useCms()
+  const { publishedServices } = useCms()
+  const services = publishedServices()
   const navigate = useNavigate()
   const [params, setParams] = useSearchParams()
   const activeCategory = params.get('category') || 'all'

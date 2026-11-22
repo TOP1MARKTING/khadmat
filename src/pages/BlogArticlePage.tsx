@@ -6,6 +6,8 @@ import { getCity } from '@/data/cities'
 import { Badge } from '@/components/ui/Badge'
 import { ArticleCard } from '@/components/blog/ArticleCard'
 import { CompanySpotlight } from '@/components/blog/CompanySpotlight'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { absoluteUrl } from '@/lib/siteConfig'
 import { NotFoundPage } from './NotFoundPage'
 
 export function BlogArticlePage() {
@@ -37,6 +39,25 @@ export function BlogArticlePage() {
 
   return (
     <div className="section-pad">
+      <JsonLd
+        id={`article-${article.slug}`}
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: article.titleAr,
+          description: article.metaDescriptionAr || article.excerptAr,
+          datePublished: article.publishedAt,
+          dateModified: article.updatedAt || article.publishedAt,
+          inLanguage: 'ar-SA',
+          mainEntityOfPage: absoluteUrl(`/blog/${article.slug}`),
+          image: article.image ? [absoluteUrl(article.image)] : undefined,
+          publisher: {
+            '@type': 'Organization',
+            name: 'ساعدني',
+            url: absoluteUrl('/'),
+          },
+        }}
+      />
       <div className="container-page max-w-3xl">
         <div className="flex flex-wrap gap-2">
           {service ? <Badge tone="brand">{service.nameAr}</Badge> : null}

@@ -1,12 +1,17 @@
 /**
- * Edge middleware: real HTTP 404 for commercial Phase-2 routes.
- * Page components remain in the repo for a future re-enable.
+ * Edge middleware:
+ * - Real HTTP 404 for commercial Phase-2 routes
+ * - Real HTTP 404 for unknown public paths (SPA no longer returns 200 for junk URLs)
+ * Known knowledge pages + /admin + static assets pass through.
  */
+import { next } from '@vercel/edge'
+import { ALLOW_EXACT, ALLOW_PREFIXES } from './path-allowlist.js'
+
 export const config = {
-  matcher: ['/advertise-with-us', '/advertise-with-us/(.*)', '/rent-a-page', '/rent-a-page/(.*)'],
+  matcher: ['/((?!_next/|favicon\\.png|logo\\.png|robots\\.txt|sitemap\\.xml).*)'],
 }
 
-export default function middleware() {
+function notFound() {
   return new Response(
     `<!doctype html>
 <html lang="ar" dir="rtl">
@@ -30,4 +35,35 @@ export default function middleware() {
       },
     },
   )
+}
+
+function isStaticAsset(pathname) {
+  return /\.[a-zA-Z0-9]{1,8}$/.test(pathname)
+}
+
+function isAllowed(pathname) {
+  if (pathname === '/') return true
+  if (ALLOW_EXACT.has(pathname)) return true
+  if (ALLOW_PREFIXES.some((p) => pathname.startsWith(p))) return true
+  if (isStaticAsset(pathname)) return true
+  return false
+}
+
+export default function middleware(request) {
+  const { pathname } = new URL(request.url)
+
+  if (
+    pathname === '/advertise-with-us' ||
+    pathname.startsWith('/advertise-with-us/') ||
+    pathname === '/rent-a-page' ||
+    pathname.startsWith('/rent-a-page/')
+  ) {
+    return notFound()
+  }
+
+  if (!isAllowed(pathname)) {
+    return notFound()
+  }
+
+  return next()
 }

@@ -1,9 +1,10 @@
-import { useMemo, useState, type FormEvent } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { Save, Trash2 } from 'lucide-react'
+import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Eye, History, Save, Trash2 } from 'lucide-react'
 import { useCms } from '@/context/CmsContext'
 import { categories } from '@/data/services'
-import { fileToDataUrl, slugify, type CmsService } from '@/lib/cms'
+import { fileToDataUrl, slugify, type CmsService, type PublishStatus } from '@/lib/cms'
+import { listRevisions, type ContentRevision } from '@/lib/revisions'
 import { Button } from '@/components/ui/Button'
 import { FormSuccess, Input, Label, Textarea } from '@/components/ui/Input'
 import { ModernSelect } from '@/components/ui/ModernSelect'
@@ -20,7 +21,8 @@ export function AdminServiceEditPage() {
   const { serviceId } = useParams()
   const isNew = serviceId === 'new'
   const navigate = useNavigate()
-  const { services, upsertService, createBlankService, getServiceBySlug } = useCms()
+  const { services, upsertService, createBlankService, getServiceBySlug, saveState, saveError } =
+    useCms()
 
   const existing = useMemo(
     () => (isNew ? null : services.find((s) => s.id === serviceId) || null),
@@ -33,6 +35,12 @@ export function AdminServiceEditPage() {
   const [stepsText, setStepsText] = useState(() => (existing?.stepsAr || []).join('\n'))
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
+  const [revisions, setRevisions] = useState<ContentRevision[]>([])
+
+  useEffect(() => {
+    if (!form.id || isNew) return
+    void listRevisions('services', form.id).then(setRevisions).catch(() => setRevisions([]))
+  }, [form.id, isNew, saved, saveState])
 
   if (!isNew && !existing) return <Navigate to="/admin/services" replace />
 
@@ -41,7 +49,7 @@ export function AdminServiceEditPage() {
     setForm((prev) => ({ ...prev, [key]: value }))
   }
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent, status?: PublishStatus) => {
     e.preventDefault()
     setError('')
     if (!form.nameAr.trim()) {
@@ -63,6 +71,7 @@ export function AdminServiceEditPage() {
     const payload: CmsService = {
       ...form,
       slug: nextSlug,
+      status: status || form.status || 'draft',
       nameEn: form.nameEn || form.nameAr,
       shortEn: form.shortEn || form.shortAr,
       introEn: form.introEn || form.introAr,
@@ -74,9 +83,10 @@ export function AdminServiceEditPage() {
       stepsAr,
       stepsEn: stepsAr,
       gallery: (form.gallery || []).filter(Boolean),
+      imageAltAr: form.imageAltAr || form.nameAr,
     }
 
-    upsertService(payload)
+    await upsertService(payload)
     setForm(payload)
     setSaved(true)
     if (isNew) navigate(`/admin/services/${payload.id}`, { replace: true })
@@ -90,13 +100,33 @@ export function AdminServiceEditPage() {
         backTo="/admin/services"
       />
 
-      <form onSubmit={onSubmit} className="space-y-5">
-        {saved ? <FormSuccess>تم حفظ المهنة.</FormSuccess> : null}
+      <form
+        onSubmit={(e) => void onSubmit(e, form.status || 'draft')}
+        className="space-y-5"
+      >
+        {saved || saveState === 'saved' ? (
+          <FormSuccess>
+            {`تم الحفظ${form.status === 'published' ? ' ونُشرت المهنة.' : ' كمسودة.'}${
+              saveState === 'saving' ? ' جاري الرفع…' : ''
+            }`}
+          </FormSuccess>
+        ) : null}
+        {saveState === 'error' || saveError ? (
+          <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">
+            {saveError || 'فشل الرفع للسحابة'}
+          </p>
+        ) : null}
         {error ? (
           <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">
             {error}
           </p>
         ) : null}
+        <p className="text-xs font-bold text-muted">
+          الحالة الحالية:{' '}
+          <span className="text-ink">
+            {form.status === 'published' ? 'منشورة' : 'مسودة'}
+          </span>
+        </p>
 
         <AdminPanel title="البيانات الأساسية">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -314,11 +344,112 @@ export function AdminServiceEditPage() {
           )}
         </AdminPanel>
 
+        <AdminPanel title="SEO والصورة">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <Label htmlFor="metaTitleAr">عنوان SEO</Label>
+              <Input
+                id="metaTitleAr"
+                value={form.metaTitleAr || ''}
+                onChange={(e) => set('metaTitleAr', e.target.value)}
+              />
+            </div>
+            <div>
+              <Label htmlFor="imageAltAr">Alt للصورة الرئيسية</Label>
+              <Input
+                id="imageAltAr"
+                value={form.imageAltAr || ''}
+                onChange={(e) => set('imageAltAr', e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="mt-4">
+            <Label htmlFor="metaDescriptionAr">وصف SEO</Label>
+            <Textarea
+              id="metaDescriptionAr"
+              value={form.metaDescriptionAr || ''}
+              onChange={(e) => set('metaDescriptionAr', e.target.value)}
+              rows={3}
+            />
+          </div>
+        </AdminPanel>
+
+        {!isNew && revisions.length > 0 ? (
+          <AdminPanel title="سجل التعديلات">
+            <ul className="space-y-2 text-sm">
+              {revisions.slice(0, 8).map((r) => (
+                <li
+                  key={r.id}
+                  className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line px-3 py-2"
+                >
+                  <span className="text-muted">
+                    <History className="me-1 inline size-3.5" />
+                    {r.createdAt || r.id}
+                    {r.byEmail ? ` · ${r.byEmail}` : ''}
+                  </span>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="rounded-lg"
+                    onClick={() => {
+                      const snap = r.snapshot as unknown as CmsService
+                      if (!snap?.id) return
+                      setForm({ ...snap, id: form.id })
+                      setTypesText((snap.typesAr || []).join('\n'))
+                      setBenefitsText((snap.benefitsAr || []).join('\n'))
+                      setStepsText((snap.stepsAr || []).join('\n'))
+                      setSaved(false)
+                    }}
+                  >
+                    استرجاع للتحرير
+                  </Button>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-2 text-xs text-muted">
+              الاسترجاع يملأ النموذج فقط — احفظ مرة أخرى لتثبيته.
+            </p>
+          </AdminPanel>
+        ) : null}
+
         <div className="sticky bottom-4 z-10 flex flex-wrap gap-2.5 rounded-2xl border border-line bg-surface/95 p-3 shadow-[var(--shadow-lift)] backdrop-blur-md">
-          <Button type="submit" variant="primary" className="rounded-xl">
+          <Button
+            type="button"
+            variant="outline"
+            className="rounded-xl"
+            onClick={(e) => void onSubmit(e as unknown as FormEvent, 'draft')}
+          >
             <Save className="size-4" />
-            حفظ المهنة
+            حفظ كمسودة
           </Button>
+          <Button
+            type="button"
+            variant="primary"
+            className="rounded-xl"
+            onClick={(e) => void onSubmit(e as unknown as FormEvent, 'published')}
+          >
+            <Save className="size-4" />
+            نشر
+          </Button>
+          {form.status === 'published' ? (
+            <Button
+              type="button"
+              variant="outline"
+              className="rounded-xl"
+              onClick={(e) => void onSubmit(e as unknown as FormEvent, 'draft')}
+            >
+              إلغاء النشر
+            </Button>
+          ) : null}
+          {!isNew ? (
+            <Link to={`/admin/preview/service/${form.id}`}>
+              <Button type="button" variant="accent" className="rounded-xl">
+                <Eye className="size-4" />
+                معاينة
+              </Button>
+            </Link>
+          ) : null}
         </div>
       </form>
     </div>

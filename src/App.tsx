@@ -24,6 +24,7 @@ import { AdminServiceEditPage } from '@/pages/admin/AdminServiceEditPage'
 import { AdminBlogPage } from '@/pages/admin/AdminBlogPage'
 import { AdminBlogEditPage } from '@/pages/admin/AdminBlogEditPage'
 import { AdminMediaPage } from '@/pages/admin/AdminMediaPage'
+import { AdminPreviewPage } from '@/pages/admin/AdminPreviewPage'
 
 export default function App() {
   return (
@@ -49,6 +50,14 @@ export default function App() {
                   <Route path="blog" element={<AdminBlogPage />} />
                   <Route path="blog/:articleId" element={<AdminBlogEditPage />} />
                   <Route path="media" element={<AdminMediaPage />} />
+                  <Route
+                    path="preview/service/:id"
+                    element={<AdminPreviewPage kind="service" />}
+                  />
+                  <Route
+                    path="preview/article/:id"
+                    element={<AdminPreviewPage kind="article" />}
+                  />
                 </Route>
 
                 <Route element={<Layout />}>
