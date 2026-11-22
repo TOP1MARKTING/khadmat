@@ -3,14 +3,28 @@ import { getAnalytics, isSupported, type Analytics } from 'firebase/analytics'
 import { getAuth, type Auth } from 'firebase/auth'
 import { getFirestore, type Firestore } from 'firebase/firestore'
 
+/**
+ * Firebase web config is public by design (security is Auth + Firestore rules).
+ * Env vars override when present (local .env / Vercel).
+ */
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY as string,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN as string,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID as string,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET as string,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID as string,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID as string,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID as string | undefined,
+  apiKey:
+    import.meta.env.VITE_FIREBASE_API_KEY ||
+    'AIzaSyBd2ShshTStDV73zRg1ou88-cJEg9mWy-A',
+  authDomain:
+    import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ||
+    'khadmat-5c5be.firebaseapp.com',
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'khadmat-5c5be',
+  storageBucket:
+    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ||
+    'khadmat-5c5be.firebasestorage.app',
+  messagingSenderId:
+    import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '550294781884',
+  appId:
+    import.meta.env.VITE_FIREBASE_APP_ID ||
+    '1:550294781884:web:24661e6d9d5fb57c66f5b9',
+  measurementId:
+    import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || 'G-QGJ8E14T81',
 }
 
 export function isFirebaseConfigured() {
@@ -29,7 +43,7 @@ let analytics: Analytics | undefined
 
 export function getFirebaseApp() {
   if (!isFirebaseConfigured()) {
-    throw new Error('Firebase is not configured. Set VITE_FIREBASE_* in .env')
+    throw new Error('Firebase is not configured')
   }
   if (!app) {
     app = getApps().length ? getApps()[0]! : initializeApp(firebaseConfig)

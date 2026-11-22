@@ -74,7 +74,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     if (!isFirebaseConfigured()) {
       return {
         ok: false,
-        message: 'Firebase غير مُعدّ. راجع متغيرات VITE_FIREBASE_* في .env',
+        message: 'تعذر تهيئة Firebase. حدّث الصفحة أو راجع إعدادات المشروع.',
       }
     }
     try {

@@ -24,9 +24,7 @@ export function AdminLoginPage() {
   const { isAuthenticated, authReady, login } = useAdminAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const [email, setEmail] = useState(
-    () => import.meta.env.VITE_FIREBASE_ADMIN_EMAIL || '',
-  )
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
