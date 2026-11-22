@@ -2840,7 +2840,7 @@ export const services: Service[] = [
       '/images/services/landscaping.jpg',
       '/images/hero/hero-13-landscaping-desktop.jpg',
       '/images/hero/hero-13-landscaping.jpg',
-      '/images/team/team-01-villas.png',
+      '/images/team/team-01-villas.jpg',
     ],
     benefitsAr: [
       'مساحة خارجية أوضح بالتصميم المناسب للمناخ والمساحة',

@@ -25,7 +25,7 @@ const categoryIcons: Record<string, typeof Hammer> = {
   'other-services': Building2,
 }
 
-const HERO_IMAGE = '/images/team/team-01-villas.png'
+const HERO_IMAGE = '/images/team/team-01-villas.jpg'
 
 export function ServicesPage() {
   const { t } = useLanguage()

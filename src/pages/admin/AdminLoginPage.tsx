@@ -108,7 +108,7 @@ export function AdminLoginPage() {
       <section className="relative flex flex-col bg-cream">
         <div className="relative h-36 overflow-hidden sm:h-44 lg:hidden">
           <img
-            src="/images/team/team-01-villas.png"
+            src="/images/team/team-01-villas.jpg"
             alt=""
             className="absolute inset-0 size-full object-cover"
             aria-hidden

@@ -25,34 +25,34 @@ const aboutServiceShots = [
 
 const workerShots = [
   {
-    src: '/images/team/team-01-villas.png',
-    titleAr: 'عمال من مهن مختلفة أمام الفلل',
-    titleEn: 'Workers from different trades at villas',
+    src: '/images/team/team-01-villas.jpg',
+    titleAr: 'تشطيب وترميم داخل الشقق',
+    titleEn: 'Finishing and renovation inside apartments',
   },
   {
-    src: '/images/team/team-02-apartment.png',
-    titleAr: 'عمال صيانة داخل الشقق',
-    titleEn: 'Maintenance workers inside apartments',
+    src: '/images/team/team-02-apartment.jpg',
+    titleAr: 'فني تكييف داخل الشقة',
+    titleEn: 'AC technician inside an apartment',
   },
   {
-    src: '/images/team/team-03-truck.png',
-    titleAr: 'عمال النقل بجانب سيارة الشحن',
-    titleEn: 'Moving workers beside a cargo truck',
+    src: '/images/team/team-03-truck.jpg',
+    titleAr: 'عمال نقل العفش أمام الفيلا',
+    titleEn: 'Furniture movers at a villa',
   },
   {
-    src: '/images/team/team-04-riyadh.png',
-    titleAr: 'عمال من عدة مهن في الرياض',
-    titleEn: 'Workers from several trades in Riyadh',
+    src: '/images/team/team-04-riyadh.jpg',
+    titleAr: 'تركيب بلاط بإطلالة الرياض',
+    titleEn: 'Tile installation with a Riyadh view',
   },
   {
-    src: '/images/team/team-05-corniche.png',
-    titleAr: 'فنيون على الكورنيش',
-    titleEn: 'Technicians on the corniche',
+    src: '/images/team/team-05-corniche.jpg',
+    titleAr: 'تنسيق حدائق في فلل سعودية',
+    titleEn: 'Landscaping at Saudi villas',
   },
   {
-    src: '/images/team/team-08-makkah.png',
-    titleAr: 'عامل ميداني في مكة',
-    titleEn: 'A field worker in Makkah',
+    src: '/images/team/team-08-makkah.jpg',
+    titleAr: 'دهان واحتراف داخل المنزل',
+    titleEn: 'Professional painting inside the home',
   },
 ]
 
@@ -108,7 +108,7 @@ export function AboutPage() {
       {/* Hero */}
       <section className="relative isolate min-h-[340px] overflow-hidden border-b border-line sm:min-h-[440px]">
         <img
-          src="/images/team/team-01-villas.png"
+          src="/images/team/team-01-villas.jpg"
           alt=""
           className="absolute inset-0 size-full object-cover"
         />
