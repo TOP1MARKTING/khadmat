@@ -177,7 +177,7 @@ export const cities: City[] = [
     regionEn: 'Asir',
     descriptionAr: 'صفحات خدمات منزلية ومنشآت في خميس مشيط بنطاق محلي واضح.',
     descriptionEn: 'Home and facility service pages in Khamis Mushait with clear local scope.',
-    image: img('photo-1600607687644-c7171b42498b'),
+    image: '/images/cities/khamis-mushait.jpg',
   },
 
   // القصيم

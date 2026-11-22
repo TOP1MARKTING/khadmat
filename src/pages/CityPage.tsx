@@ -33,13 +33,13 @@ export function CityPage() {
         />
         <div className="absolute inset-0 bg-ink/70" />
         <div className="container-page relative py-16 text-white sm:py-20">
-          <p className="eyebrow mb-3 text-sand">
+          <p className="eyebrow mb-3 !text-sand">
             {lang === 'ar' ? city.regionAr : city.regionEn}
           </p>
-          <h1 className="heading-display text-white">
+          <h1 className="heading-display !text-white">
             {t(`خدمات في ${city.nameAr}`, `Services in ${city.nameEn}`)}
           </h1>
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base">
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
             {lang === 'ar' ? city.descriptionAr : city.descriptionEn}
           </p>
         </div>
