@@ -60,8 +60,8 @@ export type CmsArticle = {
   updatedAt: string
 }
 
-const SERVICES_KEY = 'saedni_cms_services_v32'
-const ARTICLES_KEY = 'saedni_cms_articles_v32'
+const SERVICES_KEY = 'saedni_cms_services_v33'
+const ARTICLES_KEY = 'saedni_cms_articles_v33'
 
 function uid(prefix: string) {
   return `${prefix}_${Math.random().toString(36).slice(2, 10)}`
@@ -182,6 +182,20 @@ function seedCmsArticles(): CmsArticle[] {
   return getSeedCmsArticles()
 }
 
+/** Public catalog floor: code seeds always available even if CMS/local cache is draft-only. */
+export function ensurePublicServices(list: CmsService[]): CmsService[] {
+  const seeds = getSeedCmsServices()
+  const published = dedupeBySlug(
+    list.filter((s) => s.slug && s.status !== 'draft').map(normalizeService),
+  )
+  const bySlug = new Map<string, CmsService>()
+  for (const s of seeds) bySlug.set(s.slug, s)
+  for (const s of published) {
+    if (s.nameAr?.trim()) bySlug.set(s.slug, { ...s, status: 'published' })
+  }
+  return [...bySlug.values()]
+}
+
 export function loadCmsServices(): CmsService[] {
   try {
     const raw = localStorage.getItem(SERVICES_KEY)
@@ -191,13 +205,13 @@ export function loadCmsServices(): CmsService[] {
       return seeded
     }
     const parsed = dedupeBySlug((JSON.parse(raw) as CmsService[]).map(normalizeService))
-    // Empty cache (e.g. wiped by a bad sync) must re-seed — "[]" is truthy JSON.
-    if (parsed.length === 0) {
+    // Empty or draft-only cache must not blank the public site.
+    if (parsed.length === 0 || parsed.every((s) => s.status === 'draft')) {
       const seeded = seedCmsServices()
       localStorage.setItem(SERVICES_KEY, JSON.stringify(seeded))
       return seeded
     }
-    return parsed
+    return ensurePublicServices(parsed)
   } catch {
     return seedCmsServices()
   }

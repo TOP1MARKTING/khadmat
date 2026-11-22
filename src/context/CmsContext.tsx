@@ -20,6 +20,8 @@ import {
 import {
   emptyArticle,
   emptyService,
+  ensurePublicServices,
+  getSeedCmsServices,
   loadCmsArticles,
   loadCmsServices,
   dedupeBySlug,
@@ -77,15 +79,9 @@ function mapServices(docs: QueryDocumentSnapshot[]): CmsService[] {
   })
 }
 
-/** Cloud wins per slug; local seeds fill any gaps so a thin Firestore set cannot 404 guides. */
+/** Cloud overlays seeds; seeds always remain the floor for public guides. */
 function mergePublicServices(cloud: CmsService[]): CmsService[] {
-  const local = publicOnlyServices(loadCmsServices())
-  const fromCloud = publicOnlyServices(cloud)
-  if (!fromCloud.length) return local
-  const bySlug = new Map<string, CmsService>()
-  for (const s of local) bySlug.set(s.slug, s)
-  for (const s of fromCloud) bySlug.set(s.slug, s)
-  return [...bySlug.values()]
+  return ensurePublicServices([...getSeedCmsServices(), ...cloud, ...loadCmsServices()])
 }
 
 function mapArticles(docs: QueryDocumentSnapshot[]): CmsArticle[] {
@@ -104,9 +100,7 @@ function publicOnlyArticles(list: CmsArticle[]) {
 }
 
 export function CmsProvider({ children }: { children: ReactNode }) {
-  const [services, setServices] = useState<CmsService[]>(() =>
-    publicOnlyServices(loadCmsServices()),
-  )
+  const [services, setServices] = useState<CmsService[]>(() => ensurePublicServices(loadCmsServices()))
   const [articles, setArticles] = useState<CmsArticle[]>(() =>
     publicOnlyArticles(loadCmsArticles()),
   )
@@ -155,14 +149,15 @@ export function CmsProvider({ children }: { children: ReactNode }) {
             const next = mergePublicServices(list)
             setServices(next)
             saveCmsServices(next)
-            setCmsSource(list.length ? (next.length > list.length ? 'hybrid' : 'firebase') : 'local')
+            setCmsSource(list.length ? 'hybrid' : 'local')
           } else if (list.length === 0) {
             // Do not wipe local cache with an empty admin snapshot
-            setServices(loadCmsServices())
+            setServices(ensurePublicServices(loadCmsServices()))
             setCmsSource('local')
           } else {
-            setServices(list)
-            saveCmsServices(list)
+            // Keep admin drafts in memory, but never drop the public seed floor.
+            setServices(ensurePublicServices(list))
+            saveCmsServices(ensurePublicServices(list))
             setCmsSource('firebase')
           }
           setCmsError('')
@@ -171,7 +166,7 @@ export function CmsProvider({ children }: { children: ReactNode }) {
         (err) => {
           console.error(err)
           setCmsError(err.message)
-          setServices(publicOnlyServices(loadCmsServices()))
+          setServices(ensurePublicServices(loadCmsServices()))
           setCmsSource('local')
           setServicesReady(true)
         },
@@ -349,7 +344,14 @@ export function CmsProvider({ children }: { children: ReactNode }) {
       refreshFromFirebase,
       upsertService,
       deleteService,
-      getServiceBySlug: (slug) => services.find((s) => s.slug === slug),
+      getServiceBySlug: (slug) => {
+        const matches = services.filter((s) => s.slug === slug)
+        const published = matches.find((s) => s.status !== 'draft')
+        if (published) return published
+        const seed = getSeedCmsServices().find((s) => s.slug === slug)
+        if (seed) return seed
+        return matches[0]
+      },
       upsertArticle,
       deleteArticle,
       getArticleBySlug: (slug) => articles.find((a) => a.slug === slug),
@@ -361,7 +363,8 @@ export function CmsProvider({ children }: { children: ReactNode }) {
           if (a.featured !== b.featured) return a.featured ? -1 : 1
           return b.publishedAt.localeCompare(a.publishedAt)
         }),
-      publishedServices: () => publicOnlyServices(services),
+      // Always floor on code seeds so public pages never go empty from CMS/admin cache.
+      publishedServices: () => ensurePublicServices(services),
     }),
     [
       services,
