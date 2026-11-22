@@ -373,7 +373,7 @@ export function ServicesPage() {
                         )}
                         {service.popular ? (
                           <span className="rounded-lg bg-accent px-2.5 py-1 text-[10px] font-extrabold text-white">
-                            رائج
+                            مختار
                           </span>
                         ) : null}
                       </div>

@@ -35,7 +35,7 @@ export function Footer() {
           </span>
         </Link>
 
-        <p className="mt-3 max-w-md text-sm leading-relaxed text-white/65">
+        <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/65">
           {lang === 'ar' ? settings.taglineAr : settings.taglineEn}
         </p>
 

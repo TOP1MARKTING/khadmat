@@ -12,21 +12,41 @@ export type SiteSettings = {
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   siteNameAr: 'ساعدني',
   siteNameEn: 'Saedni',
-  taglineAr: 'نساعد الناس تلاقي خدمتها في مدينتها',
-  taglineEn: 'Helping people find services in their city',
+  taglineAr:
+    'مرجع معرفي لفهم المهن ونطاق الشغل في السعودية — مش دليل شركات ولا حجز خدمات.',
+  taglineEn:
+    'A knowledge guide to trades and scope of work in Saudi Arabia — not a company directory or booking service.',
   whatsapp: '+966 54 988 1368',
   email: 'top1markting.com',
   coverageAr: 'الرياض · جدة · مكة · الدمام · دبي · أبوظبي · الشارقة',
   coverageEn: 'Riyadh · Jeddah · Makkah · Dammam · Dubai · Abu Dhabi · Sharjah',
 }
 
-const STORAGE_KEY = 'saedni_site_settings_v2'
+/** Older public copy that implied finding/booking providers — replace on load. */
+const LEGACY_TAGLINES_AR = new Set([
+  'نساعد الناس تلاقي خدمتها في مدينتها',
+  'نساعد الناس تلقى خدمتها في مدينتها',
+])
+const LEGACY_TAGLINES_EN = new Set(['Helping people find services in their city'])
+
+export function normalizeSiteSettings(settings: SiteSettings): SiteSettings {
+  const next = { ...settings }
+  if (!next.taglineAr?.trim() || LEGACY_TAGLINES_AR.has(next.taglineAr.trim())) {
+    next.taglineAr = DEFAULT_SITE_SETTINGS.taglineAr
+  }
+  if (!next.taglineEn?.trim() || LEGACY_TAGLINES_EN.has(next.taglineEn.trim())) {
+    next.taglineEn = DEFAULT_SITE_SETTINGS.taglineEn
+  }
+  return next
+}
+
+const STORAGE_KEY = 'saedni_site_settings_v3'
 
 export function loadSiteSettings(): SiteSettings {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return { ...DEFAULT_SITE_SETTINGS }
-    return { ...DEFAULT_SITE_SETTINGS, ...JSON.parse(raw) }
+    return normalizeSiteSettings({ ...DEFAULT_SITE_SETTINGS, ...JSON.parse(raw) })
   } catch {
     return { ...DEFAULT_SITE_SETTINGS }
   }

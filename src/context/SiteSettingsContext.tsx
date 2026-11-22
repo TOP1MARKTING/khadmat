@@ -11,6 +11,7 @@ import { doc, onSnapshot } from 'firebase/firestore'
 import {
   DEFAULT_SITE_SETTINGS,
   loadSiteSettings,
+  normalizeSiteSettings,
   resetSiteSettings,
   saveSiteSettings,
   type SiteSettings,
@@ -30,7 +31,10 @@ const SiteSettingsContext = createContext<SiteSettingsContextValue | null>(null)
 
 function asSiteSettings(raw: Record<string, unknown> | undefined): SiteSettings | null {
   if (!raw) return null
-  return { ...DEFAULT_SITE_SETTINGS, ...(raw as Partial<SiteSettings>) }
+  return normalizeSiteSettings({
+    ...DEFAULT_SITE_SETTINGS,
+    ...(raw as Partial<SiteSettings>),
+  })
 }
 
 export function SiteSettingsProvider({ children }: { children: ReactNode }) {

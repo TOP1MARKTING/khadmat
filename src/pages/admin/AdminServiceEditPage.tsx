@@ -178,7 +178,7 @@ export function AdminServiceEditPage() {
               checked={!!form.popular}
               onChange={(e) => set('popular', e.target.checked)}
             />
-            <span className="text-sm font-bold text-ink">مهنة رائجة (تظهر في الأكثر طلبًا)</span>
+            <span className="text-sm font-bold text-ink">مهنة مختارة (تظهر في الأدلة المختارة)</span>
           </label>
         </AdminPanel>
 

@@ -107,7 +107,7 @@ export function AdminServicesPage() {
                         <p className="font-extrabold text-ink">{service.nameAr}</p>
                         {service.popular ? (
                           <span className="rounded-md bg-accent/15 px-2 py-0.5 text-[10px] font-extrabold text-accent">
-                            رائج
+                            مختار
                           </span>
                         ) : null}
                       </div>

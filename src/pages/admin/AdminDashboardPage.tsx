@@ -52,7 +52,7 @@ export function AdminDashboardPage() {
       />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <AdminStatCard label="المهن" value={services.length} icon={Briefcase} tone="brand" hint={`${popular} رائجة`} />
+        <AdminStatCard label="المهن" value={services.length} icon={Briefcase} tone="brand" hint={`${popular} مختارة`} />
         <AdminStatCard label="مقالات منشورة" value={published} icon={Newspaper} tone="accent" />
         <AdminStatCard label="مسودات" value={drafts} icon={FileText} tone="sand" />
         <AdminStatCard
