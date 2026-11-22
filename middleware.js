@@ -14,7 +14,7 @@ const SHARE_BOTS =
 
 export const config = {
   matcher: [
-    '/((?!_next/|api/|favicon\\.png|logo\\.png|robots\\.txt|sitemap\\.xml|google[^/]+\\.html|seo-catalog\\.json).*)',
+    '/((?!_next/|api/|favicon\\.ico|favicon\\.png|favicon-\\d+\\.png|apple-touch-icon\\.png|logo\\.png|robots\\.txt|sitemap\\.xml|google[^/]+\\.html|seo-catalog\\.json).*)',
   ],
 }
 
