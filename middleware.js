@@ -8,7 +8,9 @@ import { next } from '@vercel/edge'
 import { ALLOW_EXACT, ALLOW_PREFIXES } from './path-allowlist.js'
 
 export const config = {
-  matcher: ['/((?!_next/|favicon\\.png|logo\\.png|robots\\.txt|sitemap\\.xml).*)'],
+  matcher: [
+    '/((?!_next/|favicon\\.png|logo\\.png|robots\\.txt|sitemap\\.xml|googlefcf192a19b3a8b5c\\.html).*)',
+  ],
 }
 
 function notFound() {
