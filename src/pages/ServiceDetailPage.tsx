@@ -23,7 +23,7 @@ export function ServiceDetailPage() {
   const { serviceSlug } = useParams()
   const { t, lang, isAr } = useLanguage()
   const Arrow = isAr ? ArrowLeft : ArrowRight
-  const { getServiceBySlug, publishedServices, publishedArticles, cmsReady } = useCms()
+  const { getServiceBySlug, publishedServices, publishedArticles } = useCms()
   const service = getServiceBySlug(serviceSlug || '')
   const isPublic = Boolean(service && service.status !== 'draft')
   const category = service ? getCategory(service.categorySlug) : undefined
@@ -43,14 +43,10 @@ export function ServiceDetailPage() {
   usePageMeta({
     titleAr: isPublic
       ? `${service!.metaTitleAr || service!.nameAr} | دليل العميل | ساعدني`
-      : cmsReady
-        ? 'خدمة غير موجودة | ساعدني'
-        : 'جارٍ التحميل | ساعدني',
+      : 'خدمة غير موجودة | ساعدني',
     titleEn: isPublic
       ? `${service!.nameEn} | Customer guide | Saedni`
-      : cmsReady
-        ? 'Service not found | Saedni'
-        : 'Loading | Saedni',
+      : 'Service not found | Saedni',
     descriptionAr: isPublic
       ? service!.metaDescriptionAr || service!.shortAr || ''
       : '',
@@ -59,14 +55,6 @@ export function ServiceDetailPage() {
     image: isPublic ? service!.image : undefined,
     robots: isPublic ? 'index,follow' : 'noindex,nofollow',
   })
-
-  if (!cmsReady) {
-    return (
-      <div className="container-page flex min-h-[50vh] items-center justify-center py-20">
-        <p className="text-sm font-bold text-muted">{t('جارٍ التحميل…', 'Loading…')}</p>
-      </div>
-    )
-  }
 
   if (!isPublic || !service) return <NotFoundPage />
 

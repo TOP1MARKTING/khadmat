@@ -110,8 +110,9 @@ export function CmsProvider({ children }: { children: ReactNode }) {
   const [articles, setArticles] = useState<CmsArticle[]>(() =>
     publicOnlyArticles(loadCmsArticles()),
   )
-  const [servicesReady, setServicesReady] = useState(!isFirebaseConfigured())
-  const [articlesReady, setArticlesReady] = useState(!isFirebaseConfigured())
+  // Local seeds are already in state — stay ready so the UI never blocks on Firebase.
+  const [servicesReady, setServicesReady] = useState(true)
+  const [articlesReady, setArticlesReady] = useState(true)
   const cmsReady = servicesReady && articlesReady
   const [cmsSource, setCmsSource] = useState<'local' | 'firebase' | 'hybrid'>('local')
   const [cmsError, setCmsError] = useState('')
@@ -134,8 +135,7 @@ export function CmsProvider({ children }: { children: ReactNode }) {
     }
     clearListeners()
     setIsAdminSession(admin)
-    setServicesReady(false)
-    setArticlesReady(false)
+    // Do not flip ready→false here: that froze the UI on "جارٍ التحميل" until Firestore answered.
     const db = getDb()
 
     const servicesRef = admin
