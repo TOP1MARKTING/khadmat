@@ -98,7 +98,9 @@ export function CmsProvider({ children }: { children: ReactNode }) {
   const [articles, setArticles] = useState<CmsArticle[]>(() =>
     publicOnlyArticles(loadCmsArticles()),
   )
-  const [cmsReady, setCmsReady] = useState(!isFirebaseConfigured())
+  const [servicesReady, setServicesReady] = useState(!isFirebaseConfigured())
+  const [articlesReady, setArticlesReady] = useState(!isFirebaseConfigured())
+  const cmsReady = servicesReady && articlesReady
   const [cmsSource, setCmsSource] = useState<'local' | 'firebase' | 'hybrid'>('local')
   const [cmsError, setCmsError] = useState('')
   const [saveState, setSaveState] = useState<SaveState>('idle')
@@ -113,12 +115,15 @@ export function CmsProvider({ children }: { children: ReactNode }) {
 
   const attachListeners = useCallback((admin: boolean) => {
     if (!isFirebaseConfigured()) {
-      setCmsReady(true)
+      setServicesReady(true)
+      setArticlesReady(true)
       setCmsSource('local')
       return
     }
     clearListeners()
     setIsAdminSession(admin)
+    setServicesReady(false)
+    setArticlesReady(false)
     const db = getDb()
 
     const servicesRef = admin
@@ -139,20 +144,25 @@ export function CmsProvider({ children }: { children: ReactNode }) {
             const local = publicOnlyServices(loadCmsServices())
             setServices(local)
             setCmsSource(local.length ? 'local' : 'firebase')
+          } else if (list.length === 0 && admin) {
+            // Do not wipe local cache with an empty admin snapshot
+            setServices(loadCmsServices())
+            setCmsSource('local')
           } else {
-            setServices(admin ? list : publicOnlyServices(list))
-            saveCmsServices(admin ? list : publicOnlyServices(list))
+            const next = admin ? list : publicOnlyServices(list)
+            setServices(next)
+            saveCmsServices(next)
             setCmsSource('firebase')
           }
           setCmsError('')
-          setCmsReady(true)
+          setServicesReady(true)
         },
         (err) => {
           console.error(err)
           setCmsError(err.message)
           setServices(publicOnlyServices(loadCmsServices()))
           setCmsSource('local')
-          setCmsReady(true)
+          setServicesReady(true)
         },
       ),
     )
@@ -167,18 +177,18 @@ export function CmsProvider({ children }: { children: ReactNode }) {
           } else {
             const next = admin ? list : publicOnlyArticles(list)
             setArticles(next)
-            saveCmsArticles(next)
+            if (next.length) saveCmsArticles(next)
             setCmsSource('firebase')
           }
           setCmsError('')
-          setCmsReady(true)
+          setArticlesReady(true)
         },
         (err) => {
           console.error(err)
           setCmsError(err.message)
           setArticles(publicOnlyArticles(loadCmsArticles()))
           setCmsSource('local')
-          setCmsReady(true)
+          setArticlesReady(true)
         },
       ),
     )
@@ -191,7 +201,8 @@ export function CmsProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!isFirebaseConfigured()) {
-      setCmsReady(true)
+      setServicesReady(true)
+      setArticlesReady(true)
       return
     }
     const unsubAuth = onAuthStateChanged(getFirebaseAuth(), (user) => {

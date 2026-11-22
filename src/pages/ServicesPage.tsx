@@ -133,7 +133,7 @@ export function ServicesPage() {
             )}
           </p>
           <p className="reveal reveal-delay-3 mt-5 text-xs font-bold text-sand">
-            {!cmsReady
+            {!cmsReady || !services.length
               ? t('جارٍ التحميل…', 'Loading…')
               : `${services.length} ${t('مهنة متاحة للتصفح', 'trades ready to browse')}`}
           </p>
@@ -262,7 +262,7 @@ export function ServicesPage() {
                         activeCategory === 'all' ? 'text-white/80' : 'text-muted',
                       )}
                     >
-                      {!cmsReady
+                      {!cmsReady || !services.length
                         ? t('جارٍ التحميل…', 'Loading…')
                         : `${categoryCounts.all} ${t('مهنة', 'trades')}`}
                     </span>
@@ -303,7 +303,7 @@ export function ServicesPage() {
                             active ? 'text-white/80' : 'text-muted',
                           )}
                         >
-                          {!cmsReady
+                          {!cmsReady || !services.length
                             ? t('جارٍ التحميل…', 'Loading…')
                             : `${count} ${t('مهنة', 'trades')}`}
                         </span>

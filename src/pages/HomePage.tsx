@@ -266,7 +266,7 @@ export function HomePage() {
                     <span className="absolute start-3 top-3 inline-flex size-10 items-center justify-center rounded-xl bg-white/95 text-brand shadow-soft backdrop-blur-sm">
                       <Icon className="size-4" />
                     </span>
-                    {!cmsReady ? (
+                    {!cmsReady || !services.length ? (
                       <span className="absolute end-3 top-3 rounded-lg bg-ink/75 px-2.5 py-1 text-[10px] font-extrabold text-white backdrop-blur-sm">
                         {t('جارٍ التحميل…', 'Loading…')}
                       </span>

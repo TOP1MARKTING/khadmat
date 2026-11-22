@@ -190,13 +190,22 @@ export function loadCmsServices(): CmsService[] {
       localStorage.setItem(SERVICES_KEY, JSON.stringify(seeded))
       return seeded
     }
-    return (JSON.parse(raw) as CmsService[]).map(normalizeService)
+    const parsed = (JSON.parse(raw) as CmsService[]).map(normalizeService)
+    // Empty cache (e.g. wiped by a bad sync) must re-seed — "[]" is truthy JSON.
+    if (parsed.length === 0) {
+      const seeded = seedCmsServices()
+      localStorage.setItem(SERVICES_KEY, JSON.stringify(seeded))
+      return seeded
+    }
+    return parsed
   } catch {
     return seedCmsServices()
   }
 }
 
 export function saveCmsServices(list: CmsService[]) {
+  // Never persist an empty wipe over seeded/public guides.
+  if (!list.length) return
   localStorage.setItem(SERVICES_KEY, JSON.stringify(list))
 }
 
