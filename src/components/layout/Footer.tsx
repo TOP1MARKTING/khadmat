@@ -2,19 +2,16 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ExternalLink } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useSiteSettings } from '@/context/SiteSettingsContext'
-import { useCms } from '@/context/CmsContext'
 import { BrandLogo } from '@/components/BrandLogo'
 
 export function Footer() {
   const { t, lang } = useLanguage()
   const { settings } = useSiteSettings()
-  const { publishedArticles } = useCms()
   const navigate = useNavigate()
-  const hasBlog = publishedArticles().length > 0
 
   const links = [
     { to: '/services', ar: 'المهن', en: 'Trades' },
-    ...(hasBlog ? [{ to: '/blog', ar: 'المدونات', en: 'Blog' }] : []),
+    { to: '/blog', ar: 'المدونات', en: 'Blog' },
     { to: '/about', ar: 'عن ساعدني', en: 'About' },
     { to: '/contact', ar: 'تواصل', en: 'Contact' },
   ]
@@ -81,36 +78,23 @@ export function Footer() {
             {lang === 'ar' ? settings.siteNameAr : settings.siteNameEn}
           </p>
 
-          <div className="flex flex-col items-center gap-2">
-            <p className="max-w-sm text-center text-[11px] leading-relaxed text-white/50">
-              {t(
-                'الفكرة · التصميم · التنفيذ · الإشراف — شركة Top1Markting',
-                'Idea · design · build · supervision — Top1Markting',
-              )}
-            </p>
-            <a
-              href="https://top1markting.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[#1a2744] shadow-[var(--shadow-soft)] transition-transform hover:scale-[1.02] focus-ring"
-              aria-label={t(
-                'فكرة وتصميم وإشراف Top1Markting',
-                'Idea, design & supervision by Top1Markting',
-              )}
-            >
-              <img
-                src="/top1markting-logo.png"
-                alt="Top1Markting"
-                className="h-6 w-auto shrink-0 object-contain"
-              />
-              <span className="text-xs font-bold">
-                {t('فكرة وتصميم وإشراف', 'Idea, design & supervision')} Top
-                <span className="text-[#f0a11a]">1</span>
-                Markting
-              </span>
-              <ExternalLink className="size-3 shrink-0 opacity-70" aria-hidden />
-            </a>
-          </div>
+          <a
+            href="https://top1markting.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-[11px] text-white/45 transition-colors hover:text-white/75 focus-ring"
+            aria-label={t(
+              'فكرة وتصميم وإشراف Top1Markting',
+              'Idea, design & supervision by Top1Markting',
+            )}
+          >
+            <span>
+              {t('بإشراف', 'Supervised by')} Top
+              <span className="text-[#f0a11a]">1</span>
+              Markting
+            </span>
+            <ExternalLink className="size-3 shrink-0 opacity-70" aria-hidden />
+          </a>
         </div>
       </div>
     </footer>

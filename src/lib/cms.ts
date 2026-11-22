@@ -60,8 +60,8 @@ export type CmsArticle = {
   updatedAt: string
 }
 
-const SERVICES_KEY = 'saedni_cms_services_v33'
-const ARTICLES_KEY = 'saedni_cms_articles_v33'
+const SERVICES_KEY = 'saedni_cms_services_v35'
+const ARTICLES_KEY = 'saedni_cms_articles_v35'
 
 function uid(prefix: string) {
   return `${prefix}_${Math.random().toString(36).slice(2, 10)}`
@@ -182,6 +182,75 @@ function seedCmsArticles(): CmsArticle[] {
   return getSeedCmsArticles()
 }
 
+function uniquePaths(paths: string[] | undefined): string[] {
+  const out: string[] = []
+  for (const p of paths || []) {
+    if (p && !out.includes(p)) out.push(p)
+  }
+  return out
+}
+
+/**
+ * Prefer published CMS edits over seed when the CMS record has real content.
+ * Seed fills only thin/empty records. Never apply drafts.
+ * Intentionally cleared galleries (published + body, gallery []) stay cleared.
+ */
+function mergeServiceFloor(seed: CmsService, incoming: CmsService): CmsService {
+  const cms = normalizeService({ ...incoming, status: 'published' })
+  const seedGallery = uniquePaths(seed.gallery)
+  const cmsGallery = uniquePaths(cms.gallery)
+  const cmsBodyAr = cms.bodyAr?.trim() || ''
+  const cmsBodyEn = cms.bodyEn?.trim() || ''
+  const hasCmsSubstance = Boolean(
+    cmsBodyAr || cmsBodyEn || cmsGallery.length || cms.image?.trim(),
+  )
+
+  let gallery: string[]
+  if (cmsGallery.length > 0) {
+    // Approved admin/cloud gallery wins — even if shorter than seed (image removed on purpose).
+    gallery = cmsGallery
+  } else if (hasCmsSubstance) {
+    // Published edit with body/image but gallery cleared — do not revive seed photos.
+    gallery = []
+  } else {
+    gallery = seedGallery
+  }
+
+  const bodyAr = cmsBodyAr ? cms.bodyAr : seed.bodyAr
+  const bodyEn = cmsBodyEn ? cms.bodyEn : seed.bodyEn
+  // Explicit non-empty CMS image wins; blank image on a substantial CMS edit stays blank
+  // rather than restoring a deleted asset. Thin records fall back to seed image.
+  const image = cms.image?.trim()
+    ? cms.image
+    : hasCmsSubstance
+      ? cms.image || ''
+      : seed.image
+
+  return normalizeService({
+    ...seed,
+    ...cms,
+    status: 'published',
+    bodyAr,
+    bodyEn,
+    gallery,
+    image: image || seed.image,
+    benefitsAr: cms.benefitsAr?.length ? cms.benefitsAr : seed.benefitsAr,
+    benefitsEn: cms.benefitsEn?.length ? cms.benefitsEn : seed.benefitsEn,
+    stepsAr: cms.stepsAr?.length ? cms.stepsAr : seed.stepsAr,
+    stepsEn: cms.stepsEn?.length ? cms.stepsEn : seed.stepsEn,
+    typesAr: cms.typesAr?.length ? cms.typesAr : seed.typesAr,
+    typesEn: cms.typesEn?.length ? cms.typesEn : seed.typesEn,
+    faqAr: cms.faqAr?.length ? cms.faqAr : seed.faqAr,
+    faqEn: cms.faqEn?.length ? cms.faqEn : seed.faqEn,
+    shortAr: cms.shortAr?.trim() || seed.shortAr,
+    shortEn: cms.shortEn?.trim() || seed.shortEn,
+    introAr: cms.introAr?.trim() || seed.introAr,
+    introEn: cms.introEn?.trim() || seed.introEn,
+    nameAr: cms.nameAr?.trim() || seed.nameAr,
+    nameEn: cms.nameEn?.trim() || seed.nameEn,
+  })
+}
+
 /** Public catalog floor: code seeds always available even if CMS/local cache is draft-only. */
 export function ensurePublicServices(list: CmsService[]): CmsService[] {
   const seeds = getSeedCmsServices()
@@ -191,7 +260,9 @@ export function ensurePublicServices(list: CmsService[]): CmsService[] {
   const bySlug = new Map<string, CmsService>()
   for (const s of seeds) bySlug.set(s.slug, s)
   for (const s of published) {
-    if (s.nameAr?.trim()) bySlug.set(s.slug, { ...s, status: 'published' })
+    if (!s.nameAr?.trim()) continue
+    const seed = bySlug.get(s.slug)
+    bySlug.set(s.slug, seed ? mergeServiceFloor(seed, s) : { ...s, status: 'published' })
   }
   return [...bySlug.values()]
 }

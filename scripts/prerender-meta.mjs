@@ -2,14 +2,19 @@
  * After Vite build: write per-route HTML shells with correct meta into dist/
  * so the first response is not stuck on homepage title/canonical.
  *
- * Vercel rewrites still point many paths to /index.html; middleware serves
- * share-preview HTML to social bots. These shells help View Source / some crawlers
- * when filesystem wins, and keep dist ready for future rewrite tuning.
+ * Also emits /sa/{region}/{city}/{service} noindex shells for every real
+ * city×service matrix link on the site — never added to sitemap.xml.
  */
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { absoluteImage, absoluteUrl, renderShareHtml } from './lib/seo-catalog.mjs'
+import {
+  absoluteImage,
+  absoluteUrl,
+  extractCities,
+  extractServices,
+  renderShareHtml,
+} from './lib/seo-catalog.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = join(root, 'dist')
@@ -22,12 +27,17 @@ if (!existsSync(dist) || !existsSync(catalogPath)) {
 
 const catalog = JSON.parse(readFileSync(catalogPath, 'utf8'))
 const indexHtml = readFileSync(join(dist, 'index.html'), 'utf8')
+const servicesSrc = readFileSync(join(root, 'src/data/services.ts'), 'utf8')
+const citiesSrc = readFileSync(join(root, 'src/data/cities.ts'), 'utf8')
+
+/** Same matrix the app links: every routed service × every city with region. */
+const matrixServices = extractServices(servicesSrc, { minBody: 0 })
+const matrixCities = extractCities(citiesSrc).filter((c) => c.regionSlug)
 
 function injectMeta(shellHtml, page) {
   const share = renderShareHtml(page)
   const headMatch = share.match(/<head>([\s\S]*?)<\/head>/i)
   const metaBlock = headMatch?.[1] || ''
-  // Replace title + strip old canonical/description/og/twitter, then inject.
   let html = shellHtml
   html = html.replace(/<title>[\s\S]*?<\/title>/i, '')
   html = html.replace(/<meta\s+name="description"[^>]*>/gi, '')
@@ -36,7 +46,6 @@ function injectMeta(shellHtml, page) {
   html = html.replace(/<meta\s+property="og:[^"]+"[^>]*>/gi, '')
   html = html.replace(/<meta\s+name="twitter:[^"]+"[^>]*>/gi, '')
   html = html.replace(/<head[^>]*>/i, (m) => `${m}\n${metaBlock}`)
-  // Visible fallback for non-JS crawlers before React mounts
   html = html.replace(
     /<div id="root"><\/div>/i,
     `<div id="root"><main><h1>${page.title}</h1><p>${page.description}</p></main></div>`,
@@ -44,12 +53,7 @@ function injectMeta(shellHtml, page) {
   return html
 }
 
-let count = 0
-for (const page of Object.values(catalog)) {
-  if (!page?.path) continue
-  if ((page.robots || '').includes('noindex') && page.path === '/blog') {
-    // still emit blog shell
-  }
+function writeShell(page) {
   const outPath =
     page.path === '/'
       ? join(dist, 'index.html')
@@ -60,9 +64,31 @@ for (const page of Object.values(catalog)) {
     image: absoluteImage(page.image),
   })
   writeFileSync(outPath, html, 'utf8')
-  count += 1
+}
+
+let catalogCount = 0
+for (const page of Object.values(catalog)) {
+  if (!page?.path) continue
+  writeShell(page)
+  catalogCount += 1
+}
+
+let localCount = 0
+for (const city of matrixCities) {
+  for (const service of matrixServices) {
+    const path = `/sa/${city.regionSlug}/${city.slug}/${service.slug}`
+    writeShell({
+      path,
+      title: `دليل ${service.nameAr} في ${city.nameAr} | ساعدني`,
+      description: `دليل ${service.nameAr} في ${city.nameAr}. تعرّف على نطاق المهنة والسياق المحلي قبل التنفيذ.`,
+      image: absoluteImage(service.image),
+      robots: 'noindex,nofollow',
+      type: 'website',
+    })
+    localCount += 1
+  }
 }
 
 console.log(
-  `prerender-meta → ${count} shells (example canonical ${absoluteUrl('/services')})`,
+  `prerender-meta → ${catalogCount} catalog shells + ${localCount} /sa noindex shells (example ${absoluteUrl('/services')}; local e.g. /sa/riyadh/riyadh/plumbing)`,
 )

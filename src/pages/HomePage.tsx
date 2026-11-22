@@ -310,17 +310,17 @@ export function HomePage() {
           <div className="mb-3 flex items-center gap-2 text-accent">
             <Wrench className="size-5" />
             <p className="text-xs font-extrabold tracking-[0.16em]">
-              {t('الأكثر طلبًا', 'Most requested')}
+              {t('أدلة مختارة', 'Selected guides')}
             </p>
           </div>
           <SectionHeading
             title={t(
-              'خدمات الناس بتدور عليها في المملكة',
-              'Services people look for in Saudi Arabia',
+              'أدلة مهن عملية في المملكة',
+              'Practical trade guides across Saudi Arabia',
             )}
             description={t(
-              'أدلة عملية للمهن الأكثر بحثًا — افهم نطاق العمل قبل ما تبدأ.',
-              'Practical guides for the most searched trades — understand the scope before you start.',
+              'مجموعة مختارة من الأدلة — افهم نطاق العمل قبل ما تبدأ.',
+              'A selected set of guides — understand the scope before you start.',
             )}
           />
 

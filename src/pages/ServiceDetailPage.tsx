@@ -163,7 +163,7 @@ export function ServiceDetailPage() {
                   <div className="mb-5 flex items-center gap-2 text-brand">
                     <Images className="size-5" />
                     <h2 className="text-xl font-extrabold text-ink">
-                      {t('صور تفيد العميل', 'Photos that help the customer')}
+                      {t('صور توضيحية للمهنة', 'Illustrative photos of the trade')}
                     </h2>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
@@ -189,7 +189,7 @@ export function ServiceDetailPage() {
                   <div className="mb-5 flex items-center gap-2 text-brand">
                     <CheckCircle2 className="size-5" />
                     <h2 className="text-xl font-extrabold text-ink">
-                      {t('مميزات تهمك كعميل', 'Benefits that matter to you')}
+                      {t('ما الذي يهمك عند تقييم العمل؟', 'What matters when you evaluate the work?')}
                     </h2>
                   </div>
                   <ul className="grid gap-3 sm:grid-cols-2">

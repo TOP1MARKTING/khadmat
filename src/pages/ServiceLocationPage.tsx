@@ -37,19 +37,19 @@ export function ServiceLocationPage() {
   usePageMeta({
     titleAr:
       valid && city && service
-        ? `${service.nameAr} في ${city.nameAr} | ساعدني`
+        ? `دليل ${service.nameAr} في ${city.nameAr} | ساعدني`
         : 'صفحة غير موجودة | ساعدني',
     titleEn:
       valid && city && service
-        ? `${service.nameEn} in ${city.nameEn} | Saedni`
+        ? `${service.nameEn} guide in ${city.nameEn} | Saedni`
         : 'Page not found | Saedni',
     descriptionAr:
       valid && city && service
-        ? `خدمات ${service.nameAr} في ${city.nameAr}، ${city.regionAr}. تعرّف على نطاق التغطية واطلب الاستفسار.`
+        ? `دليل ${service.nameAr} في ${city.nameAr}، ${city.regionAr}. تعرّف على نطاق المهنة والسياق المحلي قبل التنفيذ.`
         : '',
     descriptionEn:
       valid && city && service
-        ? `${service.nameEn} services in ${city.nameEn}, ${city.regionEn}. Review coverage and send an inquiry.`
+        ? `${service.nameEn} guide in ${city.nameEn}, ${city.regionEn}. Learn the trade scope and local context before work starts.`
         : '',
     canonicalPath: undefined,
     robots: 'noindex,nofollow',
@@ -74,8 +74,8 @@ export function ServiceLocationPage() {
               )}
               <h1 className="heading-display">
                 {t(
-                  `خدمات ${service.nameAr} الاحترافية في ${city.nameAr}`,
-                  `Professional ${service.nameEn} Services in ${city.nameEn}`,
+                  `دليل ${service.nameAr} في ${city.nameAr}`,
+                  `${service.nameEn} guide in ${city.nameEn}`,
                 )}
               </h1>
               <p className="body-lead mt-4">

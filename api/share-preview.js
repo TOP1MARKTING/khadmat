@@ -41,13 +41,24 @@ export default function handler(req, res) {
   const url = new URL(incoming, 'https://www.saedniksa.com')
   const path = normalizePath(url.searchParams.get('path') || '/')
   const catalog = loadCatalog()
+  const isLocalMatrix = path === '/sa' || path.startsWith('/sa/')
+  const isAdmin = path === '/admin' || path.startsWith('/admin/')
   const page = catalog[path] || {
     path,
-    title: 'ساعدني | Saedni',
-    description: 'مرجع معرفي للمهن والخدمات في المملكة العربية السعودية.',
+    title: isLocalMatrix
+      ? 'دليل محلي | ساعدني'
+      : isAdmin
+        ? 'إدارة المحتوى | ساعدني'
+        : 'ساعدني | Saedni',
+    description: isLocalMatrix
+      ? 'صفحة محلية معرفية — غير مخصّصة للفهرسة في المرحلة الحالية.'
+      : 'مرجع معرفي للمهن والخدمات في المملكة العربية السعودية.',
     image: DEFAULT_IMAGE,
-    robots: 'noindex,follow',
+    robots: 'noindex,nofollow',
     type: 'website',
+  }
+  if (isLocalMatrix || isAdmin) {
+    page.robots = 'noindex,nofollow'
   }
 
   const html = renderShareHtml({

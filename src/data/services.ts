@@ -373,10 +373,7 @@ export const services: Service[] = [
 <p>Stages: survey → prep substrate → set layout direction → prepare adhesive → install → cut details and skirting → grout and clean → inspect and hand over.</p>`,
     gallery: [
       '/images/hero/hero-03-tiling-desktop.jpg',
-      '/images/hero/hero-03-tiling.jpg',
-      '/images/hero/hero-12-marble-desktop.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
-      '/images/hero/hero-04-waterproofing-desktop.jpg',
+      '/images/team/team-04-riyadh.jpg',
     ],
     benefitsAr: [
       'أرضيات وحوائط أسهل في التنظيف وأكثر تحملًا للاستخدام اليومي عند التركيب الصحيح',
@@ -639,9 +636,6 @@ export const services: Service[] = [
 <p>Avoid buying materials before quantities are clear, using high-gloss slippery tiles in wet zones, skipping substrate leveling, using the wrong adhesive, ignoring dry layouts, acidic cleaners on marble, or loading the floor before curing time.</p>`,
     gallery: [
       '/images/hero/hero-12-marble-desktop.jpg',
-      '/images/hero/hero-12-marble.jpg',
-      '/images/hero/hero-03-tiling-desktop.jpg',
-      '/images/hero/hero-02-finishing-desktop.jpg',
     ],
     benefitsAr: [
       'خيارات واسعة للأرضيات والجدران والسلالم وأسطح المطابخ',
@@ -1911,56 +1905,204 @@ export const services: Service[] = [
     categorySlug: 'cleaning',
     nameAr: 'تنظيف المكاتب',
     nameEn: 'Office Cleaning',
-    shortAr: 'تنظيف مكاتب ومنشآت تجارية بجداول مرنة.',
-    shortEn: 'Office and commercial cleaning on flexible schedules.',
+    shortAr: 'دليل عملي لتنظيف المكاتب والمنشآت: النطاق، الجداول، التجهيز، وعلامات الجودة قبل الاتفاق مع جهة مستقلة.',
+    shortEn: 'A practical office cleaning guide: scope, schedules, prep, and quality signs before you agree with an independent provider.',
     introAr:
-      'تركّز صفحات تنظيف المكاتب على الشركات والمحلات في مدن المملكة العربية السعودية التي تحتاج حضورًا منتظمًا.',
+      'تنظيف المكاتب يختلف عن النظافة المنزلية في التوقيت، المساحات المشتركة، والأجهزة والأسطح التي تُستخدم يوميًا. في ساعدني هتلاقي نطاق العمل والأنواع والمراحل والأسئلة التي تهمك عند تقييم أي جهة مستقلة.',
     introEn:
-      'Office cleaning pages focus on Saudi businesses that need regular presence.',
-    typesAr: ['يومي', 'أسبوعي', 'بعد الدوام', 'تعقيم أسطح'],
-    typesEn: ['Daily', 'Weekly', 'After hours', 'Surface sanitizing'],
+      'Office cleaning differs from home cleaning in timing, shared spaces, and daily-use surfaces. On Saedni you get scope, types, stages, and the questions that help you evaluate any independent provider.',
+    bodyAr: `<p>تنظيف المكاتب خدمة لتنظيف المساحات الإدارية والتجارية: المكاتب الفردية، غرف الاجتماعات، الاستقبال، الممرات، المطابخ الصغيرة، ودورات المياه، مع مراعاة استمرار العمل أو التنفيذ خارج أوقات الذروة حسب الاتفاق.</p>
+<p>تناسب الشركات الصغيرة والمتوسطة، العيادات والمكاتب المهنية، المحلات ذات المساحات الإدارية، ومراكز الأعمال التي تحتاج حضورًا منتظمًا أو تنظيفًا بعد الدوام.</p>
+<p><strong>أنواع الأعمال:</strong> يومي، أسبوعي، بعد الدوام، تنظيف دورات المياه والمطابخ الصغيرة، تعقيم أسطح اللمس المتكرر، تنظيف زجاج داخلي محدود، وإزالة نفايات مكتبية ضمن النطاق المتفق عليه.</p>
+<p>جودة العمل تظهر في التزام بالمساحات المشمولة، مواد مناسبة للأسطح دون إتلاف الأجهزة، عدم تعطيل الملفات والأجهزة، دورات مياه نظيفة بدون روائح، وعدم ترك بقايا منظفات أو أرضيات زلقة.</p>
+<p>المراحل: تحديد المساحات والمستثنى ← الاتفاق على الجدول والمواد ← تجهيز المكاتب (إبعاد أغراض حساسة) ← تنظيف الأسطح والأرضيات ← دورات المياه والمطبخ ← تفريغ النفايات ضمن الاتفاق ← مراجعة سريعة قبل المغادرة.</p>
+<p>تجنّب مواد قوية على الشاشات والخشب، دخول أدراج أو خزائن دون إذن، إهمال الزوايا خلف الأثاث، جداول غير واضحة، وخلط نطاق «تعقيم» مع مسح سطحي بلا تفاصيل.</p>
+<p>قبل الاتفاق اسأل: ما المساحات المشمولة والمستثناة؟ يومي أم أسبوعي أم بعد الدوام؟ هل المواد مشمولة؟ هل يشمل الزجاج الداخلي؟ كيف التعامل مع الملفات والأجهزة؟ هل يوجد مشرف أو قائمة تحقق؟ وما آلية الإبلاغ عن ملاحظة بعد الزيارة؟</p>
+<p>المدة والحضور يختلفان حسب المساحة وعدد الغرف ومستوى الاتساخ؛ لا تعتمد رقمًا ثابتًا من صفحة عامة — اطلب تقديرًا بعد وصف واضح للموقع.</p>`,
+    bodyEn: `<p>Office cleaning covers administrative and commercial spaces: desks, meeting rooms, reception, corridors, small kitchens, and restrooms, timed around business hours or after peak use as agreed.</p>
+<p>It suits small and mid-size companies, clinics and professional offices, shops with admin areas, and business centers that need regular presence or after-hours cleaning.</p>
+<p>Quality shows in sticking to included areas, surface-safe products, not disturbing files and devices, clean restrooms without odors, and no leftover cleaner residue or slippery floors.</p>
+<p>Stages: define included/excluded areas → agree schedule and products → prep desks (move sensitive items) → clean surfaces and floors → restrooms and kitchen → empty waste as agreed → quick check before leaving.</p>`,
+    gallery: ['/images/services/office-cleaning.jpg'],
+    benefitsAr: [
+      'بيئة عمل أوضح بجدول يناسب ساعات المنشأة',
+      'نطاق مكتوب يقلل الخلاف حول الغرف والأسطح',
+      'مواد مناسبة للأسطح تحمي الأجهزة والتشطيبات',
+      'أسئلة واضحة قبل الاتفاق تساعد على تقييم جهة مستقلة',
+    ],
+    benefitsEn: [
+      'A clearer workspace with a schedule that fits business hours',
+      'A written scope reduces disputes about rooms and surfaces',
+      'Surface-safe products protect devices and finishes',
+      'Clear pre-hire questions help you evaluate an independent provider',
+    ],
+    stepsAr: [
+      'تحديد المساحات المشمولة والمستثناة',
+      'الاتفاق على الجدول والمواد المستخدمة',
+      'تجهيز المكاتب بإبعاد الأغراض الحساسة',
+      'تنظيف الأسطح والأرضيات والممرات',
+      'تنظيف دورات المياه والمطبخ الصغير',
+      'تفريغ النفايات ضمن النطاق المتفق عليه',
+      'مراجعة سريعة قبل مغادرة الموقع',
+    ],
+    stepsEn: [
+      'Define included and excluded areas',
+      'Agree the schedule and products',
+      'Prep desks by moving sensitive items',
+      'Clean surfaces, floors, and corridors',
+      'Clean restrooms and the small kitchen',
+      'Empty waste within the agreed scope',
+      'Do a quick review before leaving',
+    ],
+    typesAr: ['يومي', 'أسبوعي', 'بعد الدوام', 'تعقيم أسطح اللمس', 'دورات مياه ومطابخ صغيرة', 'زجاج داخلي محدود'],
+    typesEn: ['Daily', 'Weekly', 'After hours', 'High-touch sanitizing', 'Restrooms and small kitchens', 'Limited interior glass'],
     faqAr: [
       {
-        q: 'هل تتوفر عقود شهرية؟',
-        a: 'نعم، يمكن الاتفاق على عقود منتظمة عند ربط الصفحة بمزوّد.',
+        q: 'ما الفرق بين تنظيف المكاتب وتنظيف المنزل؟',
+        a: 'المكاتب تركز على مساحات مشتركة، جداول تناسب العمل، وأسطح أجهزة وملفات؛ المنزل يركز على غرف المعيشة والمفروشات بتفاصيل مختلفة.',
+      },
+      {
+        q: 'هل العقود الشهرية ضرورية؟',
+        a: 'ليست قاعدة ثابتة. بعض المنشآت تحتاج حضورًا منتظمًا، وأخرى تنظيفًا عند الحاجة. اسأل عن خيارات الجدولة ونطاق كل زيارة قبل الاتفاق مع أي جهة مستقلة.',
+      },
+      {
+        q: 'هل يُفضَّل التنفيذ بعد الدوام؟',
+        a: 'كثيرًا ما يقلل التعطيل، لكنه يعتمد على أمن المبنى وإمكانية الدخول. وضّح أوقات الدخول والمسؤول عن الاستلام.',
+      },
+      {
+        q: 'هل المواد تكون ضمن الاتفاق؟',
+        a: 'يختلف حسب الجهة. اسأل إن كانت المواد مشمولة، وما أنواعها على الخشب والزجاج والأجهزة.',
+      },
+      {
+        q: 'كيف أقيّم جودة التنظيف بعد الزيارة؟',
+        a: 'راجع قائمة المساحات المتفق عليها، دورات المياه، الأرضيات، وغياب بقايا منظفات أو فوضى حول المكاتب.',
       },
     ],
     faqEn: [
       {
-        q: 'Are monthly contracts available?',
-        a: 'Yes. Recurring contracts can be arranged when a provider is assigned.',
+        q: 'How does office cleaning differ from home cleaning?',
+        a: 'Offices focus on shared spaces, work-friendly schedules, and device/file surfaces; homes focus on living rooms and upholstery with different details.',
+      },
+      {
+        q: 'Are monthly contracts required?',
+        a: 'Not a fixed rule. Some sites need regular visits; others need on-demand cleaning. Ask about schedule options and each visit’s scope before agreeing with any independent provider.',
+      },
+      {
+        q: 'Is after-hours cleaning better?',
+        a: 'It often reduces disruption, but depends on building security and access. Clarify entry times and who receives the team.',
+      },
+      {
+        q: 'Are cleaning products included?',
+        a: 'It varies. Ask whether products are included and which types are used on wood, glass, and devices.',
+      },
+      {
+        q: 'How do I judge quality after a visit?',
+        a: 'Check the agreed area list, restrooms, floors, and whether desks are free of residue or leftover clutter.',
       },
     ],
     image: '/images/services/office-cleaning.jpg',
-    gallery: ['/images/services/office-cleaning.jpg'],
   },
   {
     slug: 'upholstery-cleaning',
     categorySlug: 'cleaning',
     nameAr: 'تنظيف المفروشات',
     nameEn: 'Furniture & Upholstery Cleaning',
-    shortAr: 'تنظيف كنب وسجاد ومفروشات بمواد مناسبة للأقمشة.',
-    shortEn: 'Sofa, carpet, and upholstery cleaning with fabric-safe methods.',
+    shortAr: 'دليل عملي لتنظيف الكنب والسجاد والمفروشات: الأنواع، التجهيز، الجفاف، وعلامات الجودة قبل الاتفاق.',
+    shortEn: 'A practical upholstery guide: sofas, carpets, prep, drying, and quality signs before you agree.',
     introAr:
-      'صفحات تنظيف المفروشات تستهدف البحث المحلي عن تنظيف الكنب والسجاد داخل المملكة العربية السعودية.',
+      'تنظيف المفروشات يحتاج معرفة بنوع القماش والبقع وطريقة التجفيف. في ساعدني هتلاقي النطاق والأنواع والمراحل والأسئلة التي تساعدك تختار جهة مستقلة بوضوح — بدون وعود أسعار أو مدد ثابتة.',
     introEn:
-      'Upholstery pages target local searches for sofa and carpet cleaning in Saudi Arabia.',
-    typesAr: ['كنب', 'سجاد', 'ستائر', 'مراتب'],
-    typesEn: ['Sofas', 'Carpets', 'Curtains', 'Mattresses'],
+      'Upholstery cleaning depends on fabric type, stains, and drying. On Saedni you get scope, types, stages, and questions that help you choose an independent provider clearly — without fixed prices or durations.',
+    bodyAr: `<p>تنظيف المفروشات يشمل الكنب والمجالس والسجاد والستائر والمراتب بمواد وطرق تناسب نوع القماش أو الوبر، مع إزالة أتربة وبقع ظاهرة ضمن حدود الخامة.</p>
+<p>تناسب المنازل والفلل والمجالس العربية، الشقق المفروشة، والمكاتب التي فيها جلسات انتظار قماشية.</p>
+<p><strong>أنواع الأعمال:</strong> كنب ومجالس، سجاد وموكيت، ستائر قابلة للفك أو التنظيف في المكان، مراتب، وإزالة بقع محددة حسب قابلية القماش.</p>
+<p>جودة العمل تظهر في اختبار منطقة صغيرة عند الحاجة، عدم ترك بقع ماء واسعة، رائحة مقبولة بلا مواد خانقة، تجفيف مناسب، وعدم تلف الألوان أو الوبر.</p>
+<p>المراحل: معاينة نوع القماش والبقع ← توضيح المشمول والمستثنى ← شفط أتربة ← تنظيف بالمادة المناسبة ← معالجة بقع ضمن الاتفاق ← تجفيف وتهوية ← مراجعة النتيجة بعد الجفاف الجزئي.</p>
+<p>تجنّب مواد عامة على أقمشة حساسة، تبليل مفرط يطيل الجفاف ويسبب روائح، تنظيف سجاد على أرضية غير محمية، وإخفاء تلف قديم دون الاتفاق على توقعات واقعية.</p>
+<p>قبل الاتفاق اسأل: ما طريقة التنظيف لكل قطعة؟ هل تناسب قماشي؟ كم يتوقع للجفاف تقريبًا حسب الطقس؟ هل يشمل الوجهين للوسائد؟ هل الستائر تُفك؟ وما سياسة البقع القديمة أو الثابتة؟</p>
+<p>زمن الجفاف يختلف حسب القماش والرطوبة وتهوية المكان؛ لا تعتمد رقمًا عامًا — اطلب تقديرًا بعد معاينة القطع.</p>`,
+    bodyEn: `<p>Upholstery cleaning covers sofas, majlis seating, carpets, curtains, and mattresses with methods suited to fabric or pile, removing dust and visible stains within material limits.</p>
+<p>It suits homes, villas, Arabic majlis rooms, furnished apartments, and offices with fabric waiting areas.</p>
+<p>Quality shows in a small test area when needed, no large wet patches left behind, acceptable odor without harsh fumes, suitable drying, and no color or pile damage.</p>
+<p>Stages: inspect fabric and stains → clarify included/excluded items → vacuum dust → clean with a suitable method → treat agreed stains → dry and ventilate → review after partial drying.</p>`,
+    gallery: ['/images/services/upholstery-cleaning.jpg'],
+    benefitsAr: [
+      'اختيار طريقة تناسب القماش أهم من قوة المادة',
+      'توضيح البقع القديمة يقلل التوقعات غير الواقعية',
+      'تهوية وتجفيف مناسبان يقللان الروائح بعد التنظيف',
+      'أسئلة قبل الاتفاق تساعد على تقييم جهة مستقلة',
+    ],
+    benefitsEn: [
+      'Matching method to fabric matters more than product strength',
+      'Clarifying old stains reduces unrealistic expectations',
+      'Proper drying and ventilation reduce post-clean odors',
+      'Pre-hire questions help you evaluate an independent provider',
+    ],
+    stepsAr: [
+      'معاينة نوع القماش والبقع وحالة القطع',
+      'الاتفاق على القطع المشمولة والمستثناة',
+      'شفط الأتربة قبل التنظيف الرطب أو الجاف',
+      'تنفيذ التنظيف بالمادة والطريقة المناسبتين',
+      'معالجة البقع ضمن ما تسمح به الخامة',
+      'تجفيف وتهوية المكان',
+      'مراجعة النتيجة بعد الجفاف',
+    ],
+    stepsEn: [
+      'Inspect fabric, stains, and item condition',
+      'Agree included and excluded pieces',
+      'Vacuum dust before wet or dry cleaning',
+      'Clean with a suitable product and method',
+      'Treat stains within fabric limits',
+      'Dry and ventilate the space',
+      'Review results after drying',
+    ],
+    typesAr: ['كنب ومجالس', 'سجاد وموكيت', 'ستائر', 'مراتب', 'إزالة بقع محددة'],
+    typesEn: ['Sofas and majlis', 'Carpets and rugs', 'Curtains', 'Mattresses', 'Targeted stain treatment'],
     faqAr: [
       {
         q: 'كم يستغرق الجفاف؟',
-        a: 'يختلف حسب نوع القماش والطقس، وغالبًا خلال ساعات إلى يوم.',
+        a: 'يختلف حسب نوع القماش والرطوبة وتهوية الغرفة. اسأل عن تقدير بعد معاينة القطع، ولا تعتمد مدة عامة من صفحة.',
+      },
+      {
+        q: 'هل تزول كل البقع؟',
+        a: 'ليس دائمًا. البقع القديمة أو الثابتة قد تخف دون اختفاء كامل. اطلب تقييمًا صادقًا قبل البدء.',
+      },
+      {
+        q: 'هل يمكن تنظيف الستائر دون فكها؟',
+        a: 'أحيانًا نعم حسب النوع والتثبيت. وضّح ذلك مبكرًا لتجنب تلف القضبان أو القماش.',
+      },
+      {
+        q: 'هل المواد آمنة للأطفال والحيوانات؟',
+        a: 'اسأل عن نوع المواد ووقت التهوية المطلوب بعد التنظيف قبل إعادة الاستخدام.',
+      },
+      {
+        q: 'ماذا أجهّز قبل الزيارة؟',
+        a: 'أبعد الأغراض عن الكنب، فرّغ الأدراج الظاهرة إن لزم، ووفّر كهرباء وتهوية، وبيّن البقع المطلوب التركيز عليها.',
       },
     ],
     faqEn: [
       {
         q: 'How long does drying take?',
-        a: 'It depends on fabric and weather, often from a few hours up to a day.',
+        a: 'It depends on fabric, humidity, and room airflow. Ask for an estimate after inspecting the pieces — do not rely on a generic page duration.',
+      },
+      {
+        q: 'Will every stain disappear?',
+        a: 'Not always. Old or set stains may lighten without fully vanishing. Ask for an honest assessment before work starts.',
+      },
+      {
+        q: 'Can curtains be cleaned without taking them down?',
+        a: 'Sometimes, depending on type and mounting. Clarify early to avoid damage to rails or fabric.',
+      },
+      {
+        q: 'Are products safe around children and pets?',
+        a: 'Ask which products are used and how long to ventilate before reuse.',
+      },
+      {
+        q: 'How should I prepare before the visit?',
+        a: 'Clear items off sofas, empty visible drawers if needed, provide power and airflow, and point out priority stains.',
       },
     ],
     image: '/images/services/upholstery-cleaning.jpg',
-    gallery: ['/images/services/upholstery-cleaning.jpg'],
   },
   {
     slug: 'water-tank-cleaning',
@@ -2618,61 +2760,209 @@ export const services: Service[] = [
     categorySlug: 'moving-logistics',
     nameAr: 'فك وتركيب الأثاث',
     nameEn: 'Furniture Assembly & Disassembly',
-    shortAr: 'فك وتركيب غرف نوم ومكاتب ومطابخ جاهزة.',
-    shortEn: 'Disassembly and assembly of bedrooms, offices, and ready kitchens.',
+    shortAr: 'دليل عملي لفك وتركيب غرف النوم والمكاتب والخزائن: التجهيز، المراحل، وعلامات الجودة قبل الاتفاق.',
+    shortEn: 'A practical furniture assembly guide: bedrooms, offices, cabinets, prep, stages, and quality signs before you agree.',
     introAr:
-      'صفحات الفك والتركيب تخدم من يحتاج ترتيب الأثاث دون نقل كامل داخل مدن المملكة العربية السعودية.',
+      'فك وتركيب الأثاث خدمة مستقلة عن النقل الكامل، وتهم من يبدّل ترتيب الغرف أو يركّب قطعًا جاهزة. في ساعدني هتلاقي النطاق والأنواع والمراحل والأسئلة عند تقييم جهة مستقلة.',
     introEn:
-      'Assembly pages serve people who need furniture setup without a full move in Saudi cities.',
-    typesAr: ['غرف نوم', 'مكاتب', 'مطابخ', 'خزائن'],
-    typesEn: ['Bedrooms', 'Offices', 'Kitchens', 'Cabinets'],
+      'Furniture assembly is separate from a full move and helps when rearranging rooms or building flat-pack pieces. On Saedni you get scope, types, stages, and questions for evaluating an independent provider.',
+    bodyAr: `<p>فك وتركيب الأثاث يشمل تفكيك القطع الكبيرة بأمان، حفظ المسامير والوصلات، وإعادة التركيب وفق تعليمات المصنع أو الشكل المتفق عليه، دون اشتراط نقل بين موقعين.</p>
+<p>تناسب الانتقال الجزئي داخل المنزل، تركيب غرف نوم أو مكاتب جاهزة، إعادة ترتيب بعد التجديد، وتركيب خزائن ومكتبات جدارية ضمن قدرة القطعة والموقع.</p>
+<p><strong>أنواع الأعمال:</strong> غرف نوم، مكاتب منزلية، مطابخ جاهزة ضمن النطاق، خزائن ومكتبات، أسرّة وخزائن ملابس، وفك قبل النقل أو تركيب بعد الاستلام.</p>
+<p>جودة العمل تظهر في عدم خدش الأسطح، ترقيم الأجزاء، ربط صحيح بدون ارتخاء، محاذاة الأبواب والأدراج، وتسليم مسامير وأدوات إضافية لصاحب المكان.</p>
+<p>المراحل: جرد القطع والتعليمات ← تجهيز المساحة ← فك منظم مع حفظ الوصلات ← نقل داخلي إن لزم ضمن الاتفاق ← تركيب وضبط ← فحص ثبات وأبواب ← تنظيف بقايا بسيطة في موضع العمل.</p>
+<p>تجنّب فك بلا ترقيم، تركيب على أرض غير مستوية دون ضبط، استخدام قوة مفرطة على البلاستيك، وإهمال تعليمات الحمولة القصوى للرفوف.</p>
+<p>قبل الاتفاق اسأل: هل القطعة جديدة أم مستعملة؟ هل كتالوج التركيب متوفر؟ هل الجدار يتحمل تثبيتا؟ من يوفّر أدوات خاصة؟ هل يشمل ضبط الأبواب؟ وما سياسة كسر جزء قديم أثناء الفك؟</p>
+<p>الزمن يعتمد على عدد القطع وتعقيدها وحالة المسامير؛ اطلب تقديرًا بعد وصف أو صور واضحة.</p>`,
+    bodyEn: `<p>Furniture assembly and disassembly means safely taking large pieces apart, keeping fasteners organized, and rebuilding per manufacturer instructions or the agreed layout — without requiring a full move between sites.</p>
+<p>It suits partial rearranging at home, flat-pack bedrooms or offices, post-renovation setup, and cabinets or wall units within the piece and site limits.</p>
+<p>Quality shows in no surface scratches, labeled parts, firm joints, aligned doors and drawers, and returning spare fasteners to the owner.</p>
+<p>Stages: inventory pieces and manuals → clear the space → organized disassembly → internal move if agreed → assemble and adjust → check stability and doors → clear minor work debris.</p>`,
+    gallery: ['/images/services/furniture-assembly.jpg'],
+    benefitsAr: [
+      'ترتيب أوضح للغرف دون الحاجة لنقل كامل',
+      'حفظ المسامير والوصلات يقلل ضياع القطع',
+      'ضبط الأبواب والأدراج علامة على تركيب مرتب',
+      'أسئلة قبل الاتفاق تساعد على تقييم جهة مستقلة',
+    ],
+    benefitsEn: [
+      'Clearer room layouts without a full move',
+      'Keeping fasteners organized reduces lost parts',
+      'Aligned doors and drawers signal careful assembly',
+      'Pre-hire questions help you evaluate an independent provider',
+    ],
+    stepsAr: [
+      'جرد القطع ومراجعة تعليمات التركيب إن وُجدت',
+      'تجهيز المساحة وحماية الأرضيات',
+      'فك منظم مع ترقيم وحفظ الوصلات',
+      'تركيب القطع وفق الترتيب الصحيح',
+      'ضبط الأبواب والأدراج والمستوى',
+      'فحص الثبات والسلامة',
+      'تسليم المسامير والأدوات الإضافية لصاحب المكان',
+    ],
+    stepsEn: [
+      'Inventory pieces and review manuals if available',
+      'Prepare the space and protect floors',
+      'Disassemble in order with labeled fasteners',
+      'Assemble pieces in the correct sequence',
+      'Adjust doors, drawers, and level',
+      'Check stability and safety',
+      'Hand spare fasteners back to the owner',
+    ],
+    typesAr: ['غرف نوم', 'مكاتب', 'مطابخ جاهزة', 'خزائن ومكتبات', 'أسرّة', 'فك قبل النقل'],
+    typesEn: ['Bedrooms', 'Offices', 'Ready kitchens', 'Cabinets and shelving', 'Beds', 'Disassembly before moving'],
     faqAr: [
       {
-        q: 'هل تحتاج أدوات خاصة؟',
-        a: 'المزوّد يحضر الأدوات المعتادة، ويُبلَّغ مسبقًا إن لزم أمر خاص.',
+        q: 'هل أحتاج أدوات خاصة؟',
+        a: 'غالبًا تُستخدم أدوات شائعة، وقد تلزم قطعة خاصة لبعض الماركات. اسأل مسبقًا إن كان لديك نوع غير معتاد.',
+      },
+      {
+        q: 'هل الخدمة تشمل التثبيت في الجدار؟',
+        a: 'يختلف حسب القطعة ونوع الجدار. وضّح إن كان التثبيت مطلوبًا، ومن يتحمّل فحص قدرة الجدار.',
+      },
+      {
+        q: 'ماذا لو ضاعت مسامير من القطعة القديمة؟',
+        a: 'قد يتأخر التركيب أو يحتاج بدائل. صوّر القطع الناقصة واسأل عن إمكانية التوفير قبل الموعد.',
+      },
+      {
+        q: 'هل يمكن التركيب في نفس يوم الاستلام من المتجر؟',
+        a: 'ممكن إذا كانت القطعة كاملة والتعليمات واضحة والمساحة جاهزة. أكّد الجدول بعد التأكد من اكتمال الطرود.',
+      },
+      {
+        q: 'ما علامات التركيب الجيد؟',
+        a: 'ثبات بدون اهتزاز، أبواب متوازية، أدراج تمشي بسلاسة، وعدم وجود خدوش جديدة ظاهرة من الأدوات.',
       },
     ],
     faqEn: [
       {
         q: 'Are special tools needed?',
-        a: 'Providers bring standard tools and will notify you if something special is required.',
+        a: 'Usually common tools are enough; some brands need a specific bit. Ask ahead if you have an unusual model.',
+      },
+      {
+        q: 'Does the service include wall mounting?',
+        a: 'It depends on the piece and wall type. Clarify if mounting is required and who checks wall capacity.',
+      },
+      {
+        q: 'What if old fasteners are missing?',
+        a: 'Assembly may delay or need replacements. Photo missing parts and ask about sourcing before the visit.',
+      },
+      {
+        q: 'Can assembly happen the same day as store delivery?',
+        a: 'Yes if parts are complete, manuals are clear, and the space is ready. Confirm timing after checking all boxes.',
+      },
+      {
+        q: 'What are signs of good assembly?',
+        a: 'Stable pieces, aligned doors, smooth drawers, and no new tool scratches.',
       },
     ],
     image: '/images/services/furniture-assembly.jpg',
-    gallery: ['/images/services/furniture-assembly.jpg'],
   },
   {
     slug: 'office-relocation',
     categorySlug: 'moving-logistics',
     nameAr: 'نقل المكاتب',
     nameEn: 'Office Relocation',
-    shortAr: 'نقل مكاتب وشركات بجدولة تقلل توقف العمل.',
-    shortEn: 'Office moves scheduled to minimize downtime.',
+    shortAr: 'دليل عملي لنقل المكاتب والمنشآت: التخطيط، الأجهزة، إعادة الترتيب، وعلامات الجودة قبل الاتفاق.',
+    shortEn: 'A practical office relocation guide: planning, equipment, re-setup, and quality signs before you agree.',
     introAr:
-      'صفحات نقل المكاتب موجّهة للمنشآت في المملكة العربية السعودية التي تحتاج انتقالًا منظمًا.',
+      'نقل المكتب يحتاج جدولة تقلل توقف العمل وحماية للأجهزة والملفات. في ساعدني هتلاقي النطاق والمراحل والأسئلة التي تهمك عند اختيار جهة نقل مستقلة — بدون وعود توفر أو أسعار ثابتة.',
     introEn:
-      'Office relocation pages serve Saudi businesses needing an organized move.',
-    typesAr: ['تخطيط النقل', 'نقل أجهزة', 'إعادة ترتيب', 'نقل خارج الدوام'],
-    typesEn: ['Move planning', 'Equipment transfer', 'Re-setup', 'After-hours moves'],
+      'Office moves need scheduling that limits downtime and care for equipment and files. On Saedni you get scope, stages, and questions for choosing an independent mover — without availability promises or fixed prices.',
+    bodyAr: `<p>نقل المكاتب خدمة لنقل أثاث وأجهزة ومستندات منشأة من موقع إلى آخر، مع تخطيط مسبق لتقليل انقطاع العمل وإعادة ترتيب محطات العمل عند الوصول.</p>
+<p>تناسب الشركات والمكاتب المهنية والعيادات الصغيرة والفروع التي تنتقل داخل المدينة أو بينها ضمن اتفاق واضح للمسافة والطوابق.</p>
+<p><strong>أنواع الأعمال:</strong> تخطيط جرد وجدول زمني، تغليف أجهزة وشاشات، نقل أثاث مكتبي، نقل أرشيف منظم، إعادة ترتيب حسب مخطط المكتب الجديد، وتنفيذ خارج أوقات الذروة عند الحاجة.</p>
+<p>جودة العمل تظهر في جرد مكتوب، حماية زوايا الأثاث والأجهزة، عدم خلط صناديق الأقسام، وصول وفق ترتيب يسهّل التشغيل، وفحص أوّلي بعد التنزيل.</p>
+<p>المراحل: جرد ومحطات العمل ← تحديد يوم وساعات الدخول ← تغليف وفصل كهرباء بأمان ← تحميل مرتب ← نقل ← تنزيل حسب المخطط ← فك تغليف أساسي ← مراجعة نواقص.</p>
+<p>تجنّب نقل أجهزة دون حماية، صناديق بلا تسمية أقسام، تجاهل مصعد أو تصاريح المبنى، وضغط يوم واحد بلا خطة للطوابق والسيارات.</p>
+<p>قبل الاتفاق اسأل: هل يشمل التغليف؟ من يفصل الأجهزة؟ هل الأرشيف مرقم؟ هل العمل مساءً أو نهاية أسبوع ممكن حسب المبنى؟ هل هناك تأمين مكتوب؟ وكيف تُعالج قطعة تالفة؟</p>
+<p>مدة التوقف تعتمد على حجم المكتب والطوابق والمسافة وتنسيق المبنى؛ اطلب خطة زمنية بعد معاينة أو وصف دقيق.</p>`,
+    bodyEn: `<p>Office relocation moves furniture, equipment, and documents between sites with advance planning to limit downtime and re-stage workstations on arrival.</p>
+<p>It suits companies, professional offices, small clinics, and branches moving within or between cities under a clear distance and floor agreement.</p>
+<p>Quality shows in a written inventory, protection for furniture corners and devices, labeled department boxes, arrival order that supports restarting work, and a basic check after unloading.</p>
+<p>Stages: inventory workstations → set day and access hours → pack and power-down safely → load in order → transit → unload per floor plan → basic unpack → review missing items.</p>`,
+    gallery: ['/images/services/office-relocation.jpg'],
+    benefitsAr: [
+      'تخطيط مسبق يقلل توقف العمل غير الضروري',
+      'جرد وتسمية صناديق يحفظ تنظيم الأقسام',
+      'حماية الأجهزة والشاشات أهم من سرعة التحميل',
+      'أسئلة قبل الاتفاق تساعد على تقييم جهة نقل مستقلة',
+    ],
+    benefitsEn: [
+      'Advance planning reduces unnecessary downtime',
+      'Inventory and labeled boxes keep departments organized',
+      'Protecting devices matters more than loading speed',
+      'Pre-hire questions help you evaluate an independent mover',
+    ],
+    stepsAr: [
+      'جرد الأثاث والأجهزة والمستندات حسب الأقسام',
+      'الاتفاق على اليوم وساعات الدخول والخروج',
+      'تغليف الأجهزة وفصل الكهرباء بأمان',
+      'تحميل مرتب حسب أولوية التنزيل',
+      'النقل إلى الموقع الجديد',
+      'التنزيل وإعادة ترتيب محطات العمل',
+      'مراجعة الجرد وتسجيل الملاحظات',
+    ],
+    stepsEn: [
+      'Inventory furniture, devices, and documents by department',
+      'Agree the day and building access hours',
+      'Pack devices and power down safely',
+      'Load in an order that matches unload priority',
+      'Transit to the new site',
+      'Unload and re-stage workstations',
+      'Review the inventory and note issues',
+    ],
+    typesAr: ['تخطيط النقل', 'نقل أجهزة وشاشات', 'نقل أثاث مكتبي', 'أرشيف منظم', 'إعادة ترتيب', 'نقل خارج الدوام'],
+    typesEn: ['Move planning', 'Equipment and monitors', 'Office furniture', 'Organized archives', 'Re-setup', 'After-hours moves'],
     faqAr: [
       {
         q: 'هل يمكن النقل في نهاية الأسبوع؟',
-        a: 'غالبًا نعم حسب توفر المزوّد وجدول المنشأة.',
+        a: 'يعتمد على تصاريح المبنى وجدول المنشأة والجهة المنفذة. اسأل عن إمكانية الدخول والمصاعد خارج الدوام قبل تثبيت اليوم.',
+      },
+      {
+        q: 'من يفصل أجهزة الحاسب والطابعات؟',
+        a: 'يفضّل اتفاق واضح: إما فريق تقنية لديكم أو ضمن نطاق جهة النقل إن كانت مؤهلة. لا تترك ذلك لحظة التحميل.',
+      },
+      {
+        q: 'كيف أحمي الملفات السرية أثناء النقل؟',
+        a: 'خصّص صناديق مغلقة ومسمّاة، وقلّل عدد من يتعامل معها، واطلب تسليمها لشخص مسؤول عند الوصول.',
+      },
+      {
+        q: 'هل إعادة ترتيب المكتب الجديد مشمولة؟',
+        a: 'ليست تلقائية. اطلب مخططًا بسيطًا للغرف ومحطات العمل واسأل إن كان ضمن الاتفاق.',
+      },
+      {
+        q: 'ماذا أفعل قبل يوم النقل؟',
+        a: 'أنهِ الجرد، فرّغ الأدراج، صوّر توصيلات الشاشات، وأبلغ إدارة المبنى، وجهّز مسار المصعد والتحميل.',
       },
     ],
     faqEn: [
       {
         q: 'Are weekend moves possible?',
-        a: 'Often yes, depending on provider availability and business schedule.',
+        a: 'It depends on building permits, your schedule, and the mover. Ask about after-hours access and elevators before locking the date.',
+      },
+      {
+        q: 'Who disconnects computers and printers?',
+        a: 'Agree clearly: your IT team or the mover if qualified. Do not leave it to loading time.',
+      },
+      {
+        q: 'How do I protect confidential files in transit?',
+        a: 'Use sealed labeled boxes, limit handlers, and hand them to a named person on arrival.',
+      },
+      {
+        q: 'Is re-setup at the new office included?',
+        a: 'Not automatic. Share a simple floor plan and ask whether staging workstations is in scope.',
+      },
+      {
+        q: 'What should I do before move day?',
+        a: 'Finish the inventory, empty drawers, photo monitor cables, notify building management, and clear the elevator/loading path.',
       },
     ],
     image: '/images/services/office-relocation.jpg',
-    gallery: ['/images/services/office-relocation.jpg'],
   },
   {
     slug: 'storage',
     categorySlug: 'moving-logistics',
-    nameAr: 'خدمات التخزين',
+    nameAr: 'التخزين',
     nameEn: 'Storage Services',
     shortAr: 'دليل عملي لخدمات التخزين: تخزين الأثاث والمقتنيات واختيار مكان مناسب قبل الاتفاق.',
     shortEn: 'A practical storage services guide: store furniture and belongings and choose a suitable place before agreeing.',
@@ -2825,9 +3115,7 @@ export const services: Service[] = [
 <p>Stages: survey and measure → study soil and sun exposure → design and plant selection → prepare soil → irrigation network → plant → lawn and paths → lighting and décor → check irrigation and drainage → hand over with care guidance.</p>`,
     gallery: [
       '/images/services/landscaping.jpg',
-      '/images/hero/hero-13-landscaping-desktop.jpg',
-      '/images/hero/hero-13-landscaping.jpg',
-      '/images/team/team-01-villas.jpg',
+      '/images/team/team-05-corniche.jpg',
     ],
     benefitsAr: [
       'مساحة خارجية أوضح بالتصميم المناسب للمناخ والمساحة',
@@ -2941,28 +3229,102 @@ export const services: Service[] = [
     categorySlug: 'other-services',
     nameAr: 'إدارة المرافق',
     nameEn: 'Facility Management',
-    shortAr: 'إدارة تشغيل وصيانة للمرافق السكنية والتجارية.',
-    shortEn: 'Operations and maintenance for residential and commercial facilities.',
+    shortAr: 'دليل عملي لإدارة المرافق: التشغيل، الصيانة، الجداول، التقارير، وعلامات الجودة قبل الاتفاق.',
+    shortEn: 'A practical facility management guide: operations, maintenance, schedules, reports, and quality signs before you agree.',
     introAr:
-      'صفحات إدارة المرافق موجّهة للمجمعات والمنشآت التي تحتاج تنسيق صيانة مستمر في المملكة العربية السعودية.',
+      'إدارة المرافق تنسّق تشغيل المبنى وصيانته عبر جداول وتقارير، وليست بديلاً عن كل تخصص فني منفرد. في ساعدني هتلاقي النطاق والأنواع والمراحل والأسئلة عند تقييم جهة مستقلة.',
     introEn:
-      'Facility management pages serve compounds and sites needing ongoing maintenance coordination in Saudi Arabia.',
-    typesAr: ['صيانة تشغيلية', 'إشراف فني', 'جداول زيارات', 'تقارير دورية'],
-    typesEn: ['Operations care', 'Technical oversight', 'Visit schedules', 'Periodic reports'],
+      'Facility management coordinates building operations and maintenance through schedules and reports — it is not a substitute for every specialized trade. On Saedni you get scope, types, stages, and questions for evaluating an independent provider.',
+    bodyAr: `<p>إدارة المرافق إطار تشغيلي لمتابعة نظافة وصيانة وأمن وتشغيل الأنظمة المشتركة في مجمع سكني أو مبنى إداري أو منشأة تجارية، مع تصعيد الأعطال للتخصص المناسب عند الحاجة.</p>
+<p>تناسب ملاك المجمعات، لجان السكان، مديري المباني الإدارية، والمنشآت التي تحتاج تنسيق زيارات متعددة بدل التعامل اليومي مع كل عطل بشكل منفصل دون سجل.</p>
+<p><strong>أنواع الأعمال:</strong> صيانة تشغيلية وقائية، إشراف فني وتنسيق مقاولين، جداول زيارات، تقارير دورية، متابعة بلاغات السكان أو المستأجرين، وتنسيق أعمال نظافة أو حدائق ضمن النطاق.</p>
+<p>جودة الإدارة تظهر في نطاق مكتوب، سجل أعطال، أوقات استجابة واضحة للتصنيف، فنيون مناسبون لكل نظام، وعدم خلط «الإشراف» مع إصلاح متخصص بلا تأهيل.</p>
+<p>المراحل: مسح أصول المبنى والأنظمة ← تحديد المشمول والمستثنى ← جدول زيارات وأولويات ← تنفيذ ومتابعة بلاغات ← توثيق وتقارير ← مراجعة دورية لتحسين الخطة.</p>
+<p>تجنّب وعود شاملة بلا حدود، غياب تقارير، تأخير بلاغات حرجة، وإسناد أعمال كهرباء أو مصاعد لغير مختص.</p>
+<p>قبل الاتفاق اسأل: ما الأنظمة المشمولة؟ ما المستثنى؟ كيف تُصنَّف البلاغات؟ هل التقارير شهرية؟ من ينفّذ الإصلاح الفني؟ هل هناك تنسيق مع جهات مرخّصة للمصاعد أو الحريق؟ وكيف تُحتسب الأعمال خارج النطاق؟</p>
+<p>شكل التعاقد (شهري أو حسب الاحتياج) يختلف حسب حجم المبنى؛ ركّز على وضوح النطاق والسجلات قبل أي التزام.</p>`,
+    bodyEn: `<p>Facility management is an operating framework for cleaning, maintenance, security coordination, and shared systems in residential compounds, office buildings, or commercial sites, escalating faults to the right trade when needed.</p>
+<p>It suits compound owners, residents’ committees, office building managers, and sites that need coordinated visits instead of ad-hoc fixes with no log.</p>
+<p>Quality shows in a written scope, fault logs, clear response classes, suitable technicians per system, and not treating “supervision” as licensed specialized repair.</p>
+<p>Stages: survey building assets and systems → define included/excluded scope → set visit schedules and priorities → execute and track tickets → document and report → review the plan periodically.</p>`,
+    gallery: ['/images/services/facility-management.jpg'],
+    benefitsAr: [
+      'سجل أعطال أوضح يقلل تكرار المشكلات دون متابعة',
+      'نطاق مكتوب يفصل الإشراف عن الإصلاح المتخصص',
+      'جداول وتقارير تساعد المالك على اتخاذ قرار',
+      'أسئلة قبل الاتفاق تساعد على تقييم جهة مستقلة',
+    ],
+    benefitsEn: [
+      'A clearer fault log reduces repeat issues without follow-up',
+      'A written scope separates supervision from specialized repair',
+      'Schedules and reports help owners make decisions',
+      'Pre-hire questions help you evaluate an independent provider',
+    ],
+    stepsAr: [
+      'مسح أنظمة المبنى والأصول المشتركة',
+      'كتابة النطاق والمشمول والمستثنى',
+      'وضع جدول زيارات وأولويات البلاغات',
+      'تنفيذ المتابعة اليومية أو الدورية',
+      'تصعيد الإصلاح للتخصص المناسب',
+      'إصدار تقارير دورية',
+      'مراجعة الخطة وتحسينها',
+    ],
+    stepsEn: [
+      'Survey building systems and shared assets',
+      'Write included and excluded scope',
+      'Set visit schedules and ticket priorities',
+      'Run daily or periodic follow-up',
+      'Escalate repairs to the right trade',
+      'Issue periodic reports',
+      'Review and improve the plan',
+    ],
+    typesAr: ['صيانة تشغيلية', 'إشراف فني', 'جداول زيارات', 'تقارير دورية', 'متابعة بلاغات', 'تنسيق نظافة وحدائق'],
+    typesEn: ['Operations care', 'Technical oversight', 'Visit schedules', 'Periodic reports', 'Ticket follow-up', 'Cleaning and garden coordination'],
     faqAr: [
       {
-        q: 'هل الخدمة شهرية فقط؟',
-        a: 'يمكن الاتفاق على نطاق شهري أو حسب الاحتياج التشغيلي.',
+        q: 'هل إدارة المرافق شهرية فقط؟',
+        a: 'ليس بالضرورة. يمكن أن يكون النطاق شهريًا أو مرتبطًا بحجم التشغيل. المهم وضوح الزيارات والتقارير وما خارج النطاق.',
+      },
+      {
+        q: 'هل تشمل إصلاح المصاعد؟',
+        a: 'المتابعة والتنسيق قد تدخل ضمن الإدارة، أما الإصلاح الفني فيحتاج جهة متخصصة مؤهلة. اسأل كيف يُدار التصعيد.',
+      },
+      {
+        q: 'ما الفرق بينها وبين صيانة عقار تجاري؟',
+        a: 'الصيانة تركز على أعمال الفحص والإصلاح؛ الإدارة أوسع: تنسيق تشغيل، بلاغات، جداول، وتقارير عبر عدة بنود.',
+      },
+      {
+        q: 'هل تغني عن التعاقد مع سباك أو كهربائي؟',
+        a: 'لا. الإدارة تنسّق وتتابع؛ التنفيذ المتخصص يبقى حسب النظام والعطل والتأهيل المطلوب.',
+      },
+      {
+        q: 'ماذا أطلب في التقرير الدوري؟',
+        a: 'ملخص بلاغات مفتوحة ومغلقة، أعمال منفذة، ملاحظات سلامة ظاهرة، وما يحتاج قرارًا من المالك.',
       },
     ],
     faqEn: [
       {
-        q: 'Is this monthly only?',
-        a: 'Scope can be monthly or matched to operational needs.',
+        q: 'Is facility management monthly only?',
+        a: 'Not necessarily. Scope can be monthly or matched to operations. What matters is clear visits, reports, and out-of-scope rules.',
+      },
+      {
+        q: 'Does it include elevator repair?',
+        a: 'Coordination may be in scope; technical repair needs a qualified specialist. Ask how escalation works.',
+      },
+      {
+        q: 'How is it different from commercial maintenance?',
+        a: 'Maintenance focuses on inspect-and-repair work; facility management is broader: operations coordination, tickets, schedules, and reports across items.',
+      },
+      {
+        q: 'Does it replace hiring a plumber or electrician?',
+        a: 'No. Management coordinates and follows up; specialized execution still depends on the system, fault, and required qualifications.',
+      },
+      {
+        q: 'What should a periodic report include?',
+        a: 'Open and closed tickets, completed work, visible safety notes, and items that need an owner decision.',
       },
     ],
     image: '/images/services/facility-management.jpg',
-    gallery: ['/images/services/facility-management.jpg'],
   },
   {
     slug: 'commercial-maintenance',

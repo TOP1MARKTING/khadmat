@@ -22,8 +22,21 @@ const servicesSrc = readFileSync(resolve(root, 'src/data/services.ts'), 'utf8')
 const citiesSrc = readFileSync(resolve(root, 'src/data/cities.ts'), 'utf8')
 const blogSrc = readFileSync(resolve(root, 'src/data/blog.ts'), 'utf8')
 
-/** Sitemap: only guides with enough body copy. */
-const servicesForSitemap = extractServices(servicesSrc, { minBody: 120 })
+/** Hold newly completed guides for a separate sitemap publish review. */
+const SITEMAP_CONTENT_HOLD = new Set([
+  'office-cleaning',
+  'upholstery-cleaning',
+  'furniture-assembly',
+  'office-relocation',
+  'facility-management',
+])
+
+/** Full eligible guides (for meta catalog / prerender). */
+const servicesEligible = extractServices(servicesSrc, { minBody: 120 })
+/** Sitemap: eligible guides minus held slugs awaiting separate publish review. */
+const servicesForSitemap = servicesEligible.filter(
+  (s) => !SITEMAP_CONTENT_HOLD.has(s.slug),
+)
 /** Routing allowlist: every real service detail page must not hard-404. */
 const servicesForRoutes = extractServices(servicesSrc, { minBody: 0 })
 const cities = extractCities(citiesSrc)
@@ -84,7 +97,7 @@ ${body}
 writeFileSync(resolve(root, 'public/sitemap.xml'), xml, 'utf8')
 
 const catalog = buildSeoCatalog({
-  services: servicesForSitemap,
+  services: servicesEligible,
   cities,
   articles,
 })

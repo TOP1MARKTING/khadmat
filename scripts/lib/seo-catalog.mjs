@@ -61,11 +61,20 @@ export function extractCities(src) {
     const slug = part.match(/^\s*slug:\s*'([^']+)'/)?.[1]
     const nameAr = field(part, 'nameAr')
     const nameEn = field(part, 'nameEn')
+    const regionSlug = field(part, 'regionSlug')
     const descriptionAr = field(part, 'descriptionAr')
     const descriptionEn = field(part, 'descriptionEn')
     const image = field(part, 'image')
     if (slug && nameAr && descriptionAr.length > 20) {
-      out.push({ slug, nameAr, nameEn, descriptionAr, descriptionEn, image })
+      out.push({
+        slug,
+        nameAr,
+        nameEn,
+        regionSlug,
+        descriptionAr,
+        descriptionEn,
+        image,
+      })
     }
   }
   return out
@@ -130,9 +139,9 @@ export function buildSeoCatalog({ services, cities, articles }) {
     },
     '/about': {
       path: '/about',
-      title: 'عن ساعدني | منصة المهن من Top1Markting',
+      title: 'عن ساعدني | أدلة المهن والخدمات في السعودية',
       description:
-        'ساعدني منصة سعودية لأدلة المهن والخدمات — فكرة وتصميم وإشراف Top1Markting. معلومة واضحة بدون أسماء شركات وهمية.',
+        'ساعدني منصة سعودية لأدلة المهن والخدمات — معلومة واضحة عن نطاق الشغل قبل التنفيذ، مع صفحات مدن ضمن المرحلة المعرفية.',
       image: DEFAULT_IMAGE,
       robots: 'index,follow',
       type: 'website',
@@ -148,9 +157,9 @@ export function buildSeoCatalog({ services, cities, articles }) {
     },
     '/blog': {
       path: '/blog',
-      title: 'المقالات | ساعدني',
+      title: 'المدونة | مقالات المهن والخدمات | ساعدني',
       description:
-        'مقالات عملية عن البلاط والسباكة والمقاولات والنقل في المملكة العربية السعودية.',
+        'مدونة ساعدني لمقالات المهن والخدمات في السعودية. المقالات تُضاف عند النشر — ويمكنك الآن تصفّح أدلة المهن وصفحات المدن.',
       image: DEFAULT_IMAGE,
       robots: articles.length ? 'index,follow' : 'noindex,follow',
       type: 'website',

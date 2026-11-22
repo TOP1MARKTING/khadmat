@@ -85,5 +85,46 @@ export default function middleware(request) {
     return fetch(preview)
   }
 
+  // Local /sa/* and /admin: serve SPA shell with noindex and no leftover homepage canonical/og:url.
+  if (pathname.startsWith('/sa/') || pathname.startsWith('/admin')) {
+    try {
+      const indexRes = await fetch(new URL('/index.html', url.origin))
+      if (indexRes.ok) {
+        let html = await indexRes.text()
+        html = html.replace(
+          /<meta\s+name=["']robots["'][^>]*>/i,
+          '<meta name="robots" content="noindex,nofollow" />',
+        )
+        if (!/name=["']robots["']/i.test(html)) {
+          html = html.replace(
+            /<\/head>/i,
+            '<meta name="robots" content="noindex,nofollow" />\n</head>',
+          )
+        }
+        html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/gi, '')
+        html = html.replace(/<meta\s+property=["']og:url["'][^>]*>/gi, '')
+        html = html.replace(
+          /<title>[\s\S]*?<\/title>/i,
+          pathname.startsWith('/admin')
+            ? '<title>إدارة المحتوى | ساعدني</title>'
+            : '<title>دليل محلي | ساعدني</title>',
+        )
+        return new Response(html, {
+          status: 200,
+          headers: {
+            'content-type': 'text/html; charset=utf-8',
+            'x-robots-tag': 'noindex, nofollow',
+            'cache-control': 'public, max-age=0, must-revalidate',
+          },
+        })
+      }
+    } catch {
+      // fall through
+    }
+    const res = next()
+    res.headers.set('x-robots-tag', 'noindex, nofollow')
+    return res
+  }
+
   return next()
 }

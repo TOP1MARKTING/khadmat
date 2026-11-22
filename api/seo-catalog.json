@@ -25,8 +25,8 @@
   },
   "/about": {
     "path": "/about",
-    "title": "عن ساعدني | منصة المهن من Top1Markting",
-    "description": "ساعدني منصة سعودية لأدلة المهن والخدمات — فكرة وتصميم وإشراف Top1Markting. معلومة واضحة بدون أسماء شركات وهمية.",
+    "title": "عن ساعدني | أدلة المهن والخدمات في السعودية",
+    "description": "ساعدني منصة سعودية لأدلة المهن والخدمات — معلومة واضحة عن نطاق الشغل قبل التنفيذ، مع صفحات مدن ضمن المرحلة المعرفية.",
     "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
     "robots": "index,follow",
     "type": "website"
@@ -41,8 +41,8 @@
   },
   "/blog": {
     "path": "/blog",
-    "title": "المقالات | ساعدني",
-    "description": "مقالات عملية عن البلاط والسباكة والمقاولات والنقل في المملكة العربية السعودية.",
+    "title": "المدونة | مقالات المهن والخدمات | ساعدني",
+    "description": "مدونة ساعدني لمقالات المهن والخدمات في السعودية. المقالات تُضاف عند النشر — ويمكنك الآن تصفّح أدلة المهن وصفحات المدن.",
     "image": "https://www.saedniksa.com/images/hero/hero-11-contracting-desktop.jpg",
     "robots": "noindex,follow",
     "type": "website"
@@ -175,6 +175,22 @@
     "robots": "index,follow",
     "type": "website"
   },
+  "/services/office-cleaning": {
+    "path": "/services/office-cleaning",
+    "title": "تنظيف المكاتب | دليل العميل | ساعدني",
+    "description": "دليل عملي لتنظيف المكاتب والمنشآت: النطاق، الجداول، التجهيز، وعلامات الجودة قبل الاتفاق مع جهة مستقلة.",
+    "image": "https://www.saedniksa.com/images/services/office-cleaning.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/upholstery-cleaning": {
+    "path": "/services/upholstery-cleaning",
+    "title": "تنظيف المفروشات | دليل العميل | ساعدني",
+    "description": "دليل عملي لتنظيف الكنب والسجاد والمفروشات: الأنواع، التجهيز، الجفاف، وعلامات الجودة قبل الاتفاق.",
+    "image": "https://www.saedniksa.com/images/services/upholstery-cleaning.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
   "/services/water-tank-cleaning": {
     "path": "/services/water-tank-cleaning",
     "title": "تنظيف خزانات المياه | دليل العميل | ساعدني",
@@ -215,9 +231,25 @@
     "robots": "index,follow",
     "type": "website"
   },
+  "/services/furniture-assembly": {
+    "path": "/services/furniture-assembly",
+    "title": "فك وتركيب الأثاث | دليل العميل | ساعدني",
+    "description": "دليل عملي لفك وتركيب غرف النوم والمكاتب والخزائن: التجهيز، المراحل، وعلامات الجودة قبل الاتفاق.",
+    "image": "https://www.saedniksa.com/images/services/furniture-assembly.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/office-relocation": {
+    "path": "/services/office-relocation",
+    "title": "نقل المكاتب | دليل العميل | ساعدني",
+    "description": "دليل عملي لنقل المكاتب والمنشآت: التخطيط، الأجهزة، إعادة الترتيب، وعلامات الجودة قبل الاتفاق.",
+    "image": "https://www.saedniksa.com/images/services/office-relocation.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
   "/services/storage": {
     "path": "/services/storage",
-    "title": "خدمات التخزين | دليل العميل | ساعدني",
+    "title": "التخزين | دليل العميل | ساعدني",
     "description": "دليل عملي لخدمات التخزين: تخزين الأثاث والمقتنيات واختيار مكان مناسب قبل الاتفاق.",
     "image": "https://www.saedniksa.com/images/services/storage.jpg",
     "robots": "index,follow",
@@ -228,6 +260,14 @@
     "title": "تنسيق الحدائق | دليل العميل | ساعدني",
     "description": "دليل عملي لتنسيق الحدائق: التصميم والزراعة والري والعناية بالمساحات الخارجية قبل الاتفاق.",
     "image": "https://www.saedniksa.com/images/services/landscaping.jpg",
+    "robots": "index,follow",
+    "type": "website"
+  },
+  "/services/facility-management": {
+    "path": "/services/facility-management",
+    "title": "إدارة المرافق | دليل العميل | ساعدني",
+    "description": "دليل عملي لإدارة المرافق: التشغيل، الصيانة، الجداول، التقارير، وعلامات الجودة قبل الاتفاق.",
+    "image": "https://www.saedniksa.com/images/services/facility-management.jpg",
     "robots": "index,follow",
     "type": "website"
   },

@@ -22,6 +22,7 @@ export function LocationsPage() {
     <div className="section-pad">
       <div className="container-page">
         <SectionHeading
+          as="h1"
           eyebrow={t('التغطية المحلية', 'Local coverage')}
           title={t('اختر مدينتك', 'Choose your city')}
           description={t(

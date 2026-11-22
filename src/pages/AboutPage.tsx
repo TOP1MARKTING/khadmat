@@ -4,7 +4,6 @@ import {
   CheckCircle2,
   HardHat,
   MessageCircle,
-  Phone,
   ShieldCheck,
   Sparkles,
   XCircle,
@@ -66,8 +65,8 @@ const doItems = [
     en: 'We build trade guides that help customers before work starts.',
   },
   {
-    ar: 'المحتوى المحلي يظهر عبر المقالات عند إضافتها — مش قوائم مدن منفصلة.',
-    en: 'Local context appears through articles when added — not separate city pickers.',
+    ar: 'نوفّر صفحات مدن وأدلة محلية ضمن المرحلة المعرفية الحالية.',
+    en: 'We provide city pages and local guides within the current knowledge phase.',
   },
   {
     ar: 'نبني صفحات مفيدة للبحث — للمستخدم أولًا.',
@@ -94,12 +93,12 @@ export function AboutPage() {
   const { t, isAr } = useLanguage()
 
   usePageMeta({
-    titleAr: 'عن ساعدني | منصة المهن من Top1Markting',
-    titleEn: 'About Saedni | Trades platform by Top1Markting',
+    titleAr: 'عن ساعدني | أدلة المهن والخدمات في السعودية',
+    titleEn: 'About Saedni | Trade guides in Saudi Arabia',
     descriptionAr:
-      'ساعدني منصة سعودية لأدلة المهن والخدمات — فكرة وتصميم وإشراف Top1Markting. معلومة واضحة بدون أسماء شركات وهمية.',
+      'ساعدني منصة سعودية لأدلة المهن والخدمات — معلومة واضحة عن نطاق الشغل قبل التنفيذ، مع صفحات مدن ضمن المرحلة المعرفية.',
     descriptionEn:
-      'Saedni is a Saudi trades-guide platform — idea, design, and supervision by Top1Markting. Clear information without fake company names.',
+      'Saedni is a Saudi trades-guide platform — clear information about work scope before execution, with city pages in the knowledge phase.',
     canonicalPath: '/about',
   })
 
@@ -356,68 +355,14 @@ export function AboutPage() {
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
             {t(
-              'بنكتب عشان الباحث يفهم التجهيز والأخطاء الشائعة ونطاق الشغل. المقالات تُضاف عند الحاجة، والمحتوى المحلي يظهر من خلالها. أي منشأة أو مزوّد خدمة يُضاف فقط بعد اتفاق واضح.',
-              'We write so searchers understand prep, common mistakes, and scope of work. Articles are added when needed, and local context appears through them. Any business or provider is added only after a clear agreement.',
+              'بنكتب عشان الباحث يفهم التجهيز والأخطاء الشائعة ونطاق الشغل. صفحات المدن والأدلة المحلية جزء من المرحلة المعرفية الحالية، والمقالات تُضاف عند الحاجة. أي منشأة تُذكر فقط بعد اتفاق واضح.',
+              'We write so searchers understand prep, common mistakes, and scope of work. City pages and local guides are part of the current knowledge phase, and articles are added when needed. Any business is mentioned only after a clear agreement.',
             )}
           </p>
         </div>
       </section>
 
-      {/* Top1Markting */}
-      <section className="border-b border-line bg-ink text-white">
-        <div className="container-page section-pad">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-2xl">
-              <p className="text-[11px] font-bold tracking-[0.18em] text-sand uppercase">
-                Top1Markting
-              </p>
-              <h2 className="mt-2 text-xl font-extrabold sm:text-2xl">
-                {t(
-                  'فكرة وتصميم وتنفيذ وإشراف الموقع',
-                  'Idea, design, build & supervision of this site',
-                )}
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-white/70">
-                {t(
-                  'منصة ساعدني من فكرة وتصميم وتنفيذ وإشراف شركة Top1Markting — وكالة رقمية تخدم السعودية والإمارات.',
-                  'Saedni is the idea, design, build, and supervision of Top1Markting — a digital agency serving Saudi Arabia and the UAE.',
-                )}
-              </p>
-              <p className="mt-3 text-sm font-bold text-sand" dir="ltr">
-                +966 54 988 1368 · +971 50 766 2114
-              </p>
-            </div>
-            <div className="flex flex-col gap-2.5 sm:flex-row">
-              <a
-                href="https://top1markting.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-white px-4 text-sm font-extrabold text-[#1a2744] transition-transform hover:scale-[1.02]"
-              >
-                <img
-                  src="/top1markting-logo.png"
-                  alt="Top1Markting"
-                  className="h-7 w-auto object-contain"
-                />
-                <span>
-                  Top<span className="text-[#f0a11a]">1</span>Markting
-                </span>
-              </a>
-              <a
-                href="https://wa.me/966549881368"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/25 bg-white/10 px-4 text-sm font-extrabold text-white backdrop-blur-md hover:bg-white/16"
-              >
-                <Phone className="size-4" />
-                {t('واتساب', 'WhatsApp')}
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
+      {/* CTA — Saedni support path */}
       <section className="section-pad">
         <div className="container-page flex flex-col items-start justify-between gap-6 rounded-3xl border border-line bg-surface p-6 shadow-[var(--shadow-lift)] sm:flex-row sm:items-center sm:p-8">
           <div>
@@ -426,8 +371,8 @@ export function AboutPage() {
             </h2>
             <p className="mt-2 max-w-xl text-sm text-muted">
               {t(
-                'تصفّح المهن، أو راسل دعم ساعدني لاقتراح محتوى أو تصحيح معلومة.',
-                'Browse trades, or message Saedni support to suggest content or correct a detail.',
+                'تصفّح المهن والمدن، أو راسل دعم ساعدني لاقتراح محتوى أو تصحيح معلومة.',
+                'Browse trades and cities, or message Saedni support to suggest content or correct a detail.',
               )}
             </p>
           </div>
