@@ -31,6 +31,9 @@ export const HERO_SLIDES: HeroSlide[] = [
   { mobile: '/images/hero/hero-18-moving.jpg', desktop: '/images/hero/hero-18-moving.jpg', tone: 'mid' },
   { mobile: '/images/hero/hero-19-maintenance.jpg', desktop: '/images/hero/hero-19-maintenance.jpg', tone: 'bright' },
   { mobile: '/images/hero/hero-20-window-clean.jpg', desktop: '/images/hero/hero-20-window-clean.jpg', tone: 'mid' },
+  { mobile: '/images/hero/hero-21-upholstery.jpg', desktop: '/images/hero/hero-21-upholstery.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-22-office-clean.jpg', desktop: '/images/hero/hero-22-office-clean.jpg', tone: 'mid' },
+  { mobile: '/images/hero/hero-23-ac.jpg', desktop: '/images/hero/hero-23-ac.jpg', tone: 'bright' },
 ]
 
 const INTERVAL_MS = 2800
