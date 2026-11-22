@@ -60,7 +60,7 @@ export function AdminLoginPage() {
     <div className="grid min-h-dvh lg:grid-cols-2">
       <section className="relative hidden overflow-hidden lg:flex lg:flex-col lg:justify-between">
         <img
-          src="/images/hero/hero-11-contracting-desktop.jpg"
+          src="/images/hero/hero-07-renovation.jpg"
           alt=""
           className="absolute inset-0 size-full object-cover"
           aria-hidden

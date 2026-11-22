@@ -25,7 +25,7 @@ export function ArticleCard({ article }: { article: ArticleCardData }) {
     <article className="card-work group">
       <Link to={`/blog/${article.slug}`} className="block overflow-hidden border-b-2 border-accent/40">
         <img
-          src={article.image || '/images/hero/hero-01-plumbing-desktop.jpg'}
+          src={article.image || '/images/hero/hero-01-plumbing.jpg'}
           alt={article.titleAr}
           className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           loading="lazy"

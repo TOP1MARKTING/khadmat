@@ -9,26 +9,21 @@ type HeroSlide = {
   tone: HeroTone
 }
 
-/** Brand trade photos — landscape desktop images used on phone stacked hero + laptop */
+/** Wide Saudi trade photos — same asset for phone strip + laptop full-bleed */
 export const HERO_SLIDES: HeroSlide[] = [
-  { mobile: '/images/hero/hero-01-plumbing.jpg', desktop: '/images/hero/hero-01-plumbing-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-02-finishing.jpg', desktop: '/images/hero/hero-02-finishing-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-03-tiling.jpg', desktop: '/images/hero/hero-03-tiling-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-04-waterproofing.jpg', desktop: '/images/hero/hero-04-waterproofing-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-05-electrical.jpg', desktop: '/images/hero/hero-05-electrical-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-06-ac.jpg', desktop: '/images/hero/hero-06-ac-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-07-painting.jpg', desktop: '/images/hero/hero-07-painting-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-08-moving.jpg', desktop: '/images/hero/hero-08-moving-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-09-cleaning.jpg', desktop: '/images/hero/hero-09-cleaning-desktop.jpg', tone: 'mid' },
-  { mobile: '/images/hero/hero-10-gypsum.jpg', desktop: '/images/hero/hero-10-gypsum-desktop.jpg', tone: 'mid' },
-  { mobile: '/images/hero/hero-11-contracting.jpg', desktop: '/images/hero/hero-11-contracting-desktop.jpg', tone: 'mid' },
-  { mobile: '/images/hero/hero-12-marble.jpg', desktop: '/images/hero/hero-12-marble-desktop.jpg', tone: 'bright' },
-  { mobile: '/images/hero/hero-13-landscaping.jpg', desktop: '/images/hero/hero-13-landscaping-desktop.jpg', tone: 'mid' },
-  { mobile: '/images/hero/hero-14-leak.jpg', desktop: '/images/hero/hero-14-leak-desktop.jpg', tone: 'mid' },
-  { mobile: '/images/hero/hero-15-renovation.jpg', desktop: '/images/hero/hero-15-renovation-desktop.jpg', tone: 'mid' },
+  { mobile: '/images/hero/hero-01-plumbing.jpg', desktop: '/images/hero/hero-01-plumbing.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-02-painting.jpg', desktop: '/images/hero/hero-02-painting.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-03-tiling.jpg', desktop: '/images/hero/hero-03-tiling.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-04-waterproofing.jpg', desktop: '/images/hero/hero-04-waterproofing.jpg', tone: 'mid' },
+  { mobile: '/images/hero/hero-05-gypsum.jpg', desktop: '/images/hero/hero-05-gypsum.jpg', tone: 'mid' },
+  { mobile: '/images/hero/hero-06-marble.jpg', desktop: '/images/hero/hero-06-marble.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-07-renovation.jpg', desktop: '/images/hero/hero-07-renovation.jpg', tone: 'mid' },
+  { mobile: '/images/hero/hero-08-finishing.jpg', desktop: '/images/hero/hero-08-finishing.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-09-cleaning.jpg', desktop: '/images/hero/hero-09-cleaning.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-10-appliance.jpg', desktop: '/images/hero/hero-10-appliance.jpg', tone: 'bright' },
 ]
 
-const INTERVAL_MS = 2000
+const INTERVAL_MS = 2800
 
 const desktopOverlay =
   'bg-[linear-gradient(180deg,rgba(23,25,22,0.45)_0%,rgba(23,25,22,0.2)_35%,rgba(23,25,22,0.55)_70%,rgba(23,25,22,0.88)_100%)]'

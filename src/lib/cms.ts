@@ -276,7 +276,7 @@ export function emptyService(categorySlug = 'home-maintenance'): CmsService {
     typesEn: [],
     faqAr: [],
     faqEn: [],
-    image: '/images/hero/hero-01-plumbing-desktop.jpg',
+    image: '/images/hero/hero-01-plumbing.jpg',
     imageAltAr: '',
     metaTitleAr: '',
     metaDescriptionAr: '',
