@@ -72,8 +72,8 @@ export function BlogPage() {
             'Practical articles about trades across Saudi Arabia',
           )}
           description={t(
-            'محتوى يفيد العميل أولًا عن المقاولات والبلاط والسباكة والنقل وغيرها — ولاحقًا يمكن إضافة اسم وشعار شركة عند الاتفاق.',
-            'Customer-first content on contracting, tiling, plumbing, moving and more — a company name and logo can be added later under agreement.',
+            'محتوى عملي عن المقاولات والبلاط والسباكة والنقل وغيرها في المملكة — يساعدك تفهم الشغل قبل التنفيذ.',
+            'Practical content on contracting, tiling, plumbing, moving and more in Saudi Arabia — understand the work before you start.',
           )}
         />
 

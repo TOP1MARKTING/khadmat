@@ -12,9 +12,6 @@ import { ServiceDetailPage } from '@/pages/ServiceDetailPage'
 import { ServiceLocationPage } from '@/pages/ServiceLocationPage'
 import { CityPage } from '@/pages/CityPage'
 import { LocationsPage } from '@/pages/LocationsPage'
-import { AdvertisePage } from '@/pages/AdvertisePage'
-import { RentAPage } from '@/pages/RentAPage'
-import { AssetDetailPage } from '@/pages/AssetDetailPage'
 import { AboutPage } from '@/pages/AboutPage'
 import { ContactPage } from '@/pages/ContactPage'
 import { BlogPage } from '@/pages/BlogPage'
@@ -64,9 +61,7 @@ export default function App() {
                   />
                   <Route path="locations" element={<LocationsPage />} />
                   <Route path="locations/:citySlug" element={<CityPage />} />
-                  <Route path="advertise-with-us" element={<AdvertisePage />} />
-                  <Route path="rent-a-page" element={<RentAPage />} />
-                  <Route path="rent-a-page/:assetId" element={<AssetDetailPage />} />
+                  {/* Commercial Phase-2 routes kept as page files; public access blocked (404 middleware + no route). */}
                   <Route path="blog" element={<BlogPage />} />
                   <Route path="blog/:articleSlug" element={<BlogArticlePage />} />
                   <Route path="about" element={<AboutPage />} />

@@ -84,9 +84,9 @@ export function HomePage() {
     titleAr: 'ساعدني | منصة المعلومات عن المهن والخدمات المحلية في السعودية',
     titleEn: 'Saedni | Local trades & services information platform in Saudi Arabia',
     descriptionAr:
-      'تحتاج خدمة لمنزلك؟ ساعدني دليلك للتعرف على المهن والخدمات المحلية في المملكة — افهم طبيعة العمل ونطاق الخدمة قبل التنفيذ.',
+      'ساعدني مرجع معرفي للمهن والخدمات في المملكة العربية السعودية — أدلة عملية تساعدك تفهم طبيعة الشغل ونطاقه قبل التنفيذ.',
     descriptionEn:
-      'Need a home service? Saedni is your guide to local trades and services in Saudi Arabia — understand the work and scope before you start.',
+      'Saedni is a knowledge reference for trades and services in Saudi Arabia — practical guides to understand the work and scope before you start.',
     canonicalPath: '/',
   })
 

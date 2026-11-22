@@ -86,19 +86,15 @@ export function ContactForm({ intent = 'general', defaultService, defaultCity }:
         </div>
       </div>
 
-      {intent === 'rental' && (
-        <div>
-          <Label htmlFor="business">{t('اسم المنشأة', 'Business name')}</Label>
-          <Input id="business" name="business" placeholder={t('اسم شركتك أو مؤسستك', 'Your company name')} />
-        </div>
-      )}
-
       <div>
         <Label htmlFor="type">{t('نوع الطلب', 'Request type')}</Label>
-        <Select id="type" name="type" defaultValue={intent}>
+        <Select
+          id="type"
+          name="type"
+          defaultValue={intent === 'rental' ? 'general' : intent}
+        >
           <option value="general">{t('استفسار عام', 'General inquiry')}</option>
-          <option value="service">{t('طلب خدمة', 'Service request')}</option>
-          <option value="rental">{t('تأجير صفحة', 'Page rental')}</option>
+          <option value="service">{t('سؤال عن دليل مهنة', 'Question about a trade guide')}</option>
         </Select>
       </div>
 

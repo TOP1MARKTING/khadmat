@@ -167,8 +167,8 @@ export function AboutPage() {
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
               {t(
-                'أي شركة تظهر لاحقًا باسم وشعار واضح فقط بعد اتفاق. والمحتوى المحلي يظهر عبر المقالات عند إضافتها.',
-                'Any company appears later with a clear name and logo only after agreement. Local context appears through articles when they are added.',
+                'المرحلة الحالية مرجع معرفي فقط: أدلة مهن وخدمات ومقالات عملية. بدون إعلانات أو دليل حجوزات لمقدمي الخدمات.',
+                'This phase is knowledge-only: trade guides, services, and practical articles. No ads and no booking directory for providers.',
               )}
             </p>
           </div>

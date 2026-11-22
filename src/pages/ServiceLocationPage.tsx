@@ -1,12 +1,9 @@
 import { Link, useParams } from 'react-router-dom'
-import { MessageCircle } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { usePageMeta } from '@/hooks/usePageMeta'
 import { getCity, cities } from '@/data/cities'
 import { getCategory, getRelatedServices, getService } from '@/data/services'
-import { digitalAssets } from '@/data/assets'
 import { getArticlesForLocation } from '@/data/blog'
-import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { ContactForm } from '@/components/forms/ContactForm'
 import { RelatedArticles } from '@/components/blog/RelatedArticles'
@@ -19,9 +16,9 @@ function locationIntro(
   isAr: boolean,
 ) {
   if (isAr) {
-    return `صفحة محلية عن ${serviceName} في ${cityName} ضمن ${regionName}. نبني محتوى ومقالات مفيدة للمهنة أولًا — من غير اسم شركة وهمي. بيانات أي منشأة تُضاف فقط بعد تأجير حصري موثّق.`
+    return `دليل معرفي عن ${serviceName} في ${cityName} ضمن ${regionName}. الصفحة تشرح نطاق المهنة والسياق المحلي لتساعدك تفهم الشغل قبل التنفيذ.`
   }
-  return `A local page about ${serviceName} in ${cityName}, ${regionName}. We build useful trade content and articles first — with no fake company name. Any business details are added only after a verified exclusive rental.`
+  return `A knowledge guide about ${serviceName} in ${cityName}, ${regionName}. This page explains the trade scope and local context so you understand the work before you start.`
 }
 
 export function ServiceLocationPage() {
@@ -33,11 +30,6 @@ export function ServiceLocationPage() {
   const related = service ? getRelatedServices(service.slug, 3) : []
   const articles =
     service && city ? getArticlesForLocation(service.slug, city.slug) : []
-  const asset = digitalAssets.find(
-    (a) => a.serviceSlug === service?.slug && a.citySlug === city?.slug,
-  )
-  /** Company details only when the page is actually rented — not while still for rent. */
-  const hasRentedPartner = asset?.status === 'rented'
 
   const valid =
     city && service && city.regionSlug === regionSlug
@@ -222,75 +214,23 @@ export function ServiceLocationPage() {
 
           <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
             <div className="rounded-md border border-line bg-surface p-5 shadow-[var(--shadow-soft)]">
-              {hasRentedPartner ? (
-                <>
-                  <Badge tone="success">{t('شريك مؤجّر على الصفحة', 'Rented partner on this page')}</Badge>
-                  <h2 className="mt-3 text-lg font-semibold">
-                    {t('تواصل بشأن الخدمة', 'Contact about this service')}
-                  </h2>
-                  <p className="mt-2 text-sm text-muted">
-                    {t(
-                      'تم ربط منشأة مؤهلة بهذه الصفحة بعد اتفاق تأجير. النموذج واجهة فقط حاليًا.',
-                      'A qualified business is linked after a rental agreement. Frontend-only form for now.',
-                    )}
-                  </p>
-                  <div className="mt-4">
-                    <ContactForm
-                      intent="service"
-                      defaultCity={cityName}
-                      defaultService={serviceName}
-                    />
-                  </div>
-                  <Button variant="whatsapp" className="mt-3 w-full" type="button">
-                    <MessageCircle className="size-4" />
-                    {t('واتساب الشريك (تجريبي)', 'Partner WhatsApp (demo)')}
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Badge tone="sand">{t('محتوى للعميل أولًا', 'Customer content first')}</Badge>
-                  <h2 className="mt-3 text-lg font-semibold">
-                    {t('محتوى المهنة أولًا', 'Trade content first')}
-                  </h2>
-                  <p className="mt-2 text-sm text-muted">
-                    {t(
-                      'الصفحة والمقالات بتتبني عشان تفيد الباحث. اسم وشعار أي شركة يظهران لاحقًا عند اتفاق واضح — مش أسماء فاضية.',
-                      'The page and articles help searchers first. A company name and logo appear later under a clear agreement — never empty placeholder brands.',
-                    )}
-                  </p>
-                  <div className="mt-4">
-                    <ContactForm
-                      intent="general"
-                      defaultCity={cityName}
-                      defaultService={serviceName}
-                    />
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="rounded-md border border-dashed border-sand bg-cream p-5">
-              <p className="text-xs font-medium tracking-wide text-brand">
-                {t('للمنشآت', 'For businesses')}
-              </p>
-              <h2 className="mt-2 font-semibold text-ink">
-                {t(
-                  'عندك نشاط في نفس المهنة داخل هذه المدينة؟',
-                  'Do you operate in this trade in this city?',
-                )}
+              <Badge tone="sand">{t('مرجع معرفي', 'Knowledge guide')}</Badge>
+              <h2 className="mt-3 text-lg font-semibold">
+                {t('سؤال عن هذا الدليل؟', 'Question about this guide?')}
               </h2>
               <p className="mt-2 text-sm text-muted">
                 {t(
-                  'الصفحة والمقالات للجمهور أولًا. فرص التعاون مع المنشآت تُناقش بشكل منفصل.',
-                  'The page and articles serve the public first. Business collaboration is discussed separately.',
+                  'تواصل مع منصة ساعدني بخصوص المحتوى أو استفسار عام — مش دليل حجوزات لمقدمي خدمات.',
+                  'Contact the Saedni platform about the content or a general question — this is not a booking directory for providers.',
                 )}
               </p>
-              <Link
-                to="/advertise-with-us"
-                className="mt-4 inline-block text-sm font-medium text-brand hover:underline"
-              >
-                {t('تواصل للشركات', 'Business contact')}
-              </Link>
+              <div className="mt-4">
+                <ContactForm
+                  intent="general"
+                  defaultCity={cityName}
+                  defaultService={serviceName}
+                />
+              </div>
             </div>
           </aside>
         </div>

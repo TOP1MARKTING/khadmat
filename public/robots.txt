@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /advertise-with-us
+Disallow: /rent-a-page
 
 Sitemap: https://www.saedniksa.com/sitemap.xml
