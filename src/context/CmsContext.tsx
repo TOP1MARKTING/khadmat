@@ -91,10 +91,6 @@ function mapArticles(docs: QueryDocumentSnapshot[]): CmsArticle[] {
   })
 }
 
-function publicOnlyServices(list: CmsService[]) {
-  return dedupeBySlug(list.filter((s) => s.status === 'published' && s.slug))
-}
-
 function publicOnlyArticles(list: CmsArticle[]) {
   return dedupeBySlug(list.filter((a) => a.status === 'published' && a.slug))
 }
