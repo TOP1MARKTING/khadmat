@@ -1,7 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/((?!google[^/]+\\.html$).*)",
+      "source": "/googlefcf192a19b3a8b5c.html",
+      "destination": "/googlefcf192a19b3a8b5c.html"
+    },
+    {
+      "source": "/((?!googlefcf192a19b3a8b5c\\.html|robots\\.txt|sitemap\\.xml).*)",
       "destination": "/index.html"
     }
   ]

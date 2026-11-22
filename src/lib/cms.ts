@@ -309,6 +309,20 @@ export function articleHasCompany(article: Pick<CmsArticle, 'companyName'>) {
   return Boolean(article.companyName?.trim())
 }
 
+/** One public guide per slug — keeps counts aligned with openable /services/:slug links. */
+export function dedupeBySlug<T extends { slug: string; updatedAt?: string }>(list: T[]): T[] {
+  const map = new Map<string, T>()
+  for (const item of list) {
+    const slug = item.slug?.trim()
+    if (!slug) continue
+    const prev = map.get(slug)
+    if (!prev || (item.updatedAt || '') >= (prev.updatedAt || '')) {
+      map.set(slug, item)
+    }
+  }
+  return [...map.values()]
+}
+
 /** Remove undefined fields so cloud writes accept the payload. */
 export function normalizeForFirestore<T>(value: T): T {
   if (Array.isArray(value)) {

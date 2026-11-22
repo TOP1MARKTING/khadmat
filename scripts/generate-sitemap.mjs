@@ -69,7 +69,16 @@ const articleSlugs = extractPublishedArticleSlugs(
   readFileSync(resolve(root, 'src/data/blog.ts'), 'utf8'),
 )
 
-const staticPaths = ['/', '/services', '/locations', '/about', '/contact', '/blog']
+const staticPaths = [
+  '/',
+  '/services',
+  '/locations',
+  '/about',
+  '/contact',
+  '/blog',
+  '/privacy',
+  '/terms',
+]
 
 const urls = [
   ...staticPaths,

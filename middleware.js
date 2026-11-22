@@ -54,6 +54,11 @@ function isAllowed(pathname) {
 export default function middleware(request) {
   const { pathname } = new URL(request.url)
 
+  // Google Search Console HTML verification must never 404.
+  if (/^\/google[a-z0-9]+\.html$/i.test(pathname)) {
+    return next()
+  }
+
   if (
     pathname === '/advertise-with-us' ||
     pathname.startsWith('/advertise-with-us/') ||

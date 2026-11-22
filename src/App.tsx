@@ -16,6 +16,8 @@ import { AboutPage } from '@/pages/AboutPage'
 import { ContactPage } from '@/pages/ContactPage'
 import { BlogPage } from '@/pages/BlogPage'
 import { BlogArticlePage } from '@/pages/BlogArticlePage'
+import { PrivacyPage } from '@/pages/PrivacyPage'
+import { TermsPage } from '@/pages/TermsPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { AdminLoginPage } from '@/pages/admin/AdminLoginPage'
 import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage'
@@ -75,6 +77,8 @@ export default function App() {
                   <Route path="blog/:articleSlug" element={<BlogArticlePage />} />
                   <Route path="about" element={<AboutPage />} />
                   <Route path="contact" element={<ContactPage />} />
+                  <Route path="privacy" element={<PrivacyPage />} />
+                  <Route path="terms" element={<TermsPage />} />
                   <Route path="home" element={<Navigate to="/" replace />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Route>

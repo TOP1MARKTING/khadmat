@@ -2,27 +2,32 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ExternalLink } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useSiteSettings } from '@/context/SiteSettingsContext'
+import { useCms } from '@/context/CmsContext'
 import { BrandLogo } from '@/components/BrandLogo'
-
-const links = [
-  { to: '/services', ar: 'المهن', en: 'Trades' },
-  { to: '/blog', ar: 'المدونات', en: 'Blog' },
-  { to: '/about', ar: 'عن ساعدني', en: 'About' },
-  { to: '/contact', ar: 'تواصل', en: 'Contact' },
-]
 
 export function Footer() {
   const { t, lang } = useLanguage()
   const { settings } = useSiteSettings()
+  const { publishedArticles } = useCms()
   const navigate = useNavigate()
+  const hasBlog = publishedArticles().length > 0
+
+  const links = [
+    { to: '/services', ar: 'المهن', en: 'Trades' },
+    ...(hasBlog ? [{ to: '/blog', ar: 'المدونات', en: 'Blog' }] : []),
+    { to: '/about', ar: 'عن ساعدني', en: 'About' },
+    { to: '/contact', ar: 'تواصل', en: 'Contact' },
+  ]
+
+  const legalLinks = [
+    { to: '/privacy', ar: 'الخصوصية', en: 'Privacy' },
+    { to: '/terms', ar: 'شروط الاستخدام', en: 'Terms' },
+  ]
 
   return (
     <footer className="border-t-4 border-accent bg-ink text-white">
       <div className="container-page flex flex-col items-center py-10 text-center sm:py-12">
-        <Link
-          to="/"
-          className="inline-flex flex-col items-center gap-3 focus-ring"
-        >
+        <Link to="/" className="inline-flex flex-col items-center gap-3 focus-ring">
           <BrandLogo
             variant="mark-light"
             size="lg"
@@ -43,6 +48,18 @@ export function Footer() {
               key={item.to}
               to={item.to}
               className="inline-flex h-9 items-center text-sm font-bold text-white/75 transition-colors hover:text-white"
+            >
+              {t(item.ar, item.en)}
+            </Link>
+          ))}
+        </nav>
+
+        <nav className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          {legalLinks.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="inline-flex h-8 items-center text-xs font-bold text-white/50 transition-colors hover:text-white/85"
             >
               {t(item.ar, item.en)}
             </Link>

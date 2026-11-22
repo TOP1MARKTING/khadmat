@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Briefcase } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useCms } from '@/context/CmsContext'
@@ -128,9 +128,23 @@ export function BlogPage() {
             ))}
           </div>
         ) : (
-          <p className="mt-10 rounded-2xl border border-dashed border-line bg-cream/40 px-4 py-12 text-center text-sm text-muted">
-            {t('لا توجد مقالات حاليًا.', 'No articles yet.')}
-          </p>
+          <div className="mt-10 rounded-2xl border border-dashed border-line bg-cream/40 px-4 py-12 text-center">
+            <p className="text-sm font-bold text-ink">
+              {t('المدونة قيد التجهيز', 'Blog is being prepared')}
+            </p>
+            <p className="mt-2 text-sm text-muted">
+              {t(
+                'حاليًا الأدلة الأساسية داخل صفحات المهن. المقالات المنفصلة تُنشر بعد المراجعة.',
+                'Core guides live on trade pages for now. Standalone articles will publish after review.',
+              )}
+            </p>
+            <Link
+              to="/services"
+              className="mt-5 inline-flex h-11 items-center justify-center rounded-xl bg-brand px-4 text-sm font-bold text-white hover:bg-brand-dark"
+            >
+              {t('تصفّح المهن', 'Browse trades')}
+            </Link>
+          </div>
         )}
       </div>
     </div>

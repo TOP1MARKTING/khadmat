@@ -22,6 +22,7 @@ import {
   emptyService,
   loadCmsArticles,
   loadCmsServices,
+  dedupeBySlug,
   saveCmsArticles,
   saveCmsServices,
   type CmsArticle,
@@ -83,11 +84,11 @@ function mapArticles(docs: QueryDocumentSnapshot[]): CmsArticle[] {
 }
 
 function publicOnlyServices(list: CmsService[]) {
-  return list.filter((s) => s.status === 'published')
+  return dedupeBySlug(list.filter((s) => s.status === 'published' && s.slug))
 }
 
 function publicOnlyArticles(list: CmsArticle[]) {
-  return list.filter((a) => a.status === 'published')
+  return dedupeBySlug(list.filter((a) => a.status === 'published' && a.slug))
 }
 
 export function CmsProvider({ children }: { children: ReactNode }) {
@@ -334,13 +335,11 @@ export function CmsProvider({ children }: { children: ReactNode }) {
       createBlankService: () => emptyService(),
       createBlankArticle: () => emptyArticle(),
       publishedArticles: () =>
-        articles
-          .filter((a) => a.status === 'published')
-          .sort((a, b) => {
-            if (a.featured !== b.featured) return a.featured ? -1 : 1
-            return b.publishedAt.localeCompare(a.publishedAt)
-          }),
-      publishedServices: () => services.filter((s) => s.status === 'published'),
+        publicOnlyArticles(articles).sort((a, b) => {
+          if (a.featured !== b.featured) return a.featured ? -1 : 1
+          return b.publishedAt.localeCompare(a.publishedAt)
+        }),
+      publishedServices: () => publicOnlyServices(services),
     }),
     [
       services,

@@ -52,17 +52,17 @@ const helpPoints = [
   },
   {
     icon: FileText,
-    arTitle: 'اقرأ مقالات عملية',
-    enTitle: 'Read practical articles',
-    ar: 'نصائح وأخطاء شائعة وأدلة مرتبطة بكل مهنة — بما فيها محتوى محلي عبر المقالات.',
-    en: 'Tips, common mistakes, and guides for each trade — including local context through articles.',
+    arTitle: 'افهم نطاق الشغل',
+    enTitle: 'Understand the scope',
+    ar: 'كل دليل يوضح طبيعة المهنة وأنواع الأعمال وما يهم قبل الاتفاق.',
+    en: 'Each guide explains the trade, work types, and what matters before you agree.',
   },
   {
     icon: BookOpen,
     arTitle: 'اعرف قبل أن تبدأ',
     enTitle: 'Know before you start',
-    ar: 'اقرأ النصائح والأخطاء الشائعة قبل تنفيذ أي عمل.',
-    en: 'Read tips and common mistakes before any work begins.',
+    ar: 'اقرأ النصائح والأخطاء الشائعة داخل دليل المهنة قبل التنفيذ.',
+    en: 'Read tips and common mistakes inside each trade guide before work begins.',
   },
   {
     icon: Search,
@@ -471,10 +471,10 @@ export function HomePage() {
                 {t('استكشف الخدمات', 'Explore services')}
               </Link>
               <Link
-                to="/blog"
+                to="/about"
                 className="inline-flex h-12 items-center justify-center rounded-lg border-2 border-brand px-4 text-sm font-bold text-brand hover:bg-brand hover:text-white"
               >
-                {t('اقرأ الأدلة', 'Read guides')}
+                {t('عن ساعدني', 'About Saedni')}
               </Link>
             </div>
           </div>

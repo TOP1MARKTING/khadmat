@@ -10,19 +10,23 @@ import {
   X,
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import { useCms } from '@/context/CmsContext'
 import { BrandLogo } from '@/components/BrandLogo'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
 
-const nav = [
+const baseNav = [
   { to: '/services', ar: 'المهن', en: 'Trades', icon: Briefcase },
-  { to: '/blog', ar: 'المدونات', en: 'Blog', icon: Newspaper },
+  { to: '/blog', ar: 'المدونات', en: 'Blog', icon: Newspaper, blogOnly: true },
   { to: '/about', ar: 'عن ساعدني', en: 'About', icon: Info },
   { to: '/contact', ar: 'تواصل', en: 'Contact', icon: MessageCircle },
-]
+] as const
 
 export function Header() {
   const { t } = useLanguage()
+  const { publishedArticles } = useCms()
+  const hasBlog = publishedArticles().length > 0
+  const nav = baseNav.filter((item) => !('blogOnly' in item && item.blogOnly) || hasBlog)
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
