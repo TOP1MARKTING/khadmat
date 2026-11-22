@@ -426,8 +426,8 @@ export function AboutPage() {
             </h2>
             <p className="mt-2 max-w-xl text-sm text-muted">
               {t(
-                'تصفّح المهن، أو راسل Top1Markting لأي استفسار عن المنصة.',
-                'Browse trades, or message Top1Markting for any platform inquiry.',
+                'تصفّح المهن، أو راسل دعم ساعدني لاقتراح محتوى أو تصحيح معلومة.',
+                'Browse trades, or message Saedni support to suggest content or correct a detail.',
               )}
             </p>
           </div>

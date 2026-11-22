@@ -185,8 +185,8 @@ export function AdvertisePage() {
             </h2>
             <p className="mt-2 text-sm text-muted">
               {t(
-                'اكتب المهنة والمدينة — هنراجع المخزون ونرد عليك. النموذج واجهة فقط حاليًا.',
-                'Tell us the trade and city — we will check inventory and reply. Frontend-only form for now.',
+                'اكتب المهنة والمدينة — نكمّل عبر واتساب برسالة جاهزة.',
+                'Tell us the trade and city — we continue on WhatsApp with a ready message.',
               )}
             </p>
             <div className="mt-4">

@@ -62,8 +62,8 @@ export function TermsPage() {
               </li>
               <li>
                 {t(
-                  'أي تواصل تجاري أو استفسار عن المنصة يتم عبر قنوات Top1Markting الموضحة في صفحة التواصل.',
-                  'Business or platform inquiries go through Top1Markting channels listed on the Contact page.',
+                  'دعم المنصة واقتراح المحتوى وتصحيح المعلومات يتم عبر صفحة التواصل وقناة واتساب المعتمدة. نسبة التصميم والإشراف لـ Top1Markting مذكورة في تذييل الموقع.',
+                  'Platform support, content suggestions, and corrections go through the Contact page and approved WhatsApp channel. Design credit for Top1Markting remains in the site footer.',
                 )}
               </li>
             </ul>

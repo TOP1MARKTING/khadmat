@@ -159,13 +159,13 @@ export function Header() {
               }}
             >
               <MessageCircle className="size-4" />
-              {t('تواصل مع Top1Markting', 'Contact Top1Markting')}
+              {t('دعم ساعدني', 'Saedni support')}
             </Button>
 
             <p className="pt-1 text-center text-[11px] font-bold text-muted">
               {t(
-                'فكرة وتصميم وإشراف Top1Markting',
-                'Idea, design & supervision by Top1Markting',
+                'دعم المنصة · اقتراح محتوى · تصحيح معلومات',
+                'Support · content ideas · corrections',
               )}
             </p>
           </div>

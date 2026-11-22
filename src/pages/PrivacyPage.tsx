@@ -43,8 +43,8 @@ export function PrivacyPage() {
             </h2>
             <p>
               {t(
-                'الفكرة والتصميم والإشراف على المنصة من شركة Top1Markting. للاستفسارات:',
-                'Idea, design, and supervision are by Top1Markting. For inquiries:',
+                'الفكرة والتصميم والإشراف على المنصة من شركة Top1Markting. لدعم ساعدني واقتراح المحتوى:',
+                'Idea, design, and supervision are by Top1Markting. For Saedni support and content suggestions:',
               )}{' '}
               <Link to="/contact" className="font-bold text-accent hover:underline">
                 {t('صفحة التواصل', 'Contact page')}
@@ -66,8 +66,8 @@ export function PrivacyPage() {
               </li>
               <li>
                 {t(
-                  'نموذج التواصل في الموقع يعمل حاليًا على الواجهة فقط ولا يُرسل بياناتك إلى خادم في هذه المرحلة. للتواصل الفعلي نستخدم واتساب/قنوات Top1Markting الظاهرة في صفحة التواصل.',
-                  'The on-site contact form currently stays on the frontend and does not send your data to a server in this phase. Real contact happens via WhatsApp / Top1Markting channels shown on the Contact page.',
+                  'صفحة التواصل موجّهة لدعم ساعدني واقتراح المحتوى وتصحيح المعلومات، ويتم الاستقبال عبر واتساب المعتمد الظاهر هناك — وليس عبر صندوق رسائل على الخادم.',
+                  'The contact page is for Saedni support, content suggestions, and corrections. Messages go through the approved WhatsApp channel shown there — not a server-side inbox.',
                 )}
               </li>
               <li>

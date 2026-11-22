@@ -29,7 +29,7 @@ const HERO_IMAGE = '/images/team/team-01-villas.jpg'
 
 export function ServicesPage() {
   const { t } = useLanguage()
-  const { publishedServices } = useCms()
+  const { publishedServices, cmsReady } = useCms()
   const services = publishedServices()
   const navigate = useNavigate()
   const [params, setParams] = useSearchParams()
@@ -133,7 +133,9 @@ export function ServicesPage() {
             )}
           </p>
           <p className="reveal reveal-delay-3 mt-5 text-xs font-bold text-sand">
-            {services.length} {t('مهنة متاحة للتصفح', 'trades ready to browse')}
+            {!cmsReady
+              ? t('جارٍ التحميل…', 'Loading…')
+              : `${services.length} ${t('مهنة متاحة للتصفح', 'trades ready to browse')}`}
           </p>
         </div>
       </section>
@@ -260,7 +262,9 @@ export function ServicesPage() {
                         activeCategory === 'all' ? 'text-white/80' : 'text-muted',
                       )}
                     >
-                      {categoryCounts.all} {t('مهنة', 'trades')}
+                      {!cmsReady
+                        ? t('جارٍ التحميل…', 'Loading…')
+                        : `${categoryCounts.all} ${t('مهنة', 'trades')}`}
                     </span>
                   </span>
                 </button>
@@ -299,7 +303,9 @@ export function ServicesPage() {
                             active ? 'text-white/80' : 'text-muted',
                           )}
                         >
-                          {count} {t('مهنة', 'trades')}
+                          {!cmsReady
+                            ? t('جارٍ التحميل…', 'Loading…')
+                            : `${count} ${t('مهنة', 'trades')}`}
                         </span>
                       </span>
                     </button>
