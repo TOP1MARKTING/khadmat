@@ -82,18 +82,24 @@ export function Footer() {
             href="https://top1markting.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-[11px] text-white/45 transition-colors hover:text-white/75 focus-ring"
-            aria-label={t(
-              'فكرة وتصميم وإشراف Top1Markting',
-              'Idea, design & supervision by Top1Markting',
-            )}
+            dir="rtl"
+            className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white py-1.5 pe-3 ps-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.08)] transition hover:bg-white/95 focus-ring"
+            aria-label={t('تنفيذ Top1Markting', 'Built by Top1Markting')}
           >
-            <span>
-              {t('بإشراف', 'Supervised by')} Top
-              <span className="text-[#f0a11a]">1</span>
-              Markting
+            <svg viewBox="0 0 44 40" className="h-7 w-8 shrink-0" aria-hidden>
+              <path fill="#0b1f3a" d="M2 5h26v6.5H18.5V35h-7V11.5H2V5z" />
+              <path
+                fill="#f0a11a"
+                d="M30.5 35V16.5h-4L34 5l7.5 11.5H37.5V35H30.5z"
+              />
+            </svg>
+            <span className="text-[11px] font-bold text-[#5b6b82]">
+              {t('تنفيذ', 'Built by')}
             </span>
-            <ExternalLink className="size-3 shrink-0 opacity-70" aria-hidden />
+            <span className="text-[12px] font-extrabold tracking-tight text-[#0b1f3a]">
+              Top<span className="text-[#f0a11a]">1</span>Markting
+            </span>
+            <ExternalLink className="size-3.5 shrink-0 text-[#94a3b8]" aria-hidden />
           </a>
         </div>
       </div>
