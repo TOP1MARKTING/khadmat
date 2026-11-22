@@ -5,7 +5,263 @@
       "destination": "/googlefcf192a19b3a8b5c.html"
     },
     {
-      "source": "/((?!googlefcf192a19b3a8b5c\\.html|robots\\.txt|sitemap\\.xml).*)",
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/admin/login",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/home",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/abha",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/ahsa",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/al-baha",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/al-bukayriyah",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/al-kharj",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/ar-rass",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/arar",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/buraydah",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/dammam",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/dhahran",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/hail",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/jazan",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/jeddah",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/jubail",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/khamis-mushait",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/khobar",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/madinah",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/makkah",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/najran",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/riyadh",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/sakaka",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/tabuk",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/taif",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/locations/unaizah",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/air-conditioning",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/apartment-finishing",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/appliance-repair",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/ceramic-installation",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/commercial-maintenance",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/electrical",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/facility-management",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/furniture-assembly",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/furniture-moving",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/general-contracting",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/gypsum-board",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/home-cleaning",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/landscaping",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/leak-detection",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/marble-porcelain",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/office-cleaning",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/office-relocation",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/packing",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/painting",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/pest-control",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/plumbing",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/post-construction-cleaning",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/renovation",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/storage",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/upholstery-cleaning",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/water-tank-cleaning",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/waterproofing",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sa/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog/:path*",
       "destination": "/index.html"
     }
   ]
