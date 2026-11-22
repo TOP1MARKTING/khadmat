@@ -85,13 +85,5 @@ export default function middleware(request) {
     return fetch(preview)
   }
 
-  // /sa and /admin: pass through (prerendered /sa shells + vercel.json admin headers).
-  // Do not fetch /index.html here — that re-enters this middleware and fails the edge invoke.
-  if (pathname.startsWith('/sa/') || pathname.startsWith('/admin')) {
-    const res = next()
-    res.headers.set('x-robots-tag', 'noindex, nofollow')
-    return res
-  }
-
   return next()
 }
