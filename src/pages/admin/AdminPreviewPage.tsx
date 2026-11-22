@@ -21,7 +21,7 @@ export function AdminPreviewPage({ kind }: { kind: 'service' | 'article' }) {
     titleEn: 'Internal preview | Saedni',
     descriptionAr: 'معاينة غير عامة',
     descriptionEn: 'Private preview',
-    robots: 'noindex,nofollow',
+    robots: 'noindex,nofollow,noarchive',
   })
 
   if (kind === 'service' && !service) return <Navigate to="/admin/services" replace />
