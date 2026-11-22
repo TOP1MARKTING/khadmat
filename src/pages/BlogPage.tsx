@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, Navigate, useSearchParams } from 'react-router-dom'
 import { Briefcase } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useCms } from '@/context/CmsContext'
@@ -25,6 +25,7 @@ export function BlogPage() {
       'مقالات عملية عن البلاط والسباكة والمقاولات والنقل في المملكة العربية السعودية.',
     descriptionEn: 'Practical articles on trades across Saudi Arabia.',
     canonicalPath: '/blog',
+    robots: articles.length === 0 ? 'noindex,follow' : 'index,follow',
   })
 
   const filtered = useMemo(() => {
@@ -61,6 +62,11 @@ export function BlogPage() {
     ],
     [lang, services, t],
   )
+
+  // Empty blog should not look like a dead end — send visitors to trade guides.
+  if (articles.length === 0) {
+    return <Navigate to="/services" replace />
+  }
 
   return (
     <div className="section-pad">
@@ -130,13 +136,7 @@ export function BlogPage() {
         ) : (
           <div className="mt-10 rounded-2xl border border-dashed border-line bg-cream/40 px-4 py-12 text-center">
             <p className="text-sm font-bold text-ink">
-              {t('المدونة قيد التجهيز', 'Blog is being prepared')}
-            </p>
-            <p className="mt-2 text-sm text-muted">
-              {t(
-                'حاليًا الأدلة الأساسية داخل صفحات المهن. المقالات المنفصلة تُنشر بعد المراجعة.',
-                'Core guides live on trade pages for now. Standalone articles will publish after review.',
-              )}
+              {t('لا توجد مقالات في هذا التصنيف', 'No articles in this filter')}
             </p>
             <Link
               to="/services"

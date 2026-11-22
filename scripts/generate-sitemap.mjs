@@ -144,10 +144,7 @@ writeFileSync(resolve(root, 'path-allowlist.js'), allowlistJs, 'utf8')
  * Middleware remains a second layer for the same allowlist.
  */
 const spaRewrites = [
-  {
-    source: '/googlefcf192a19b3a8b5c.html',
-    destination: '/googlefcf192a19b3a8b5c.html',
-  },
+  // Do NOT rewrite google*.html — serve the static file from /public as-is.
   { source: '/', destination: '/index.html' },
   ...[...allowExact]
     .filter((p) => p !== '/')
@@ -161,6 +158,16 @@ const spaRewrites = [
 ]
 
 const vercelJson = {
+  headers: [
+    {
+      source: '/googlefcf192a19b3a8b5c.html',
+      headers: [
+        { key: 'Content-Type', value: 'text/plain; charset=utf-8' },
+        { key: 'Cache-Control', value: 'no-store, max-age=0, must-revalidate' },
+        { key: 'X-Robots-Tag', value: 'noindex' },
+      ],
+    },
+  ],
   rewrites: spaRewrites,
 }
 

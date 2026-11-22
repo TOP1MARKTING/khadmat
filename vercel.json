@@ -1,9 +1,24 @@
 {
-  "rewrites": [
+  "headers": [
     {
       "source": "/googlefcf192a19b3a8b5c.html",
-      "destination": "/googlefcf192a19b3a8b5c.html"
-    },
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
     {
       "source": "/",
       "destination": "/index.html"
