@@ -6,13 +6,16 @@ export function SectionHeading({
   description,
   align = 'start',
   className,
+  as = 'h2',
 }: {
   eyebrow?: string
   title: string
   description?: string
   align?: 'start' | 'center'
   className?: string
+  as?: 'h1' | 'h2'
 }) {
+  const HeadingTag = as
   return (
     <div
       className={cn(
@@ -27,7 +30,7 @@ export function SectionHeading({
           <div className="mb-3 work-rule w-12" />
         </>
       )}
-      <h2 className="heading-section">{title}</h2>
+      <HeadingTag className="heading-section">{title}</HeadingTag>
       {description && <p className="body-lead mt-4 max-w-2xl">{description}</p>}
     </div>
   )
