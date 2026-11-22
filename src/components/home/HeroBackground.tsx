@@ -21,6 +21,16 @@ export const HERO_SLIDES: HeroSlide[] = [
   { mobile: '/images/hero/hero-08-finishing.jpg', desktop: '/images/hero/hero-08-finishing.jpg', tone: 'bright' },
   { mobile: '/images/hero/hero-09-cleaning.jpg', desktop: '/images/hero/hero-09-cleaning.jpg', tone: 'bright' },
   { mobile: '/images/hero/hero-10-appliance.jpg', desktop: '/images/hero/hero-10-appliance.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-11-facility.jpg', desktop: '/images/hero/hero-11-facility.jpg', tone: 'mid' },
+  { mobile: '/images/hero/hero-12-electrical.jpg', desktop: '/images/hero/hero-12-electrical.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-13-landscaping.jpg', desktop: '/images/hero/hero-13-landscaping.jpg', tone: 'mid' },
+  { mobile: '/images/hero/hero-14-storage.jpg', desktop: '/images/hero/hero-14-storage.jpg', tone: 'mid' },
+  { mobile: '/images/hero/hero-15-office-move.jpg', desktop: '/images/hero/hero-15-office-move.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-16-assembly.jpg', desktop: '/images/hero/hero-16-assembly.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-17-packing.jpg', desktop: '/images/hero/hero-17-packing.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-18-moving.jpg', desktop: '/images/hero/hero-18-moving.jpg', tone: 'mid' },
+  { mobile: '/images/hero/hero-19-maintenance.jpg', desktop: '/images/hero/hero-19-maintenance.jpg', tone: 'bright' },
+  { mobile: '/images/hero/hero-20-window-clean.jpg', desktop: '/images/hero/hero-20-window-clean.jpg', tone: 'mid' },
 ]
 
 const INTERVAL_MS = 2800
