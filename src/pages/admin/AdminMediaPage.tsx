@@ -1,11 +1,7 @@
 import { useMemo, useState } from 'react'
-import { Check, Copy, Images, Search } from 'lucide-react'
-import {
-  mediaGroups,
-  mediaLibrary,
-  type MediaAsset,
-  type MediaGroupId,
-} from '@/data/mediaLibrary'
+import { Check, Copy, Images, Search, Trash2 } from 'lucide-react'
+import { mediaGroups, type MediaAsset, type MediaGroupId } from '@/data/mediaLibrary'
+import { useMediaCatalog } from '@/lib/mediaCatalog'
 import { AdminPageHeader, AdminPanel } from '@/components/admin/AdminUI'
 import { cn } from '@/lib/cn'
 
@@ -33,10 +29,12 @@ function MediaCard({
   asset,
   onCopied,
   copied,
+  onDelete,
 }: {
   asset: MediaAsset
   onCopied: (src: string) => void
   copied: boolean
+  onDelete: (asset: MediaAsset) => void
 }) {
   return (
     <article className="group overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--shadow-soft)] transition-all hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-[var(--shadow-lift)]">
@@ -58,6 +56,15 @@ function MediaCard({
         <span className="absolute start-2 top-2 rounded-lg bg-ink/70 px-2 py-0.5 text-[10px] font-bold text-white backdrop-blur-sm">
           {asset.groupAr}
         </span>
+        <button
+          type="button"
+          onClick={() => onDelete(asset)}
+          className="absolute end-2 top-2 inline-flex size-8 items-center justify-center rounded-lg bg-white/95 text-red-600 shadow-sm opacity-100 transition-opacity hover:bg-red-50 focus-ring sm:opacity-0 sm:group-hover:opacity-100"
+          aria-label={`حذف ${asset.labelAr}`}
+          title="حذف من المعرض"
+        >
+          <Trash2 className="size-4" />
+        </button>
       </div>
       <div className="space-y-2.5 p-3.5">
         <div>
@@ -66,35 +73,46 @@ function MediaCard({
             {asset.src}
           </p>
         </div>
-        <button
-          type="button"
-          onClick={async () => {
-            const ok = await copyText(asset.src)
-            if (ok) onCopied(asset.src)
-          }}
-          className={cn(
-            'inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-xl text-xs font-extrabold transition-colors focus-ring',
-            copied
-              ? 'bg-brand text-white'
-              : 'border border-line bg-cream text-ink hover:border-brand/40 hover:text-brand',
-          )}
-        >
-          {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
-          {copied ? 'تم النسخ' : 'نسخ المسار'}
-        </button>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={async () => {
+              const ok = await copyText(asset.src)
+              if (ok) onCopied(asset.src)
+            }}
+            className={cn(
+              'inline-flex h-9 items-center justify-center gap-1.5 rounded-xl text-xs font-extrabold transition-colors focus-ring',
+              copied
+                ? 'bg-brand text-white'
+                : 'border border-line bg-cream text-ink hover:border-brand/40 hover:text-brand',
+            )}
+          >
+            {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+            {copied ? 'تم النسخ' : 'نسخ'}
+          </button>
+          <button
+            type="button"
+            onClick={() => onDelete(asset)}
+            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-red-200 bg-red-50 text-xs font-extrabold text-red-700 transition-colors hover:bg-red-100 focus-ring"
+          >
+            <Trash2 className="size-3.5" />
+            حذف
+          </button>
+        </div>
       </div>
     </article>
   )
 }
 
 export function AdminMediaPage() {
+  const { items, remove } = useMediaCatalog()
   const [filter, setFilter] = useState<Filter>('all')
   const [query, setQuery] = useState('')
   const [copiedSrc, setCopiedSrc] = useState('')
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
-    return mediaLibrary.filter((m) => {
+    return items.filter((m) => {
       if (filter !== 'all' && m.group !== filter) return false
       if (!q) return true
       return (
@@ -104,25 +122,37 @@ export function AdminMediaPage() {
         m.groupAr.includes(query.trim())
       )
     })
-  }, [filter, query])
+  }, [filter, query, items])
 
   const counts = useMemo(() => {
-    const map: Record<string, number> = { all: mediaLibrary.length }
+    const map: Record<string, number> = { all: items.length }
     for (const g of mediaGroups) {
-      map[g.id] = mediaLibrary.filter((m) => m.group === g.id).length
+      map[g.id] = items.filter((m) => m.group === g.id).length
     }
     return map
-  }, [])
+  }, [items])
+
+  const onDelete = (asset: MediaAsset) => {
+    if (
+      !confirm(
+        `حذف «${asset.labelAr}» من معرض الأدمن؟\nلن تظهر في الاختيار بعد كده (الملف على السيرفر يفضل موجود).`,
+      )
+    ) {
+      return
+    }
+    remove(asset.id)
+    if (copiedSrc === asset.src) setCopiedSrc('')
+  }
 
   return (
     <div className="space-y-6">
       <AdminPageHeader
         title="معرض الصور"
-        description="كل الصور المتاحة في الموقع. انسخ المسار والصقه في صورة المقال أو المهنة."
+        description="كل الصور المتاحة في الموقع. انسخ المسار أو احذف الصورة من المعرض."
         action={
           <span className="inline-flex items-center gap-2 rounded-xl border border-line bg-cream/60 px-3 py-2 text-xs font-bold text-muted">
             <Images className="size-4 text-accent" />
-            {mediaLibrary.length} صورة
+            {items.length} صورة
           </span>
         }
       />
@@ -179,9 +209,10 @@ export function AdminMediaPage() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filtered.map((asset) => (
             <MediaCard
-              key={asset.src}
+              key={asset.id}
               asset={asset}
               copied={copiedSrc === asset.src}
+              onDelete={onDelete}
               onCopied={(src) => {
                 setCopiedSrc(src)
                 window.setTimeout(() => {

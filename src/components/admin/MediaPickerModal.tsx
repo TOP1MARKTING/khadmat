@@ -1,11 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Images, Search, X } from 'lucide-react'
-import {
-  mediaGroups,
-  mediaLibrary,
-  type MediaAsset,
-  type MediaGroupId,
-} from '@/data/mediaLibrary'
+import { mediaGroups, type MediaAsset, type MediaGroupId } from '@/data/mediaLibrary'
+import { useMediaCatalog } from '@/lib/mediaCatalog'
 import { cn } from '@/lib/cn'
 
 type Filter = MediaGroupId | 'all'
@@ -23,6 +19,7 @@ export function MediaPickerModal({
   onSelect,
   title = 'اختر من المعرض',
 }: Props) {
+  const { items: catalog } = useMediaCatalog()
   const [filter, setFilter] = useState<Filter>('all')
   const [q, setQ] = useState('')
 
@@ -42,7 +39,7 @@ export function MediaPickerModal({
 
   const items = useMemo(() => {
     const query = q.trim().toLowerCase()
-    return mediaLibrary.filter((m) => {
+    return catalog.filter((m) => {
       if (filter !== 'all' && m.group !== filter) return false
       if (!query) return true
       return (
@@ -52,7 +49,7 @@ export function MediaPickerModal({
         m.groupAr.includes(q.trim())
       )
     })
-  }, [filter, q])
+  }, [filter, q, catalog])
 
   if (!open) return null
 
