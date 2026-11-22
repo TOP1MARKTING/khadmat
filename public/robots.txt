@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://saedniksa.com/sitemap.xml
+Sitemap: https://www.saedniksa.com/sitemap.xml

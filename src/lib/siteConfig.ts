@@ -1,5 +1,5 @@
-/** Production domain for Saedni */
-export const SITE_HOST = 'saedniksa.com'
+/** Production domain for Saedni (www is primary on Vercel) */
+export const SITE_HOST = 'www.saedniksa.com'
 
 export const SITE_URL = (
   import.meta.env.VITE_SITE_URL || `https://${SITE_HOST}`
