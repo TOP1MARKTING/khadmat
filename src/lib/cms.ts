@@ -60,8 +60,8 @@ export type CmsArticle = {
   updatedAt: string
 }
 
-const SERVICES_KEY = 'saedni_cms_services_v31'
-const ARTICLES_KEY = 'saedni_cms_articles_v31'
+const SERVICES_KEY = 'saedni_cms_services_v32'
+const ARTICLES_KEY = 'saedni_cms_articles_v32'
 
 function uid(prefix: string) {
   return `${prefix}_${Math.random().toString(36).slice(2, 10)}`
@@ -190,7 +190,7 @@ export function loadCmsServices(): CmsService[] {
       localStorage.setItem(SERVICES_KEY, JSON.stringify(seeded))
       return seeded
     }
-    const parsed = (JSON.parse(raw) as CmsService[]).map(normalizeService)
+    const parsed = dedupeBySlug((JSON.parse(raw) as CmsService[]).map(normalizeService))
     // Empty cache (e.g. wiped by a bad sync) must re-seed — "[]" is truthy JSON.
     if (parsed.length === 0) {
       const seeded = seedCmsServices()

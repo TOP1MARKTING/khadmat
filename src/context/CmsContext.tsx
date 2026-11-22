@@ -71,9 +71,21 @@ function mapServices(docs: QueryDocumentSnapshot[]): CmsService[] {
     return {
       ...data,
       id: data.id || d.id,
-      status: data.status === 'draft' ? 'draft' : data.status === 'published' ? 'published' : 'draft',
+      // Only explicit draft stays draft — missing/legacy status must remain public.
+      status: data.status === 'draft' ? 'draft' : 'published',
     }
   })
+}
+
+/** Cloud wins per slug; local seeds fill any gaps so a thin Firestore set cannot 404 guides. */
+function mergePublicServices(cloud: CmsService[]): CmsService[] {
+  const local = publicOnlyServices(loadCmsServices())
+  const fromCloud = publicOnlyServices(cloud)
+  if (!fromCloud.length) return local
+  const bySlug = new Map<string, CmsService>()
+  for (const s of local) bySlug.set(s.slug, s)
+  for (const s of fromCloud) bySlug.set(s.slug, s)
+  return [...bySlug.values()]
 }
 
 function mapArticles(docs: QueryDocumentSnapshot[]): CmsArticle[] {
@@ -139,19 +151,18 @@ export function CmsProvider({ children }: { children: ReactNode }) {
         servicesRef,
         (snap) => {
           const list = mapServices(snap.docs)
-          if (list.length === 0 && !admin) {
-            // Fallback seeds until cloud has published docs
-            const local = publicOnlyServices(loadCmsServices())
-            setServices(local)
-            setCmsSource(local.length ? 'local' : 'firebase')
-          } else if (list.length === 0 && admin) {
+          if (!admin) {
+            const next = mergePublicServices(list)
+            setServices(next)
+            saveCmsServices(next)
+            setCmsSource(list.length ? (next.length > list.length ? 'hybrid' : 'firebase') : 'local')
+          } else if (list.length === 0) {
             // Do not wipe local cache with an empty admin snapshot
             setServices(loadCmsServices())
             setCmsSource('local')
           } else {
-            const next = admin ? list : publicOnlyServices(list)
-            setServices(next)
-            saveCmsServices(next)
+            setServices(list)
+            saveCmsServices(list)
             setCmsSource('firebase')
           }
           setCmsError('')
