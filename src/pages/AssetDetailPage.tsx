@@ -130,8 +130,8 @@ export function AssetDetailPage() {
             <p className="mt-2 text-sm text-muted">
               {canRequest
                 ? t(
-                    'ابعت بيانات منشأتك. الربط الخلفي والدفع هيتموا لاحقًا — دلوقتي واجهة فقط.',
-                    'Send your business details. Backend and payment come later — frontend only for now.',
+                    'ابعت بيانات منشأتك — نكمّل عبر واتساب برسالة جاهزة.',
+                    'Send your business details — we continue on WhatsApp with a ready message.',
                   )
                 : t(
                     'الصفحة مش متاحة للتأجير الفوري حاليًا، لكن ممكن تسجّل اهتمامك.',
