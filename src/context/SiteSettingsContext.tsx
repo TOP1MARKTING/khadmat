@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { doc, onSnapshot } from 'firebase/firestore'
 import {
   DEFAULT_SITE_SETTINGS,
   loadSiteSettings,
@@ -14,11 +15,9 @@ import {
   saveSiteSettings,
   type SiteSettings,
 } from '@/lib/siteSettings'
-import { isFirebaseConfigured } from '@/lib/firebase'
-import {
-  fetchSiteSettingsFromFirestore,
-  saveSiteSettingsToFirestore,
-} from '@/lib/firestoreData'
+import { getDb, getFirebaseAuth, isFirebaseConfigured } from '@/lib/firebase'
+import { isEmailAllowedAdmin } from '@/lib/adminAllowlist'
+import { COL, saveSiteSettingsToFirestore } from '@/lib/firestoreData'
 
 type SiteSettingsContextValue = {
   settings: SiteSettings
@@ -29,39 +28,59 @@ type SiteSettingsContextValue = {
 
 const SiteSettingsContext = createContext<SiteSettingsContextValue | null>(null)
 
+function asSiteSettings(raw: Record<string, unknown> | undefined): SiteSettings | null {
+  if (!raw) return null
+  return { ...DEFAULT_SITE_SETTINGS, ...(raw as Partial<SiteSettings>) }
+}
+
 export function SiteSettingsProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<SiteSettings>(() => loadSiteSettings())
 
   useEffect(() => {
     if (!isFirebaseConfigured()) return
-    void (async () => {
-      try {
-        const remote = await fetchSiteSettingsFromFirestore()
-        if (remote) {
-          saveSiteSettings(remote)
-          setSettings(remote)
-        }
-      } catch (err) {
+    const ref = doc(getDb(), COL.settings, 'site')
+    const unsub = onSnapshot(
+      ref,
+      (snap) => {
+        if (!snap.exists()) return
+        const remote = asSiteSettings(snap.data())
+        if (!remote) return
+        saveSiteSettings(remote)
+        setSettings(remote)
+      },
+      (err) => {
         console.warn(err)
-      }
-    })()
+      },
+    )
+    return () => unsub()
   }, [])
 
+  const canWriteCloud = () => {
+    const email = getFirebaseAuth().currentUser?.email
+    return Boolean(
+      isFirebaseConfigured() &&
+        getFirebaseAuth().currentUser &&
+        isEmailAllowedAdmin(email),
+    )
+  }
+
   const updateSettings = useCallback(async (next: Partial<SiteSettings>) => {
-    setSettings((prev) => {
-      const merged = { ...prev, ...next }
-      saveSiteSettings(merged)
-      if (isFirebaseConfigured()) {
-        void saveSiteSettingsToFirestore(merged).catch(console.error)
+    const merged = { ...loadSiteSettings(), ...next }
+    saveSiteSettings(merged)
+    setSettings(merged)
+    if (canWriteCloud()) {
+      try {
+        await saveSiteSettingsToFirestore(merged)
+      } catch (err) {
+        console.error(err)
       }
-      return merged
-    })
+    }
   }, [])
 
   const replaceSettings = useCallback(async (next: SiteSettings) => {
     saveSiteSettings(next)
     setSettings(next)
-    if (isFirebaseConfigured()) {
+    if (canWriteCloud()) {
       try {
         await saveSiteSettingsToFirestore(next)
       } catch (err) {
@@ -73,7 +92,7 @@ export function SiteSettingsProvider({ children }: { children: ReactNode }) {
   const resetSettings = useCallback(async () => {
     const defaults = resetSiteSettings()
     setSettings(defaults)
-    if (isFirebaseConfigured()) {
+    if (canWriteCloud()) {
       try {
         await saveSiteSettingsToFirestore(defaults)
       } catch (err) {
