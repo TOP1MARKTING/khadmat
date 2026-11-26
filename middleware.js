@@ -3,7 +3,7 @@
  * - Social/share bots → /api/share-preview (page-specific OG meta without JS)
  * - Real HTTP 404 for commercial Phase-2 routes
  * - Real HTTP 404 for unknown public paths (SPA no longer returns 200 for junk URLs)
- * Known knowledge pages + /admin + static assets pass through.
+ * Known knowledge pages + /admin + /blog/* (CMS) + static assets pass through.
  * Note: Googlebot is intentionally NOT rewritten (renders JS).
  */
 import { next } from '@vercel/edge'
@@ -58,11 +58,17 @@ function isAllowed(pathname) {
 
 export default function middleware(request) {
   const url = new URL(request.url)
-  const { pathname } = url
+  let { pathname } = url
 
   // Google Search Console HTML verification must never 404.
   if (/^\/google[a-z0-9]+\.html$/i.test(pathname)) {
     return next()
+  }
+
+  // /blog/ and /blog/<slug>/ → canonical without trailing slash
+  if (pathname === '/blog/' || /^\/blog\/.+\/$/.test(pathname)) {
+    url.pathname = pathname.replace(/\/+$/, '') || '/'
+    return Response.redirect(url, 308)
   }
 
   if (

@@ -286,6 +286,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/blog/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/admin/:path*",
       "destination": "/index.html"
     },
